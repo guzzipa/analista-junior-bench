@@ -12,7 +12,7 @@ class LLMError(RuntimeError):
 
 def _post(url, payload, headers, timeout):
     req = urllib.request.Request(url, data=json.dumps(payload).encode(), method="POST",
-                                 headers={"Content-Type": "application/json", **headers})
+                                 headers={"Content-Type": "application/json", "User-Agent": "analista-junior-bench/1.0", **headers})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.loads(r.read().decode())
 
