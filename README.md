@@ -64,8 +64,9 @@ python3 -m venv .venv
 ./run_local.sh
 
 # 4. Modelos por API (claves gratuitas, sin tarjeta)
-export GROQ_API_KEY=...      # https://console.groq.com/keys
-export GEMINI_API_KEY=...    # https://aistudio.google.com/apikey
+# Guardalas en un archivo .env en la raíz del repo (está en .gitignore):
+#   GROQ_API_KEY=...      # https://console.groq.com/keys
+#   GEMINI_API_KEY=...    # https://aistudio.google.com/apikey
 .venv/bin/python bench.py run --model gpt-oss-120b-groq
 .venv/bin/python bench.py run --model gemini-flash-lite
 

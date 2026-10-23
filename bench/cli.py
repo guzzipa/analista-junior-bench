@@ -37,6 +37,18 @@ def save_json(path, obj):
     os.replace(tmp, path)
 
 
+def load_env():
+    """Carga claves desde un archivo .env local (no se sube a git)."""
+    path = os.path.join(ROOT, ".env")
+    if os.path.exists(path):
+        with open(path, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if line and not line.startswith("#") and "=" in line:
+                    k, v = line.split("=", 1)
+                    os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
+
+
 def load_models():
     return load_json(os.path.join(ROOT, "models.json"), {})["models"]
 
@@ -388,6 +400,7 @@ def main():
     sub.add_parser("report", help="arma la tabla de resultados y el gráfico")
     sub.add_parser("verify", help="chequea que el harness funcione")
     args = ap.parse_args()
+    load_env()
     fn = {"setup": cmd_setup, "list": cmd_list, "run": cmd_run, "regrade": cmd_regrade, "review": cmd_review,
           "report": cmd_report, "verify": cmd_verify}[args.cmd]
     res = fn(args)
