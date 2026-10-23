@@ -1,0 +1,59 @@
+{
+  "models": [
+    {
+      "name": "qwen3.5-4b",
+      "provider": "ollama",
+      "model": "qwen3.5:4b",
+      "num_ctx": 16384,
+      "nota": "Local, ~3,5 GB. El más chico: corre en casi cualquier notebook."
+    },
+    {
+      "name": "qwen3.5-9b",
+      "provider": "ollama",
+      "model": "qwen3.5:9b",
+      "num_ctx": 16384,
+      "nota": "Local, ~7 GB."
+    },
+    {
+      "name": "gemma4-12b",
+      "provider": "ollama",
+      "model": "gemma4:12b",
+      "num_ctx": 16384,
+      "nota": "Local, ~8 GB."
+    },
+    {
+      "name": "gpt-oss-120b-groq",
+      "provider": "openai_compat",
+      "base_url": "https://api.groq.com/openai/v1",
+      "model": "openai/gpt-oss-120b",
+      "api_key_env": "GROQ_API_KEY",
+      "min_interval_s": 4,
+      "nota": "Capa gratuita de Groq (sin tarjeta). Tope diario de tokens: si se corta, se retoma al día siguiente con el mismo comando."
+    },
+    {
+      "name": "gemini-flash-lite",
+      "provider": "openai_compat",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "model": "gemini-3.5-flash-lite",
+      "api_key_env": "GEMINI_API_KEY",
+      "min_interval_s": 7,
+      "nota": "Capa gratuita de Google AI Studio. Verificá el nombre del modelo y tus límites en AI Studio."
+    },
+    {
+      "name": "gpt-oss-20b",
+      "provider": "ollama",
+      "model": "gpt-oss:20b",
+      "num_ctx": 8192,
+      "nota": "OPCIONAL. Local, ~14 GB: en una Mac de 16 GB anda muy justo y necesita casi todo el disco libre."
+    },
+    {
+      "name": "gemini-flash",
+      "provider": "openai_compat",
+      "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+      "model": "gemini-3.8-flash",
+      "api_key_env": "GEMINI_API_KEY",
+      "min_interval_s": 7,
+      "nota": "OPCIONAL. Más capaz que Flash-Lite, pero la capa gratuita permite muy pocos pedidos por día: puede llevar varios días."
+    }
+  ]
+}
