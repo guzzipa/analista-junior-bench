@@ -1,0 +1,26 @@
+{
+ "task_id": "L05",
+ "bloque": "Limpieza",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport pandas as pd\nfrom datetime import datetime\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula la venta total del primer trimestre de 2026 por sucursal\n    a partir del archivo CSV `ventas_sucursales.csv`.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene `ventas_sucursales.csv` y la base SQLite.\n\n    Retorna\n    -------\n    dict\n        Diccionario {nombre_de_sucursal: total_ventas} con totales redondeados a 2 decimales.\n    \"\"\"\n    # Ruta del CSV\n    csv_path = os.path.join(data_dir, \"ventas_sucursales.csv\")\n\n    # Lectura del CSV:\n    # - separador ';'\n    # - coma como separador decimal\n    # - punto como separador de miles\n    # - la columna de fecha está en formato dd/mm/yyyy\n    df = pd.read_csv(\n        csv_path,\n        sep=';',\n        decimal=',',\n        thousands='.',\n        dtype={'sucursal': str, 'venta': float},\n        parse_dates=['fecha'],\n        dayfirst=True,\n        keep_default_na=False\n    )\n\n    # Filtrar solo el primer trimestre de 2026\n    start = pd.Timestamp('2026-01-01')\n    end   = pd.Timestamp('2026-03-31')\n    mask = (df['fecha'] >= start) & (df['fecha'] <= end)\n    df_q1 = df.loc[mask]\n\n    # Agrupar por sucursal y sumar ventas\n    result_series = df_q1.groupby('sucursal')['venta'].sum()\n\n    # Convertir a dict con redondeo a 2 decimales\n    result_dict = {sucursal: round(total, 2) for sucursal, total in result_series.items()}\n\n    return result_dict\n```",
+ "thinking_chars": 1093,
+ "usage": {
+  "queue_time": 0.204318494,
+  "prompt_tokens": 714,
+  "prompt_time": 0.031979402,
+  "completion_tokens": 646,
+  "completion_time": 1.3533094,
+  "total_tokens": 1360,
+  "total_time": 1.385288802,
+  "completion_tokens_details": {
+   "reasoning_tokens": 243
+  }
+ },
+ "latency_s": 1.89,
+ "timestamp": "2026-10-23 09:18:47",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:   File \"pandas/_libs/parsers.pyx\", line 574, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas/_libs/parsers.pyx\", line 663, in pandas._libs.parsers.TextReader._get_header\n  File \"pandas/_libs/parsers.pyx\", line 874, in pandas._libs.parsers.TextReader._tokenize_rows\n  File \"pandas/_libs/parsers.pyx\", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status\n  File \"pandas/_libs/parsers.pyx\", line 2053, in pandas._libs.parsers.raise_parser_error\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xf3 in position 34: invalid continuation byte",
+  "code": "import os\nimport pandas as pd\nfrom datetime import datetime\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula la venta total del primer trimestre de 2026 por sucursal\n    a partir del archivo CSV `ventas_sucursales.csv`.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene `ventas_sucursales.csv` y la base SQLite.\n\n    Retorna\n    -------\n    dict\n        Diccionario {nombre_de_sucursal: total_ventas} con totales redondeados a 2 decimales.\n    \"\"\"\n    # Ruta del CSV\n    csv_path = os.path.join(data_dir, \"ventas_sucursales.csv\")\n\n    # Lectura del CSV:\n    # - separador ';'\n    # - coma como separador decimal\n    # - punto como separador de miles\n    # - la columna de fecha está en formato dd/mm/yyyy\n    df = pd.read_csv(\n        csv_path,\n        sep=';',\n        decimal=',',\n        thousands='.',\n        dtype={'sucursal': str, 'venta': float},\n        parse_dates=['fecha'],\n        dayfirst=True,\n        keep_default_na=False\n    )\n\n    # Filtrar solo el primer trimestre de 2026\n    start = pd.Timestamp('2026-01-01')\n    end   = pd.Timestamp('2026-03-31')\n    mask = (df['fecha'] >= start) & (df['fecha'] <= end)\n    df_q1 = df.loc[mask]\n\n    # Agrupar por sucursal y sumar ventas\n    result_series = df_q1.groupby('sucursal')['venta'].sum()\n\n    # Convertir a dict con redondeo a 2 decimales\n    result_dict = {sucursal: round(total, 2) for sucursal, total in result_series.items()}\n\n    return result_dict"
+ }
+}

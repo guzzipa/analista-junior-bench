@@ -1,0 +1,30 @@
+{
+ "task_id": "L09",
+ "bloque": "Limpieza",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport pandas as pd\n\ndef solve(data_dir):\n    \"\"\"\n    Lee el archivo eventos.csv, convierte los timestamps de UTC a hora de Argentina (UTC-3)\n    y devuelve un diccionario con la cantidad de eventos por día (formato 'YYYY-MM-DD').\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene los archivos de datos, incluido eventos.csv.\n\n    Retorna\n    -------\n    dict\n        Diccionario donde la clave es la fecha en hora argentina (str 'YYYY-MM-DD')\n        y el valor es la cantidad de eventos ocurridos ese día.\n    \"\"\"\n    # Ruta al archivo CSV\n    eventos_path = os.path.join(data_dir, \"eventos.csv\")\n\n    # Cargar solo la columna de timestamps (el resto no es necesario para el conteo)\n    df = pd.read_csv(eventos_path, usecols=[\"timestamp_utc\"])\n\n    # Parsear timestamps como UTC y restar 3 horas para pasar a hora de Argentina (UTC-3)\n    # Se usa utc=True para que pandas reconozca el sufijo 'Z' como zona UTC.\n    df[\"timestamp_utc\"] = pd.to_datetime(df[\"timestamp_utc\"], utc=True)\n    df[\"timestamp_ars\"] = df[\"timestamp_utc\"] - pd.Timedelta(hours=3)\n\n    # Extraer la fecha en formato YYYY-MM-DD\n    df[\"fecha_ars\"] = df[\"timestamp_ars\"].dt.strftime(\"%Y-%m-%d\")\n\n    # Contar eventos por fecha\n    conteo = df[\"fecha_ars\"].value_counts().sort_index()\n\n    # Convertir a dict\n    resultado = conteo.to_dict()\n\n    return resultado\n```",
+ "thinking_chars": 1078,
+ "usage": {
+  "queue_time": 0.312890782,
+  "prompt_tokens": 697,
+  "prompt_time": 1.801590912,
+  "completion_tokens": 627,
+  "completion_time": 1.7287529940000002,
+  "total_tokens": 1324,
+  "total_time": 3.530343906,
+  "prompt_tokens_details": {
+   "cached_tokens": 256
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 259
+  }
+ },
+ "latency_s": 4.06,
+ "timestamp": "2026-10-23 09:19:29",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\ndef solve(data_dir):\n    \"\"\"\n    Lee el archivo eventos.csv, convierte los timestamps de UTC a hora de Argentina (UTC-3)\n    y devuelve un diccionario con la cantidad de eventos por día (formato 'YYYY-MM-DD').\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene los archivos de datos, incluido eventos.csv.\n\n    Retorna\n    -------\n    dict\n        Diccionario donde la clave es la fecha en hora argentina (str 'YYYY-MM-DD')\n        y el valor es la cantidad de eventos ocurridos ese día.\n    \"\"\"\n    # Ruta al archivo CSV\n    eventos_path = os.path.join(data_dir, \"eventos.csv\")\n\n    # Cargar solo la columna de timestamps (el resto no es necesario para el conteo)\n    df = pd.read_csv(eventos_path, usecols=[\"timestamp_utc\"])\n\n    # Parsear timestamps como UTC y restar 3 horas para pasar a hora de Argentina (UTC-3)\n    # Se usa utc=True para que pandas reconozca el sufijo 'Z' como zona UTC.\n    df[\"timestamp_utc\"] = pd.to_datetime(df[\"timestamp_utc\"], utc=True)\n    df[\"timestamp_ars\"] = df[\"timestamp_utc\"] - pd.Timedelta(hours=3)\n\n    # Extraer la fecha en formato YYYY-MM-DD\n    df[\"fecha_ars\"] = df[\"timestamp_ars\"].dt.strftime(\"%Y-%m-%d\")\n\n    # Contar eventos por fecha\n    conteo = df[\"fecha_ars\"].value_counts().sort_index()\n\n    # Convertir a dict\n    resultado = conteo.to_dict()\n\n    return resultado",
+  "got": "{\"2026-06-01\": 883, \"2026-06-02\": 903, \"2026-06-03\": 833, \"2026-06-04\": 866, \"2026-06-05\": 812, \"2026-06-06\": 857, \"2026-06-07\": 846}"
+ }
+}

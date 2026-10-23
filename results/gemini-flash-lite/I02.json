@@ -1,0 +1,17 @@
+{
+ "task_id": "I02",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "Sí, es cierto que en Patagonia los clientes están más enojados. El puntaje promedio de sus reseñas cayó fuertemente de 3.94 en enero a 3.08 en junio, tocando un piso de 2.95 en mayo. Esto se explica claramente por un empeoramiento en la logística: los días promedio de entrega saltaron drásticamente de 7.4-7.6 días en el primer trimestre a 12.1 días en abril y mayo, cerrando en 12.0 días en junio. No hay otros datos disponibles para evaluar variables adicionales.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 127,
+  "prompt_tokens": 838,
+  "total_tokens": 965
+ },
+ "latency_s": 1.83,
+ "timestamp": "2026-10-23 09:20:37",
+ "grade": {
+  "ok": null
+ }
+}

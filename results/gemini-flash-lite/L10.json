@@ -1,0 +1,20 @@
+{
+ "task_id": "L10",
+ "bloque": "Limpieza",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    file_path = os.path.join(data_dir, \"ventas_wide.csv\")\n    df = pd.read_csv(file_path)\n\n    # Las columnas de meses son todas excepto 'categoria'\n    meses = [c for c in df.columns if c != \"categoria\"]\n\n    resultado = {}\n    for _, row in df.iterrows():\n        cat = row[\"categoria\"]\n        total = 0\n        for mes in meses:\n            val = row[mes]\n            if isinstance(val, str):\n                # Limpiamos el formato '$ 38.954.795'\n                val_limpio = (\n                    val.replace(\"$\", \"\").replace(\".\", \"\").strip()\n                )\n                total += int(val_limpio)\n            else:\n                total += int(val)\n        resultado[cat] = total\n\n    return resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 223,
+  "prompt_tokens": 1158,
+  "total_tokens": 1381
+ },
+ "latency_s": 12.28,
+ "timestamp": "2026-10-23 09:16:15",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    file_path = os.path.join(data_dir, \"ventas_wide.csv\")\n    df = pd.read_csv(file_path)\n\n    # Las columnas de meses son todas excepto 'categoria'\n    meses = [c for c in df.columns if c != \"categoria\"]\n\n    resultado = {}\n    for _, row in df.iterrows():\n        cat = row[\"categoria\"]\n        total = 0\n        for mes in meses:\n            val = row[mes]\n            if isinstance(val, str):\n                # Limpiamos el formato '$ 38.954.795'\n                val_limpio = (\n                    val.replace(\"$\", \"\").replace(\".\", \"\").strip()\n                )\n                total += int(val_limpio)\n            else:\n                total += int(val)\n        resultado[cat] = total\n\n    return resultado",
+  "got": "{\"Tecnología\": 565502635, \"Electro\": 560436876, \"Hogar\": 431519666, \"Deportes\": 360919266, \"Moda\": 286457490, \"Belleza\": 211291376}"
+ }
+}

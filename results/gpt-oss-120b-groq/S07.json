@@ -1,0 +1,30 @@
+{
+ "task_id": "S07",
+ "bloque": "SQL",
+ "model": "gpt-oss-120b-groq",
+ "response": "```sql\nWITH facturacion_mensual AS (\n    SELECT \n        strftime('%Y-%m', p.fecha) AS mes,\n        SUM(i.cantidad * i.precio_unitario) AS facturacion\n    FROM pedidos p\n    JOIN items i ON i.pedido_id = p.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n    GROUP BY mes\n)\nSELECT \n    mes,\n    facturacion,\n    SUM(facturacion) OVER (ORDER BY mes\n                           ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS acumulado\nFROM facturacion_mensual\nORDER BY mes;\n```",
+ "thinking_chars": 1330,
+ "usage": {
+  "queue_time": 0.242662942,
+  "prompt_tokens": 557,
+  "prompt_time": 1.150495984,
+  "completion_tokens": 498,
+  "completion_time": 1.067825671,
+  "total_tokens": 1055,
+  "total_time": 2.218321655,
+  "prompt_tokens_details": {
+   "cached_tokens": 256
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 336
+  }
+ },
+ "latency_s": 2.61,
+ "timestamp": "2026-10-23 09:17:41",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "WITH facturacion_mensual AS (\n    SELECT \n        strftime('%Y-%m', p.fecha) AS mes,\n        SUM(i.cantidad * i.precio_unitario) AS facturacion\n    FROM pedidos p\n    JOIN items i ON i.pedido_id = p.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n    GROUP BY mes\n)\nSELECT \n    mes,\n    facturacion,\n    SUM(facturacion) OVER (ORDER BY mes\n                           ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS acumulado\nFROM facturacion_mensual\nORDER BY mes;",
+  "got": "[[\"2025-01\", 479314260.0, 479314260.0], [\"2025-02\", 488141740.0, 967456000.0], [\"2025-03\", 485802610.0, 1453258610.0], [\"2025-04\", 502568200.0, 1955826810.0], [\"2025-05\", 632772380.0, 2588599190.0], [\"2025-06\", 572794670.0, 3161393860.0], [\"2025-07\", 594745220.0, 3756139080.0], [\"2025-08\", 677002620.0, 4433141700.0], [\"2025-09\", 586965790.0, 5020107490.0], [\"2025-10\", 652338740.0, 5672446230.0], [\"2025-11\", 745358930.0, 6417805160.0], [\"2025-12\", 1147209470.0, 7565014630.0]]"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "task_id": "E10",
+ "bloque": "Estadística",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"devoluciones_envio.csv\")\n    df = pd.read_csv(csv_path)\n\n    # Tasa global por método\n    tasas_global = df.groupby(\"metodo\")[\"devuelto\"].mean()\n    tasa_moto = float(tasas_global.get(\"Moto\", 0.0))\n    tasa_correo = float(tasas_global.get(\"Correo\", 0.0))\n\n    mejor_global = \"Moto\" if tasa_moto < tasa_correo else \"Correo\"\n\n    # Tasa dentro de AMBA\n    df_amba = df[df[\"segmento\"] == \"AMBA\"]\n    tasas_amba = df_amba.groupby(\"metodo\")[\"devuelto\"].mean()\n    tasa_moto_amba = tasas_amba.get(\"Moto\", 0.0)\n    tasa_correo_amba = tasas_amba.get(\"Correo\", 0.0)\n    mejor_amba = \"Moto\" if tasa_moto_amba < tasa_correo_amba else \"Correo\"\n\n    # Tasa dentro de Interior\n    df_interior = df[df[\"segmento\"] == \"Interior\"]\n    tasas_interior = df_interior.groupby(\"metodo\")[\"devuelto\"].mean()\n    tasa_moto_int = tasas_interior.get(\"Moto\", 0.0)\n    tasa_correo_int = tasas_interior.get(\"Correo\", 0.0)\n    mejor_interior = \"Moto\" if tasa_moto_int < tasa_correo_int else \"Correo\"\n\n    return {\n        \"tasa_moto\": tasa_moto,\n        \"tasa_correo\": tasa_correo,\n        \"mejor_global\": mejor_global,\n        \"mejor_amba\": mejor_amba,\n        \"mejor_interior\": mejor_interior,\n    }\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 453,
+  "prompt_tokens": 741,
+  "total_tokens": 1194
+ },
+ "latency_s": 2.39,
+ "timestamp": "2026-10-23 09:20:17",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"devoluciones_envio.csv\")\n    df = pd.read_csv(csv_path)\n\n    # Tasa global por método\n    tasas_global = df.groupby(\"metodo\")[\"devuelto\"].mean()\n    tasa_moto = float(tasas_global.get(\"Moto\", 0.0))\n    tasa_correo = float(tasas_global.get(\"Correo\", 0.0))\n\n    mejor_global = \"Moto\" if tasa_moto < tasa_correo else \"Correo\"\n\n    # Tasa dentro de AMBA\n    df_amba = df[df[\"segmento\"] == \"AMBA\"]\n    tasas_amba = df_amba.groupby(\"metodo\")[\"devuelto\"].mean()\n    tasa_moto_amba = tasas_amba.get(\"Moto\", 0.0)\n    tasa_correo_amba = tasas_amba.get(\"Correo\", 0.0)\n    mejor_amba = \"Moto\" if tasa_moto_amba < tasa_correo_amba else \"Correo\"\n\n    # Tasa dentro de Interior\n    df_interior = df[df[\"segmento\"] == \"Interior\"]\n    tasas_interior = df_interior.groupby(\"metodo\")[\"devuelto\"].mean()\n    tasa_moto_int = tasas_interior.get(\"Moto\", 0.0)\n    tasa_correo_int = tasas_interior.get(\"Correo\", 0.0)\n    mejor_interior = \"Moto\" if tasa_moto_int < tasa_correo_int else \"Correo\"\n\n    return {\n        \"tasa_moto\": tasa_moto,\n        \"tasa_correo\": tasa_correo,\n        \"mejor_global\": mejor_global,\n        \"mejor_amba\": mejor_amba,\n        \"mejor_interior\": mejor_interior,\n    }",
+  "got": "{\"tasa_moto\": 0.052, \"tasa_correo\": 0.078, \"mejor_global\": \"Moto\", \"mejor_amba\": \"Correo\", \"mejor_interior\": \"Correo\"}"
+ }
+}

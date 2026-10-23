@@ -1,0 +1,65 @@
+Corriendo 50 tareas con gpt-oss-120b-groq (openai/gpt-oss-120b)
+  S02 [OK ]    1.6s
+  S03 [OK ]    1.6s
+  S04 [MAL]    1.5s  fila 1, columna 2: esperado 1085, recibido 967
+  S05 [OK ]    1.3s
+  S06 [OK ]    2.3s
+  S07 [OK ]    2.6s
+  S08 [OK ]    1.7s
+  S09 [OK ]    2.9s
+  S10 [MAL]    2.7s  fila 1, columna 1: esperado 0.6378, recibido 0.6329
+  L01 [MAL]    2.2s  resultado: esperado 3000, recibido 3123
+  L02 [MAL]    7.3s  no encontré un bloque de código en la respuesta
+  L03 [MAL]    2.3s  resultado['2025-07']: esperado 96, recibido 35
+  L04 [OK ]    2.0s
+    HTTP 429, reintento en 9s…
+  L05 [MAL]    1.9s  error al ejecutar:   File "pandas/_libs/parsers.pyx", line 574, in pandas._libs.parsers.TextReader.__cinit__
+  L06 [OK ]    1.9s
+  L07 [MAL]    2.0s  resultado: esperado 441547.29, recibido 498793.46
+    HTTP 429, reintento en 11s…
+  L08 [MAL]    2.6s  resultado['belleza']: esperado 22778390.0, recibido 5931830.0
+  L09 [OK ]    4.1s
+  L10 [OK ]    1.6s
+  V01 [MAL]    2.7s  error al ejecutar:     main()
+  V02 [MAL]    2.6s  error al ejecutar:         WHERE p.estado = 'entregado'
+  V03 [PNG]    3.5s
+    HTTP 429, reintento en 8s…
+    HTTP 429, reintento en 12s…
+  V04 [PNG]    3.4s
+  V05 [PNG]    4.9s
+  V06 [PNG]    3.8s
+    HTTP 429, reintento en 11s…
+  V07 [PNG]    4.2s
+  V08 [PNG]    4.0s
+  V09 [PNG]    3.8s
+    HTTP 429, reintento en 1s…
+  V10 [PNG]    5.7s
+    HTTP 429, reintento en 16s…
+  E01 [OK ]    1.9s
+  E02 [OK ]    2.6s
+  E03 [OK ]    1.6s
+    HTTP 429, reintento en 5s…
+  E04 [OK ]    2.9s
+  E05 [OK ]    1.8s
+  E06 [OK ]    3.0s
+  E07 [OK ]    2.0s
+    HTTP 429, reintento en 9s…
+  E08 [OK ]    2.0s
+  E09 [OK ]    2.9s
+    HTTP 429, reintento en 6s…
+  E10 [OK ]    2.6s
+  I01 [TXT]    2.0s
+    HTTP 429, reintento en 10s…
+  I02 [TXT]    1.1s
+    HTTP 429, reintento en 1s…
+  I03 [TXT]    1.2s
+  I04 [TXT]    1.1s
+  I05 [TXT]    0.9s
+  I06 [TXT]    1.1s
+    HTTP 429, reintento en 1s…
+  I07 [TXT]    2.0s
+  I08 [TXT]    1.2s
+  I09 [TXT]    1.1s
+    HTTP 429, reintento en 4s…
+  I10 [TXT]    1.5s
+Terminado. Siguiente paso: python bench.py review  (y después python bench.py report)

@@ -1,0 +1,27 @@
+{
+ "task_id": "L06",
+ "bloque": "Limpieza",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport pandas as pd\n\ndef solve(data_dir: str) -> int:\n    \"\"\"\n    Cuenta cuántas filas del archivo clientes_crm.csv no tienen un teléfono válido.\n    Un teléfono se considera válido si, después de eliminar espacios, está compuesto\n    únicamente por dígitos (ej. \"1157790515\"). Cualquier otro caso (NA, vacío,\n    valores no numéricos, etc.) se cuenta como inválido.\n\n    Parámetros\n    ----------\n    data_dir: str\n        Ruta al directorio que contiene el archivo clientes_crm.csv.\n\n    Retorna\n    -------\n    int\n        Cantidad de filas con teléfono inválido.\n    \"\"\"\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n\n    # Leemos el CSV manteniendo todo como texto para evitar conversiones automáticas.\n    df = pd.read_csv(csv_path, dtype=str, keep_default_na=False, na_values=[\"\"])\n\n    # La columna de teléfono se llama exactamente \"telefono\" según el ejemplo.\n    # Si por alguna razón el nombre difiere (mayúsculas/minúsculas), lo normalizamos.\n    telefono_col = None\n    for col in df.columns:\n        if col.strip().lower() == \"telefono\":\n            telefono_col = col\n            break\n    if telefono_col is None:\n        raise ValueError(\"No se encontró la columna 'telefono' en clientes_crm.csv\")\n\n    # Función que determina si un teléfono es inválido.\n    def is_invalid(t):\n        if pd.isna(t):\n            return True\n        s = str(t).strip()\n        if s == \"\" or s.upper() == \"NA\":\n            return True\n        return not s.isdigit()\n\n    # Aplicamos la validación y contamos los casos inválidos.\n    invalid_count = df[telefono_col].apply(is_invalid).sum()\n\n    return int(invalid_count)\n```",
+ "thinking_chars": 1366,
+ "usage": {
+  "queue_time": 0.243658942,
+  "prompt_tokens": 766,
+  "prompt_time": 0.056271993,
+  "completion_tokens": 713,
+  "completion_time": 1.486750667,
+  "total_tokens": 1479,
+  "total_time": 1.54302266,
+  "completion_tokens_details": {
+   "reasoning_tokens": 310
+  }
+ },
+ "latency_s": 1.91,
+ "timestamp": "2026-10-23 09:18:54",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\ndef solve(data_dir: str) -> int:\n    \"\"\"\n    Cuenta cuántas filas del archivo clientes_crm.csv no tienen un teléfono válido.\n    Un teléfono se considera válido si, después de eliminar espacios, está compuesto\n    únicamente por dígitos (ej. \"1157790515\"). Cualquier otro caso (NA, vacío,\n    valores no numéricos, etc.) se cuenta como inválido.\n\n    Parámetros\n    ----------\n    data_dir: str\n        Ruta al directorio que contiene el archivo clientes_crm.csv.\n\n    Retorna\n    -------\n    int\n        Cantidad de filas con teléfono inválido.\n    \"\"\"\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n\n    # Leemos el CSV manteniendo todo como texto para evitar conversiones automáticas.\n    df = pd.read_csv(csv_path, dtype=str, keep_default_na=False, na_values=[\"\"])\n\n    # La columna de teléfono se llama exactamente \"telefono\" según el ejemplo.\n    # Si por alguna razón el nombre difiere (mayúsculas/minúsculas), lo normalizamos.\n    telefono_col = None\n    for col in df.columns:\n        if col.strip().lower() == \"telefono\":\n            telefono_col = col\n            break\n    if telefono_col is None:\n        raise ValueError(\"No se encontró la columna 'telefono' en clientes_crm.csv\")\n\n    # Función que determina si un teléfono es inválido.\n    def is_invalid(t):\n        if pd.isna(t):\n            return True\n        s = str(t).strip()\n        if s == \"\" or s.upper() == \"NA\":\n            return True\n        return not s.isdigit()\n\n    # Aplicamos la validación y contamos los casos inválidos.\n    invalid_count = df[telefono_col].apply(is_invalid).sum()\n\n    return int(invalid_count)",
+  "got": "400"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "task_id": "S10",
+ "bloque": "SQL",
+ "model": "gemini-flash-lite",
+ "response": "```sql\nWITH primera_compra AS (\n    SELECT \n        p.cliente_id,\n        MIN(p.fecha) AS fecha_primera\n    FROM pedidos p\n    WHERE p.estado = 'entregado'\n    GROUP BY p.cliente_id\n    HAVING MIN(p.fecha) >= '2025-01-01' AND MIN(p.fecha) <= '2025-01-31'\n),\nrecompras AS (\n    SELECT DISTINCT pc.cliente_id\n    FROM primera_compra pc\n    JOIN pedidos p ON pc.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha > pc.fecha_primera\n      AND p.fecha <= DATE(pc.fecha_primera, '+90 days')\n)\nSELECT \n    ROUND(CAST(COUNT(DISTINCT r.cliente_id) AS REAL) / COUNT(DISTINCT pc.cliente_id), 4) AS tasa\nFROM primera_compra pc\nLEFT JOIN recompras r ON pc.cliente_id = r.cliente_id;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 260,
+  "prompt_tokens": 554,
+  "total_tokens": 814
+ },
+ "latency_s": 1.99,
+ "timestamp": "2026-10-23 09:14:20",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "WITH primera_compra AS (\n    SELECT \n        p.cliente_id,\n        MIN(p.fecha) AS fecha_primera\n    FROM pedidos p\n    WHERE p.estado = 'entregado'\n    GROUP BY p.cliente_id\n    HAVING MIN(p.fecha) >= '2025-01-01' AND MIN(p.fecha) <= '2025-01-31'\n),\nrecompras AS (\n    SELECT DISTINCT pc.cliente_id\n    FROM primera_compra pc\n    JOIN pedidos p ON pc.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha > pc.fecha_primera\n      AND p.fecha <= DATE(pc.fecha_primera, '+90 days')\n)\nSELECT \n    ROUND(CAST(COUNT(DISTINCT r.cliente_id) AS REAL) / COUNT(DISTINCT pc.cliente_id), 4) AS tasa\nFROM primera_compra pc\nLEFT JOIN recompras r ON pc.cliente_id = r.cliente_id;",
+  "got": "[[0.6378]]"
+ }
+}

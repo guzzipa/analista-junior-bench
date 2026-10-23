@@ -1,0 +1,17 @@
+{
+ "task_id": "I09",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "¡Hola! Analizando el reporte diario de abril, se observa un promedio cercano a los 60 pedidos diarios en días hábiles, con caídas notables los fines de semana (por ejemplo, el 11 y 12, y el 18 de abril). La web supera levemente a la app en la mayoría de las jornadas. Lo más llamativo es el 14 de abril, un martes hábil y sin feriado, que registra en cero todos sus indicadores (pedidos, app y web). Con estos datos no es posible saber la causa de esa caída total, por lo que sugiero revisar con el equipo de tecnología si hubo una falla en el sistema o en el registro.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 145,
+  "prompt_tokens": 596,
+  "total_tokens": 741
+ },
+ "latency_s": 1.22,
+ "timestamp": "2026-10-23 09:21:39",
+ "grade": {
+  "ok": null
+ }
+}

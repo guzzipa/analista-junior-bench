@@ -1,0 +1,20 @@
+{
+ "task_id": "L09",
+ "bloque": "Limpieza",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    eventos_path = os.path.join(data_dir, \"eventos.csv\")\n    df = pd.read_csv(eventos_path)\n\n    # Convertir timestamp_utc a datetime con UTC\n    df[\"timestamp_utc\"] = pd.to_datetime(df[\"timestamp_utc\"])\n\n    # Convertir a hora de Argentina (UTC-3) restando 3 horas\n    df[\"fecha_arg\"] = (df[\"timestamp_utc\"] - pd.Timedelta(hours=3)).dt.strftime(\n        \"%Y-%m-%d\"\n    )\n\n    # Agrupar por fecha argentina y contar eventos\n    conteo = df.groupby(\"fecha_arg\").size().to_dict()\n\n    return conteo\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 188,
+  "prompt_tokens": 699,
+  "total_tokens": 887
+ },
+ "latency_s": 2.28,
+ "timestamp": "2026-10-23 09:15:55",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    eventos_path = os.path.join(data_dir, \"eventos.csv\")\n    df = pd.read_csv(eventos_path)\n\n    # Convertir timestamp_utc a datetime con UTC\n    df[\"timestamp_utc\"] = pd.to_datetime(df[\"timestamp_utc\"])\n\n    # Convertir a hora de Argentina (UTC-3) restando 3 horas\n    df[\"fecha_arg\"] = (df[\"timestamp_utc\"] - pd.Timedelta(hours=3)).dt.strftime(\n        \"%Y-%m-%d\"\n    )\n\n    # Agrupar por fecha argentina y contar eventos\n    conteo = df.groupby(\"fecha_arg\").size().to_dict()\n\n    return conteo",
+  "got": "{\"2026-06-01\": 883, \"2026-06-02\": 903, \"2026-06-03\": 833, \"2026-06-04\": 866, \"2026-06-05\": 812, \"2026-06-06\": 857, \"2026-06-07\": 846}"
+ }
+}

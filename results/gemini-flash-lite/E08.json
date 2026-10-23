@@ -1,0 +1,20 @@
+{
+ "task_id": "E08",
+ "bloque": "Estadística",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nfrom scipy.stats import chi2_contingency\n\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    query = \"\"\"\n        SELECT c.region, p.medio\n        FROM pagos p\n        JOIN pedidos pe ON p.pedido_id = pe.pedido_id\n        JOIN clientes c ON pe.cliente_id = c.cliente_id\n    \"\"\"\n\n    df = pd.read_sql(query, conn)\n    conn.close()\n\n    contingency_table = pd.crosstab(df[\"region\"], df[\"medio\"])\n\n    chi2, p_val, dof, ex = chi2_contingency(contingency_table)\n\n    significativo = p_val < 0.05\n\n    return {\"chi2\": float(chi2), \"p_valor\": float(p_val), \"significativo\": bool(significativo)}\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 246,
+  "prompt_tokens": 625,
+  "total_tokens": 871
+ },
+ "latency_s": 1.88,
+ "timestamp": "2026-10-23 09:19:54",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nfrom scipy.stats import chi2_contingency\n\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    query = \"\"\"\n        SELECT c.region, p.medio\n        FROM pagos p\n        JOIN pedidos pe ON p.pedido_id = pe.pedido_id\n        JOIN clientes c ON pe.cliente_id = c.cliente_id\n    \"\"\"\n\n    df = pd.read_sql(query, conn)\n    conn.close()\n\n    contingency_table = pd.crosstab(df[\"region\"], df[\"medio\"])\n\n    chi2, p_val, dof, ex = chi2_contingency(contingency_table)\n\n    significativo = p_val < 0.05\n\n    return {\"chi2\": float(chi2), \"p_valor\": float(p_val), \"significativo\": bool(significativo)}",
+  "got": "{\"chi2\": 8.645967424221809, \"p_valor\": 0.5659993635506239, \"significativo\": false}"
+ }
+}

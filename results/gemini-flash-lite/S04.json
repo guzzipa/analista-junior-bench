@@ -1,0 +1,20 @@
+{
+ "task_id": "S04",
+ "bloque": "SQL",
+ "model": "gemini-flash-lite",
+ "response": "```sql\nWITH primera_compra AS (\n    SELECT \n        p.cliente_id,\n        MIN(p.fecha) AS primera_fecha\n    FROM pedidos p\n    WHERE p.estado = 'entregado'\n    GROUP BY p.cliente_id\n)\nSELECT \n    strftime('%Y-%m', pc.primera_fecha) AS mes,\n    COUNT(DISTINCT pc.cliente_id) AS nuevos_clientes\nFROM primera_compra pc\nWHERE strftime('%Y', pc.primera_fecha) = '2025'\nGROUP BY mes\nORDER BY mes ASC;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 139,
+  "prompt_tokens": 533,
+  "total_tokens": 672
+ },
+ "latency_s": 1.9,
+ "timestamp": "2026-10-23 09:13:24",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "WITH primera_compra AS (\n    SELECT \n        p.cliente_id,\n        MIN(p.fecha) AS primera_fecha\n    FROM pedidos p\n    WHERE p.estado = 'entregado'\n    GROUP BY p.cliente_id\n)\nSELECT \n    strftime('%Y-%m', pc.primera_fecha) AS mes,\n    COUNT(DISTINCT pc.cliente_id) AS nuevos_clientes\nFROM primera_compra pc\nWHERE strftime('%Y', pc.primera_fecha) = '2025'\nGROUP BY mes\nORDER BY mes ASC;",
+  "got": "[[\"2025-01\", 1085], [\"2025-02\", 679], [\"2025-03\", 565], [\"2025-04\", 428], [\"2025-05\", 458], [\"2025-06\", 314], [\"2025-07\", 271], [\"2025-08\", 272], [\"2025-09\", 228], [\"2025-10\", 229], [\"2025-11\", 226], [\"2025-12\", 267]]"
+ }
+}

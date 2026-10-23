@@ -1,0 +1,30 @@
+{
+ "task_id": "S10",
+ "bloque": "SQL",
+ "model": "gpt-oss-120b-groq",
+ "response": "```sql\nWITH delivered AS (\n    SELECT cliente_id,\n           pedido_id,\n           fecha_entrega\n    FROM   pedidos\n    WHERE  estado = 'entregado'\n           AND fecha_entrega IS NOT NULL\n),\nfirst AS (\n    SELECT cliente_id,\n           MIN(fecha_entrega) AS first_date\n    FROM   delivered\n    GROUP BY cliente_id\n    HAVING MIN(fecha_entrega) BETWEEN '2025-01-01' AND '2025-01-31'\n),\nsubsequent AS (\n    SELECT DISTINCT d.cliente_id\n    FROM   delivered d\n           JOIN first f ON d.cliente_id = f.cliente_id\n    WHERE  d.fecha_entrega > f.first_date\n           AND d.fecha_entrega <= date(f.first_date, '+90 day')\n)\nSELECT ROUND(\n           CASE \n               WHEN (SELECT COUNT(*) FROM first) = 0 THEN 0\n               ELSE (SELECT COUNT(*) FROM subsequent) * 1.0\n                    / (SELECT COUNT(*) FROM first)\n           END,\n           4\n       ) AS tasa;\n```",
+ "thinking_chars": 2515,
+ "usage": {
+  "queue_time": 0.307378187,
+  "prompt_tokens": 587,
+  "prompt_time": 0.021548698,
+  "completion_tokens": 886,
+  "completion_time": 2.262955988,
+  "total_tokens": 1473,
+  "total_time": 2.284504686,
+  "prompt_tokens_details": {
+   "cached_tokens": 256
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 652
+  }
+ },
+ "latency_s": 2.74,
+ "timestamp": "2026-10-23 09:18:00",
+ "grade": {
+  "ok": false,
+  "error": "fila 1, columna 1: esperado 0.6378, recibido 0.6329",
+  "code": "WITH delivered AS (\n    SELECT cliente_id,\n           pedido_id,\n           fecha_entrega\n    FROM   pedidos\n    WHERE  estado = 'entregado'\n           AND fecha_entrega IS NOT NULL\n),\nfirst AS (\n    SELECT cliente_id,\n           MIN(fecha_entrega) AS first_date\n    FROM   delivered\n    GROUP BY cliente_id\n    HAVING MIN(fecha_entrega) BETWEEN '2025-01-01' AND '2025-01-31'\n),\nsubsequent AS (\n    SELECT DISTINCT d.cliente_id\n    FROM   delivered d\n           JOIN first f ON d.cliente_id = f.cliente_id\n    WHERE  d.fecha_entrega > f.first_date\n           AND d.fecha_entrega <= date(f.first_date, '+90 day')\n)\nSELECT ROUND(\n           CASE \n               WHEN (SELECT COUNT(*) FROM first) = 0 THEN 0\n               ELSE (SELECT COUNT(*) FROM subsequent) * 1.0\n                    / (SELECT COUNT(*) FROM first)\n           END,\n           4\n       ) AS tasa;",
+  "got": "[[0.6329]]"
+ }
+}

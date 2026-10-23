@@ -1,0 +1,27 @@
+{
+ "task_id": "E07",
+ "bloque": "Estadística",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula el percentil 90 de los días de entrega por región para los pedidos entregados.\n    \n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo SQLite `tienda.db`.\n    \n    Retorna\n    -------\n    dict\n        Diccionario con la forma {region: percentil_90}, redondeado a 2 decimales.\n    \"\"\"\n    # Ruta al archivo SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    # Conexión a la base\n    con = sqlite3.connect(db_path)\n    \n    # Consulta de los pedidos entregados con su región\n    query = \"\"\"\n        SELECT \n            p.pedido_id,\n            p.fecha,\n            p.fecha_entrega,\n            c.region\n        FROM pedidos p\n        JOIN clientes c ON p.cliente_id = c.cliente_id\n        WHERE p.estado = 'entregado'\n          AND p.fecha_entrega IS NOT NULL\n    \"\"\"\n    df = pd.read_sql_query(query, con)\n    con.close()\n    \n    # Calcular la diferencia en días (puede ser fraccionaria)\n    df[\"fecha\"] = pd.to_datetime(df[\"fecha\"])\n    df[\"fecha_entrega\"] = pd.to_datetime(df[\"fecha_entrega\"])\n    df[\"dias_entrega\"] = (df[\"fecha_entrega\"] - df[\"fecha\"]).dt.total_seconds() / 86400.0\n    \n    # Agrupar por región y calcular el percentil 90\n    result = {}\n    for region, group in df.groupby(\"region\"):\n        # Si por alguna razón no hay datos, evitamos error\n        if len(group) == 0:\n            continue\n        p90 = np.percentile(group[\"dias_entrega\"].values, 90, method=\"linear\")\n        result[region] = round(float(p90), 2)\n    \n    return result\n```",
+ "thinking_chars": 1368,
+ "usage": {
+  "queue_time": 0.206875462,
+  "prompt_tokens": 644,
+  "prompt_time": 0.037962423,
+  "completion_tokens": 767,
+  "completion_time": 1.6163217250000002,
+  "total_tokens": 1411,
+  "total_time": 1.654284148,
+  "completion_tokens_details": {
+   "reasoning_tokens": 334
+  }
+ },
+ "latency_s": 1.99,
+ "timestamp": "2026-10-23 09:23:05",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula el percentil 90 de los días de entrega por región para los pedidos entregados.\n    \n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo SQLite `tienda.db`.\n    \n    Retorna\n    -------\n    dict\n        Diccionario con la forma {region: percentil_90}, redondeado a 2 decimales.\n    \"\"\"\n    # Ruta al archivo SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    # Conexión a la base\n    con = sqlite3.connect(db_path)\n    \n    # Consulta de los pedidos entregados con su región\n    query = \"\"\"\n        SELECT \n            p.pedido_id,\n            p.fecha,\n            p.fecha_entrega,\n            c.region\n        FROM pedidos p\n        JOIN clientes c ON p.cliente_id = c.cliente_id\n        WHERE p.estado = 'entregado'\n          AND p.fecha_entrega IS NOT NULL\n    \"\"\"\n    df = pd.read_sql_query(query, con)\n    con.close()\n    \n    # Calcular la diferencia en días (puede ser fraccionaria)\n    df[\"fecha\"] = pd.to_datetime(df[\"fecha\"])\n    df[\"fecha_entrega\"] = pd.to_datetime(df[\"fecha_entrega\"])\n    df[\"dias_entrega\"] = (df[\"fecha_entrega\"] - df[\"fecha\"]).dt.total_seconds() / 86400.0\n    \n    # Agrupar por región y calcular el percentil 90\n    result = {}\n    for region, group in df.groupby(\"region\"):\n        # Si por alguna razón no hay datos, evitamos error\n        if len(group) == 0:\n            continue\n        p90 = np.percentile(group[\"dias_entrega\"].values, 90, method=\"linear\")\n        result[region] = round(float(p90), 2)\n    \n    return result",
+  "got": "{\"AMBA\": 3.0, \"Centro\": 5.0, \"Cuyo\": 6.0, \"NEA\": 8.0, \"NOA\": 7.0, \"Patagonia\": 12.0}"
+ }
+}

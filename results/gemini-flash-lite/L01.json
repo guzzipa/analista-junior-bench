@@ -1,0 +1,20 @@
+{
+ "task_id": "L01",
+ "bloque": "Limpieza",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    df = pd.read_csv(csv_path)\n\n    # Dos filas son el mismo cliente si tienen el mismo email\n    # Normalizamos el email pasándolo a minúsculas y sacando espacios por seguridad\n    df[\"email_norm\"] = df[\"email\"].str.strip().str.lower()\n\n    # Contamos la cantidad de emails distintos\n    clientes_distintos = df[\"email_norm\"].nunique()\n\n    return int(clientes_distintos)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 146,
+  "prompt_tokens": 827,
+  "total_tokens": 973
+ },
+ "latency_s": 1.82,
+ "timestamp": "2026-10-23 09:14:29",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    df = pd.read_csv(csv_path)\n\n    # Dos filas son el mismo cliente si tienen el mismo email\n    # Normalizamos el email pasándolo a minúsculas y sacando espacios por seguridad\n    df[\"email_norm\"] = df[\"email\"].str.strip().str.lower()\n\n    # Contamos la cantidad de emails distintos\n    clientes_distintos = df[\"email_norm\"].nunique()\n\n    return int(clientes_distintos)",
+  "got": "3000"
+ }
+}

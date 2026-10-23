@@ -1,0 +1,27 @@
+{
+ "task_id": "E06",
+ "bloque": "Estadística",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport sqlite3\nimport numpy as np\nimport pandas as pd\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula la pendiente (en pesos por mes) de la regresión lineal de la facturación\n    mensual de 2025 (solo pedidos entregados) respecto al número de mes.\n    Devuelve la pendiente redondeada a 0 decimales.\n    \"\"\"\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    # Consulta que calcula la facturación por mes (1..12) para pedidos entregados en 2025\n    query = \"\"\"\n        SELECT mes, SUM(total) AS facturacion_mes\n        FROM (\n            SELECT \n                CAST(strftime('%m', p.fecha) AS INTEGER) AS mes,\n                SUM(i.cantidad * i.precio_unitario) AS total\n            FROM pedidos p\n            JOIN items i ON p.pedido_id = i.pedido_id\n            WHERE p.estado = 'entregado'\n              AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n            GROUP BY p.pedido_id\n        )\n        GROUP BY mes\n        ORDER BY mes;\n    \"\"\"\n\n    df = pd.read_sql_query(query, conn)\n    conn.close()\n\n    # Aseguramos que haya una fila para cada mes del 1 al 12\n    all_months = pd.DataFrame({'mes': range(1, 13)})\n    df = all_months.merge(df, on='mes', how='left')\n    df['facturacion_mes'] = df['facturacion_mes'].fillna(0)\n\n    # Variables para la regresión\n    x = df['mes'].to_numpy(dtype=float)\n    y = df['facturacion_mes'].to_numpy(dtype=float)\n\n    # Si todos los valores son cero, la pendiente es 0\n    if np.all(y == 0):\n        slope = 0.0\n    else:\n        # Ajuste lineal por mínimos cuadrados (grado 1)\n        coeffs = np.polyfit(x, y, 1)   # coeffs[0] = pendiente, coeffs[1] = intersección\n        slope = coeffs[0]\n\n    # Redondeamos a 0 decimales (entero) y devolvemos como float/int\n    return round(slope)\n```",
+ "thinking_chars": 2529,
+ "usage": {
+  "queue_time": 0.272803711,
+  "prompt_tokens": 639,
+  "prompt_time": 0.030681944,
+  "completion_tokens": 1196,
+  "completion_time": 2.5595654,
+  "total_tokens": 1835,
+  "total_time": 2.590247344,
+  "completion_tokens_details": {
+   "reasoning_tokens": 686
+  }
+ },
+ "latency_s": 3.04,
+ "timestamp": "2026-10-23 09:22:59",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport numpy as np\nimport pandas as pd\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula la pendiente (en pesos por mes) de la regresión lineal de la facturación\n    mensual de 2025 (solo pedidos entregados) respecto al número de mes.\n    Devuelve la pendiente redondeada a 0 decimales.\n    \"\"\"\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    # Consulta que calcula la facturación por mes (1..12) para pedidos entregados en 2025\n    query = \"\"\"\n        SELECT mes, SUM(total) AS facturacion_mes\n        FROM (\n            SELECT \n                CAST(strftime('%m', p.fecha) AS INTEGER) AS mes,\n                SUM(i.cantidad * i.precio_unitario) AS total\n            FROM pedidos p\n            JOIN items i ON p.pedido_id = i.pedido_id\n            WHERE p.estado = 'entregado'\n              AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n            GROUP BY p.pedido_id\n        )\n        GROUP BY mes\n        ORDER BY mes;\n    \"\"\"\n\n    df = pd.read_sql_query(query, conn)\n    conn.close()\n\n    # Aseguramos que haya una fila para cada mes del 1 al 12\n    all_months = pd.DataFrame({'mes': range(1, 13)})\n    df = all_months.merge(df, on='mes', how='left')\n    df['facturacion_mes'] = df['facturacion_mes'].fillna(0)\n\n    # Variables para la regresión\n    x = df['mes'].to_numpy(dtype=float)\n    y = df['facturacion_mes'].to_numpy(dtype=float)\n\n    # Si todos los valores son cero, la pendiente es 0\n    if np.all(y == 0):\n        slope = 0.0\n    else:\n        # Ajuste lineal por mínimos cuadrados (grado 1)\n        coeffs = np.polyfit(x, y, 1)   # coeffs[0] = pendiente, coeffs[1] = intersección\n        slope = coeffs[0]\n\n    # Redondeamos a 0 decimales (entero) y devolvemos como float/int\n    return round(slope)",
+  "got": "39874770"
+ }
+}

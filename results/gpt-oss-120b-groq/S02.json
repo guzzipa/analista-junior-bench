@@ -1,0 +1,27 @@
+{
+ "task_id": "S02",
+ "bloque": "SQL",
+ "model": "gpt-oss-120b-groq",
+ "response": "```sql\nSELECT \n    i.producto_id,\n    p.nombre,\n    SUM(i.cantidad) AS unidades\nFROM items i\nJOIN pedidos ped      ON i.pedido_id = ped.pedido_id\nJOIN productos p      ON i.producto_id = p.producto_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha BETWEEN '2025-01-01' AND '2025-12-31'\nGROUP BY i.producto_id, p.nombre\nORDER BY unidades DESC\nLIMIT 5;\n```",
+ "thinking_chars": 814,
+ "usage": {
+  "queue_time": 0.33637579,
+  "prompt_tokens": 552,
+  "prompt_time": 0.100135271,
+  "completion_tokens": 332,
+  "completion_time": 0.698330864,
+  "total_tokens": 884,
+  "total_time": 0.798466135,
+  "completion_tokens_details": {
+   "reasoning_tokens": 215
+  }
+ },
+ "latency_s": 1.63,
+ "timestamp": "2026-10-23 09:17:12",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT \n    i.producto_id,\n    p.nombre,\n    SUM(i.cantidad) AS unidades\nFROM items i\nJOIN pedidos ped      ON i.pedido_id = ped.pedido_id\nJOIN productos p      ON i.producto_id = p.producto_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha BETWEEN '2025-01-01' AND '2025-12-31'\nGROUP BY i.producto_id, p.nombre\nORDER BY unidades DESC\nLIMIT 5;",
+  "got": "[[1, \"Celular Nova X\", 2472], [32, \"Crema Facial Hidratante\", 2029], [34, \"Protector Solar FPS50\", 1915], [35, \"Shampoo Sólido Natural\", 1754], [26, \"Remera Dry Fit\", 1706]]"
+ }
+}

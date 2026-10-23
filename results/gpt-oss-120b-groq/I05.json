@@ -1,0 +1,24 @@
+{
+ "task_id": "I05",
+ "bloque": "Insight de negocio",
+ "model": "gpt-oss-120b-groq",
+ "response": "Hola [Product Manager],\n\nEl checkout B muestra una conversión global de 4.20 % frente al 3.74 % de A (Δ = 0.46 p.p.) y el test de diferencia de proporciones da p‑valor = 0.0164, por lo que la mejora es estadísticamente significativa al 5 %. En los tres periodos analizados B mantiene una tasa superior (4.19 %, 4.08 %, 4.30 %) pese a una ligera caída en la segunda quincena. Con estos datos, recomendaría migrar al checkout de un solo paso (B). No podemos afirmar el impacto en ingresos, tiempo de compra u otras métricas sin datos adicionales, por lo que sugiero seguir monitoreando esos indicadores tras el rollout.",
+ "thinking_chars": 453,
+ "usage": {
+  "queue_time": 0.207420083,
+  "prompt_tokens": 367,
+  "prompt_time": 0.015573603,
+  "completion_tokens": 286,
+  "completion_time": 0.608489672,
+  "total_tokens": 653,
+  "total_time": 0.624063275,
+  "completion_tokens_details": {
+   "reasoning_tokens": 107
+  }
+ },
+ "latency_s": 0.95,
+ "timestamp": "2026-10-23 09:24:29",
+ "grade": {
+  "ok": null
+ }
+}

@@ -1,0 +1,27 @@
+{
+ "task_id": "E08",
+ "bloque": "Estadística",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nfrom scipy.stats import chi2_contingency\n\ndef solve(data_dir):\n    \"\"\"\n    Ejecuta un test chi‑cuadrado de independencia entre la región del cliente\n    y el medio de pago, usando todas las filas de la tabla `pagos`.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo `tienda.db`.\n\n    Retorna\n    -------\n    dict\n        {'chi2': float, 'p_valor': float, 'significativo': bool}\n        donde `significativo` es True si p < 0.05.\n    \"\"\"\n    # Ruta al archivo SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    # Cargar las tablas necesarias\n    pagos = pd.read_sql_query(\"SELECT pedido_id, medio FROM pagos\", conn)\n    pedidos = pd.read_sql_query(\"SELECT pedido_id, cliente_id FROM pedidos\", conn)\n    clientes = pd.read_sql_query(\"SELECT cliente_id, region FROM clientes\", conn)\n\n    # Cerrar la conexión (ya no se necesita)\n    conn.close()\n\n    # Unir las tablas para obtener (region, medio) por cada registro de pago\n    df = (\n        pagos\n        .merge(pedidos, on=\"pedido_id\", how=\"inner\")\n        .merge(clientes, on=\"cliente_id\", how=\"inner\")\n        [[\"region\", \"medio\"]]\n    )\n\n    # Construir la tabla de contingencia\n    tabla = pd.crosstab(df[\"region\"], df[\"medio\"])\n\n    # Aplicar el test chi‑cuadrado de independencia\n    chi2, p, dof, _ = chi2_contingency(tabla.values, correction=False)\n\n    # Resultado\n    resultado = {\n        \"chi2\": float(chi2),\n        \"p_valor\": float(p),\n        \"significativo\": p < 0.05\n    }\n\n    return resultado\n```",
+ "thinking_chars": 1531,
+ "usage": {
+  "queue_time": 0.216762642,
+  "prompt_tokens": 648,
+  "prompt_time": 0.036060523,
+  "completion_tokens": 803,
+  "completion_time": 1.690338175,
+  "total_tokens": 1451,
+  "total_time": 1.7263986980000001,
+  "completion_tokens_details": {
+   "reasoning_tokens": 365
+  }
+ },
+ "latency_s": 2.05,
+ "timestamp": "2026-10-23 09:23:21",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nfrom scipy.stats import chi2_contingency\n\ndef solve(data_dir):\n    \"\"\"\n    Ejecuta un test chi‑cuadrado de independencia entre la región del cliente\n    y el medio de pago, usando todas las filas de la tabla `pagos`.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo `tienda.db`.\n\n    Retorna\n    -------\n    dict\n        {'chi2': float, 'p_valor': float, 'significativo': bool}\n        donde `significativo` es True si p < 0.05.\n    \"\"\"\n    # Ruta al archivo SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    # Cargar las tablas necesarias\n    pagos = pd.read_sql_query(\"SELECT pedido_id, medio FROM pagos\", conn)\n    pedidos = pd.read_sql_query(\"SELECT pedido_id, cliente_id FROM pedidos\", conn)\n    clientes = pd.read_sql_query(\"SELECT cliente_id, region FROM clientes\", conn)\n\n    # Cerrar la conexión (ya no se necesita)\n    conn.close()\n\n    # Unir las tablas para obtener (region, medio) por cada registro de pago\n    df = (\n        pagos\n        .merge(pedidos, on=\"pedido_id\", how=\"inner\")\n        .merge(clientes, on=\"cliente_id\", how=\"inner\")\n        [[\"region\", \"medio\"]]\n    )\n\n    # Construir la tabla de contingencia\n    tabla = pd.crosstab(df[\"region\"], df[\"medio\"])\n\n    # Aplicar el test chi‑cuadrado de independencia\n    chi2, p, dof, _ = chi2_contingency(tabla.values, correction=False)\n\n    # Resultado\n    resultado = {\n        \"chi2\": float(chi2),\n        \"p_valor\": float(p),\n        \"significativo\": p < 0.05\n    }\n\n    return resultado",
+  "got": "{\"chi2\": 8.645967424221809, \"p_valor\": 0.5659993635506239, \"significativo\": false}"
+ }
+}

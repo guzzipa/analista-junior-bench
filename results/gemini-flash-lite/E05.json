@@ -1,0 +1,20 @@
+{
+ "task_id": "E05",
+ "bloque": "Estadística",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\n\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    query = \"\"\"\n    SELECT \n        p.pedido_id,\n        p.fecha,\n        SUM(i.cantidad * i.precio_unitario) AS facturacion\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND (p.fecha BETWEEN '2025-01-01' AND '2025-03-31' \n           OR p.fecha BETWEEN '2026-01-01' AND '2026-03-31')\n    GROUP BY p.pedido_id, p.fecha\n    \"\"\"\n\n    df = pd.read_sql(query, conn)\n    conn.close()\n\n    df[\"fecha\"] = pd.to_datetime(df[\"fecha\"])\n    df[\"trimestre\"] = df[\"fecha\"].dt.to_period(\"Q\")\n\n    # Q1 2025 y Q1 2026\n    facturacion_q1_2025 = df[df[\"trimestre\"] == \"2025Q1\"][\"facturacion\"].sum()\n    facturacion_q1_2026 = df[df[\"trimestre\"] == \"2026Q1\"][\"facturacion\"].sum()\n\n    if facturacion_q1_2025 == 0:\n        return 0.0\n\n    crecimiento = (\n        facturacion_q1_2026 - facturacion_q1_2025\n    ) / facturacion_q1_2025\n\n    return round(float(crecimiento), 4)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 448,
+  "prompt_tokens": 616,
+  "total_tokens": 1064
+ },
+ "latency_s": 2.03,
+ "timestamp": "2026-10-23 09:19:24",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\n\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    query = \"\"\"\n    SELECT \n        p.pedido_id,\n        p.fecha,\n        SUM(i.cantidad * i.precio_unitario) AS facturacion\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND (p.fecha BETWEEN '2025-01-01' AND '2025-03-31' \n           OR p.fecha BETWEEN '2026-01-01' AND '2026-03-31')\n    GROUP BY p.pedido_id, p.fecha\n    \"\"\"\n\n    df = pd.read_sql(query, conn)\n    conn.close()\n\n    df[\"fecha\"] = pd.to_datetime(df[\"fecha\"])\n    df[\"trimestre\"] = df[\"fecha\"].dt.to_period(\"Q\")\n\n    # Q1 2025 y Q1 2026\n    facturacion_q1_2025 = df[df[\"trimestre\"] == \"2025Q1\"][\"facturacion\"].sum()\n    facturacion_q1_2026 = df[df[\"trimestre\"] == \"2026Q1\"][\"facturacion\"].sum()\n\n    if facturacion_q1_2025 == 0:\n        return 0.0\n\n    crecimiento = (\n        facturacion_q1_2026 - facturacion_q1_2025\n    ) / facturacion_q1_2025\n\n    return round(float(crecimiento), 4)",
+  "got": "0.369"
+ }
+}

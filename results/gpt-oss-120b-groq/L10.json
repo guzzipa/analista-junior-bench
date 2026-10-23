@@ -1,0 +1,30 @@
+{
+ "task_id": "L10",
+ "bloque": "Limpieza",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport pandas as pd\n\ndef solve(data_dir):\n    \"\"\"\n    Lee el archivo ventas_wide.csv y devuelve un diccionario con la suma total de ventas\n    de cada categoría para el año 2025.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo ventas_wide.csv.\n\n    Returns\n    -------\n    dict\n        {categoria: venta_total_2025} donde los totales son enteros (pesos argentinos).\n    \"\"\"\n    csv_path = os.path.join(data_dir, \"ventas_wide.csv\")\n\n    # Cargamos el CSV tal cual (las columnas de monto son strings con \"$ \" y puntos como separador de miles)\n    df = pd.read_csv(csv_path, dtype=str)\n\n    # Identificamos las columnas que corresponden a los meses de 2025\n    month_cols = [col for col in df.columns if col.startswith(\"2025-\")]\n\n    # Función auxiliar para convertir el texto \"$ 38.954.795\" → 38954795\n    def parse_amount(txt):\n        if pd.isna(txt):\n            return 0\n        # Quitamos el símbolo de peso y los espacios\n        txt = txt.replace(\"$\", \"\").replace(\" \", \"\")\n        # Eliminamos los puntos de miles y convertimos a entero\n        return int(txt.replace(\".\", \"\"))\n\n    # Aplicamos la conversión a todas las columnas de meses\n    for col in month_cols:\n        df[col] = df[col].apply(parse_amount)\n\n    # Sumamos los valores de los 12 meses para cada categoría\n    df[\"total_2025\"] = df[month_cols].sum(axis=1)\n\n    # Construimos el diccionario solicitado\n    result = dict(zip(df[\"categoria\"], df[\"total_2025\"]))\n\n    return result\n```",
+ "thinking_chars": 973,
+ "usage": {
+  "queue_time": 0.206423017,
+  "prompt_tokens": 959,
+  "prompt_time": 0.031868559,
+  "completion_tokens": 620,
+  "completion_time": 1.276885471,
+  "total_tokens": 1579,
+  "total_time": 1.30875403,
+  "prompt_tokens_details": {
+   "cached_tokens": 256
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 226
+  }
+ },
+ "latency_s": 1.63,
+ "timestamp": "2026-10-23 09:19:35",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\ndef solve(data_dir):\n    \"\"\"\n    Lee el archivo ventas_wide.csv y devuelve un diccionario con la suma total de ventas\n    de cada categoría para el año 2025.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo ventas_wide.csv.\n\n    Returns\n    -------\n    dict\n        {categoria: venta_total_2025} donde los totales son enteros (pesos argentinos).\n    \"\"\"\n    csv_path = os.path.join(data_dir, \"ventas_wide.csv\")\n\n    # Cargamos el CSV tal cual (las columnas de monto son strings con \"$ \" y puntos como separador de miles)\n    df = pd.read_csv(csv_path, dtype=str)\n\n    # Identificamos las columnas que corresponden a los meses de 2025\n    month_cols = [col for col in df.columns if col.startswith(\"2025-\")]\n\n    # Función auxiliar para convertir el texto \"$ 38.954.795\" → 38954795\n    def parse_amount(txt):\n        if pd.isna(txt):\n            return 0\n        # Quitamos el símbolo de peso y los espacios\n        txt = txt.replace(\"$\", \"\").replace(\" \", \"\")\n        # Eliminamos los puntos de miles y convertimos a entero\n        return int(txt.replace(\".\", \"\"))\n\n    # Aplicamos la conversión a todas las columnas de meses\n    for col in month_cols:\n        df[col] = df[col].apply(parse_amount)\n\n    # Sumamos los valores de los 12 meses para cada categoría\n    df[\"total_2025\"] = df[month_cols].sum(axis=1)\n\n    # Construimos el diccionario solicitado\n    result = dict(zip(df[\"categoria\"], df[\"total_2025\"]))\n\n    return result",
+  "got": "{\"Tecnología\": 565502635, \"Electro\": 560436876, \"Hogar\": 431519666, \"Deportes\": 360919266, \"Moda\": 286457490, \"Belleza\": 211291376}"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "task_id": "E06",
+ "bloque": "Estadística",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"\"\"\n        SELECT \n            p.fecha,\n            i.cantidad,\n            i.precio_unitario,\n            ped.estado\n        FROM pedidos ped\n        JOIN items i ON ped.pedido_id = i.pedido_id\n        JOIN productos pr ON i.producto_id = pr.producto_id\n        JOIN (\n            SELECT pedido_id, fecha, estado \n            FROM pedidos \n            WHERE estado = 'entregado' \n              AND fecha >= '2025-01-01' \n              AND fecha <= '2025-12-31'\n        ) p ON ped.pedido_id = p.pedido_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    conn.close()\n    \n    if df.empty:\n        return 0.0\n        \n    df['fecha'] = pd.to_datetime(df['fecha'])\n    df['mes'] = df['fecha'].dt.month\n    df['facturacion'] = df['cantidad'] * df['precio_unitario']\n    \n    # Agrupar por mes y sumar la facturación\n    df_mensual = df.groupby('mes')['facturacion'].sum().reset_index()\n    \n    # Asegurar que estén todos los meses del 1 al 12\n    todos_los_meses = pd.DataFrame({'mes': range(1, 13)})\n    df_mensual = pd.merge(todos_los_meses, df_mensual, on='mes', how='left').fillna(0)\n    \n    x = df_mensual['mes'].values\n    y = df_mensual['facturacion'].values\n    \n    # Regresión lineal por mínimos cuadrados: y = m * x + c\n    A = np.vstack([x, np.ones(len(x))]).T\n    m, c = np.linalg.lstsq(A, y, rcond=None)[0]\n    \n    return float(round(m, 0))\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 539,
+  "prompt_tokens": 615,
+  "total_tokens": 1154
+ },
+ "latency_s": 1.94,
+ "timestamp": "2026-10-23 09:19:34",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"\"\"\n        SELECT \n            p.fecha,\n            i.cantidad,\n            i.precio_unitario,\n            ped.estado\n        FROM pedidos ped\n        JOIN items i ON ped.pedido_id = i.pedido_id\n        JOIN productos pr ON i.producto_id = pr.producto_id\n        JOIN (\n            SELECT pedido_id, fecha, estado \n            FROM pedidos \n            WHERE estado = 'entregado' \n              AND fecha >= '2025-01-01' \n              AND fecha <= '2025-12-31'\n        ) p ON ped.pedido_id = p.pedido_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    conn.close()\n    \n    if df.empty:\n        return 0.0\n        \n    df['fecha'] = pd.to_datetime(df['fecha'])\n    df['mes'] = df['fecha'].dt.month\n    df['facturacion'] = df['cantidad'] * df['precio_unitario']\n    \n    # Agrupar por mes y sumar la facturación\n    df_mensual = df.groupby('mes')['facturacion'].sum().reset_index()\n    \n    # Asegurar que estén todos los meses del 1 al 12\n    todos_los_meses = pd.DataFrame({'mes': range(1, 13)})\n    df_mensual = pd.merge(todos_los_meses, df_mensual, on='mes', how='left').fillna(0)\n    \n    x = df_mensual['mes'].values\n    y = df_mensual['facturacion'].values\n    \n    # Regresión lineal por mínimos cuadrados: y = m * x + c\n    A = np.vstack([x, np.ones(len(x))]).T\n    m, c = np.linalg.lstsq(A, y, rcond=None)[0]\n    \n    return float(round(m, 0))",
+  "got": "39874770.0"
+ }
+}

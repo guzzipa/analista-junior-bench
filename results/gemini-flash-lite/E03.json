@@ -1,0 +1,20 @@
+{
+ "task_id": "E03",
+ "bloque": "Estadística",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport sqlite3\nimport os\nimport numpy as np\nimport pandas as pd\nfrom scipy import stats\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"SELECT puntaje FROM resenas WHERE puntaje IS NOT NULL;\"\n    df = pd.read_sql(query, conn)\n    conn.close()\n    \n    puntajes = df['puntaje'].values\n    n = len(puntajes)\n    \n    if n < 2:\n        return [0.0, 0.0]\n        \n    media = np.mean(puntajes)\n    error_std = stats.sem(puntajes)\n    \n    # Intervalo de confianza del 95% usando la distribución t de Student\n    ic = stats.t.interval(0.95, df=n-1, loc=media, scale=error_std)\n    \n    return [round(float(ic[0]), 4), round(float(ic[1]), 4)]\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 259,
+  "prompt_tokens": 604,
+  "total_tokens": 863
+ },
+ "latency_s": 2.0,
+ "timestamp": "2026-10-23 09:19:01",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import sqlite3\nimport os\nimport numpy as np\nimport pandas as pd\nfrom scipy import stats\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"SELECT puntaje FROM resenas WHERE puntaje IS NOT NULL;\"\n    df = pd.read_sql(query, conn)\n    conn.close()\n    \n    puntajes = df['puntaje'].values\n    n = len(puntajes)\n    \n    if n < 2:\n        return [0.0, 0.0]\n        \n    media = np.mean(puntajes)\n    error_std = stats.sem(puntajes)\n    \n    # Intervalo de confianza del 95% usando la distribución t de Student\n    ic = stats.t.interval(0.95, df=n-1, loc=media, scale=error_std)\n    \n    return [round(float(ic[0]), 4), round(float(ic[1]), 4)]",
+  "got": "[4.4102, 4.435]"
+ }
+}

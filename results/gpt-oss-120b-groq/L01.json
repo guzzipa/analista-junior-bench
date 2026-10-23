@@ -1,0 +1,30 @@
+{
+ "task_id": "L01",
+ "bloque": "Limpieza",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport pandas as pd\n\ndef solve(data_dir: str) -> int:\n    \"\"\"\n    Cuenta la cantidad de clientes distintos en el archivo clientes_crm.csv\n    considerando que dos filas son el mismo cliente si comparten el mismo email.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo `clientes_crm.csv`.\n\n    Retorna\n    -------\n    int\n        Número de emails únicos (clientes distintos).\n    \"\"\"\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leemos el CSV. Se asume que está separado por comas y que el separador decimal\n    # dentro de los montos es la coma, por lo que pandas lo interpreta correctamente.\n    # Usamos low_memory=False para evitar warnings en archivos grandes.\n    df = pd.read_csv(csv_path, low_memory=False)\n    \n    # Nos aseguramos de que la columna de email exista (puede variar en mayúsculas/minúsculas)\n    # Normalizamos el nombre de la columna a minúsculas.\n    df.columns = [c.strip().lower() for c in df.columns]\n    \n    if 'email' not in df.columns:\n        raise ValueError(\"El archivo clientes_crm.csv no contiene la columna 'email'\")\n    \n    # Eliminamos posibles valores nulos y normalizamos espacios alrededor del email.\n    emails = df['email'].dropna().astype(str).str.strip()\n    \n    # Contamos los valores únicos.\n    unique_emails = emails.nunique()\n    \n    return int(unique_emails)\n```",
+ "thinking_chars": 729,
+ "usage": {
+  "queue_time": 0.308768645,
+  "prompt_tokens": 781,
+  "prompt_time": 0.582595239,
+  "completion_tokens": 495,
+  "completion_time": 1.099690122,
+  "total_tokens": 1276,
+  "total_time": 1.682285361,
+  "prompt_tokens_details": {
+   "cached_tokens": 256
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 155
+  }
+ },
+ "latency_s": 2.24,
+ "timestamp": "2026-10-23 09:18:07",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 3000, recibido 3123",
+  "code": "import os\nimport pandas as pd\n\ndef solve(data_dir: str) -> int:\n    \"\"\"\n    Cuenta la cantidad de clientes distintos en el archivo clientes_crm.csv\n    considerando que dos filas son el mismo cliente si comparten el mismo email.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo `clientes_crm.csv`.\n\n    Retorna\n    -------\n    int\n        Número de emails únicos (clientes distintos).\n    \"\"\"\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leemos el CSV. Se asume que está separado por comas y que el separador decimal\n    # dentro de los montos es la coma, por lo que pandas lo interpreta correctamente.\n    # Usamos low_memory=False para evitar warnings en archivos grandes.\n    df = pd.read_csv(csv_path, low_memory=False)\n    \n    # Nos aseguramos de que la columna de email exista (puede variar en mayúsculas/minúsculas)\n    # Normalizamos el nombre de la columna a minúsculas.\n    df.columns = [c.strip().lower() for c in df.columns]\n    \n    if 'email' not in df.columns:\n        raise ValueError(\"El archivo clientes_crm.csv no contiene la columna 'email'\")\n    \n    # Eliminamos posibles valores nulos y normalizamos espacios alrededor del email.\n    emails = df['email'].dropna().astype(str).str.strip()\n    \n    # Contamos los valores únicos.\n    unique_emails = emails.nunique()\n    \n    return int(unique_emails)",
+  "got": "3123"
+ }
+}

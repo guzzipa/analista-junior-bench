@@ -1,0 +1,27 @@
+{
+ "task_id": "S03",
+ "bloque": "SQL",
+ "model": "gpt-oss-120b-groq",
+ "response": "```sql\nSELECT \n    p.canal,\n    ROUND(AVG(t.ticket), 2) AS ticket_promedio\nFROM (\n    SELECT \n        pedido_id,\n        SUM(cantidad * precio_unitario) AS ticket\n    FROM items\n    GROUP BY pedido_id\n) AS t\nJOIN pedidos AS p\n    ON p.pedido_id = t.pedido_id\nWHERE \n    p.estado = 'entregado'\n    AND p.fecha BETWEEN '2026-01-01' AND '2026-03-31'\nGROUP BY p.canal;\n```",
+ "thinking_chars": 959,
+ "usage": {
+  "queue_time": 0.467476279,
+  "prompt_tokens": 560,
+  "prompt_time": 0.093583801,
+  "completion_tokens": 381,
+  "completion_time": 0.801075127,
+  "total_tokens": 941,
+  "total_time": 0.894658928,
+  "completion_tokens_details": {
+   "reasoning_tokens": 256
+  }
+ },
+ "latency_s": 1.64,
+ "timestamp": "2026-10-23 09:17:17",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT \n    p.canal,\n    ROUND(AVG(t.ticket), 2) AS ticket_promedio\nFROM (\n    SELECT \n        pedido_id,\n        SUM(cantidad * precio_unitario) AS ticket\n    FROM items\n    GROUP BY pedido_id\n) AS t\nJOIN pedidos AS p\n    ON p.pedido_id = t.pedido_id\nWHERE \n    p.estado = 'entregado'\n    AND p.fecha BETWEEN '2026-01-01' AND '2026-03-31'\nGROUP BY p.canal;",
+  "got": "[[\"app\", 359228.9], [\"web\", 517505.57]]"
+ }
+}

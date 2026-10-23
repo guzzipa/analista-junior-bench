@@ -1,0 +1,24 @@
+{
+ "task_id": "I03",
+ "bloque": "Insight de negocio",
+ "model": "gpt-oss-120b-groq",
+ "response": "No, no estoy de acuerdo con dejar de impulsar la app.  \n\n- El ticket promedio de la app (367,5 miles) es efectivamente menor que el de la web (527 miles), por lo que sí “trae pedidos más baratos”.  \n- Sin embargo, la app genera más pedidos por cliente (1,9 vs 1,7) y su participación en el total de pedidos ha subido del 37,3 % (2025‑S1) al 45,5 % (2026‑S1).  \n- Además, la facturación por cliente también es menor (704,8 miles vs 898 miles), lo que indica que la app está captando clientes que compran con menor gasto pero con mayor frecuencia.  \n\nCon los datos disponibles no podemos afirmar que la app sea perjudicial; más bien, su crecimiento sugiere que podría ser una vía para aumentar la base de clientes y, potencialmente, elevar el ticket con acciones de upselling o cross‑selling.",
+ "thinking_chars": 567,
+ "usage": {
+  "queue_time": 0.30718697,
+  "prompt_tokens": 505,
+  "prompt_time": 0.020974734,
+  "completion_tokens": 364,
+  "completion_time": 0.766735402,
+  "total_tokens": 869,
+  "total_time": 0.787710136,
+  "completion_tokens_details": {
+   "reasoning_tokens": 140
+  }
+ },
+ "latency_s": 1.21,
+ "timestamp": "2026-10-23 09:24:19",
+ "grade": {
+  "ok": null
+ }
+}

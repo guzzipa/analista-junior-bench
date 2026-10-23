@@ -1,0 +1,17 @@
+{
+ "task_id": "I05",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "Hola, PM. Recomiendo implementar la variante B, ya que aumentó la conversión total del 3.74% al 4.20% con significancia estadística (p-valor = 0.0164). Aunque en el período del 11 al 20 de mayo la variante A tuvo un rendimiento similar (4.04% vs 4.08%), la variante B dominó en los otros dos períodos. No tenemos datos sobre ingresos, ticket promedio ni tiempos de carga con estos números.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 110,
+  "prompt_tokens": 336,
+  "total_tokens": 446
+ },
+ "latency_s": 1.97,
+ "timestamp": "2026-10-23 09:21:04",
+ "grade": {
+  "ok": null
+ }
+}

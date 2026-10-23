@@ -1,0 +1,27 @@
+{
+ "task_id": "S08",
+ "bloque": "SQL",
+ "model": "gpt-oss-120b-groq",
+ "response": "```sql\nWITH ventas AS (\n    SELECT \n        c.region,\n        i.producto_id,\n        SUM(i.cantidad) AS unidades\n    FROM pedidos p\n    JOIN clientes c      ON p.cliente_id = c.cliente_id\n    JOIN items i         ON i.pedido_id = p.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n    GROUP BY c.region, i.producto_id\n),\nranked AS (\n    SELECT \n        region,\n        producto_id,\n        unidades,\n        ROW_NUMBER() OVER (PARTITION BY region ORDER BY unidades DESC, producto_id) AS rn\n    FROM ventas\n)\nSELECT \n    region,\n    producto_id,\n    unidades\nFROM ranked\nWHERE rn = 1\nORDER BY region;\n```",
+ "thinking_chars": 1261,
+ "usage": {
+  "queue_time": 0.312952052,
+  "prompt_tokens": 557,
+  "prompt_time": 0.033759621,
+  "completion_tokens": 503,
+  "completion_time": 1.051520072,
+  "total_tokens": 1060,
+  "total_time": 1.085279693,
+  "completion_tokens_details": {
+   "reasoning_tokens": 316
+  }
+ },
+ "latency_s": 1.7,
+ "timestamp": "2026-10-23 09:17:47",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "WITH ventas AS (\n    SELECT \n        c.region,\n        i.producto_id,\n        SUM(i.cantidad) AS unidades\n    FROM pedidos p\n    JOIN clientes c      ON p.cliente_id = c.cliente_id\n    JOIN items i         ON i.pedido_id = p.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n    GROUP BY c.region, i.producto_id\n),\nranked AS (\n    SELECT \n        region,\n        producto_id,\n        unidades,\n        ROW_NUMBER() OVER (PARTITION BY region ORDER BY unidades DESC, producto_id) AS rn\n    FROM ventas\n)\nSELECT \n    region,\n    producto_id,\n    unidades\nFROM ranked\nWHERE rn = 1\nORDER BY region;",
+  "got": "[[\"AMBA\", 1, 1114], [\"Centro\", 1, 492], [\"Cuyo\", 1, 176], [\"NEA\", 1, 172], [\"NOA\", 1, 222], [\"Patagonia\", 1, 296]]"
+ }
+}

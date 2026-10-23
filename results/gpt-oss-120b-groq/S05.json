@@ -1,0 +1,27 @@
+{
+ "task_id": "S05",
+ "bloque": "SQL",
+ "model": "gpt-oss-120b-groq",
+ "response": "```sql\nSELECT \n    mes,\n    ROUND(CAST(canceled AS REAL) / total, 4) AS tasa_cancelacion\nFROM (\n    SELECT \n        strftime('%Y-%m', fecha) AS mes,\n        SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) AS canceled,\n        COUNT(*) AS total\n    FROM pedidos\n    WHERE fecha BETWEEN '2026-01-01' AND '2026-04-30'\n    GROUP BY mes\n)\nORDER BY mes;\n```",
+ "thinking_chars": 1030,
+ "usage": {
+  "queue_time": 0.308411779,
+  "prompt_tokens": 581,
+  "prompt_time": 0.029251325,
+  "completion_tokens": 383,
+  "completion_time": 0.798993485,
+  "total_tokens": 964,
+  "total_time": 0.82824481,
+  "completion_tokens_details": {
+   "reasoning_tokens": 264
+  }
+ },
+ "latency_s": 1.34,
+ "timestamp": "2026-10-23 09:17:28",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT \n    mes,\n    ROUND(CAST(canceled AS REAL) / total, 4) AS tasa_cancelacion\nFROM (\n    SELECT \n        strftime('%Y-%m', fecha) AS mes,\n        SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) AS canceled,\n        COUNT(*) AS total\n    FROM pedidos\n    WHERE fecha BETWEEN '2026-01-01' AND '2026-04-30'\n    GROUP BY mes\n)\nORDER BY mes;",
+  "got": "[[\"2026-01\", 0.0622], [\"2026-02\", 0.0753], [\"2026-03\", 0.1029], [\"2026-04\", 0.0673]]"
+ }
+}

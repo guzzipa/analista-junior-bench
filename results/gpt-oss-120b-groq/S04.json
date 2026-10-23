@@ -1,0 +1,27 @@
+{
+ "task_id": "S04",
+ "bloque": "SQL",
+ "model": "gpt-oss-120b-groq",
+ "response": "```sql\nWITH primera_compra AS (\n    SELECT \n        cliente_id,\n        MIN(fecha_entrega) AS primera_fecha\n    FROM pedidos\n    WHERE estado = 'entregado' \n      AND fecha_entrega IS NOT NULL\n    GROUP BY cliente_id\n)\nSELECT \n    strftime('%Y-%m', primera_fecha) AS mes,\n    COUNT(*) AS nuevos_clientes\nFROM primera_compra\nWHERE primera_fecha BETWEEN '2025-01-01' AND '2025-12-31'\nGROUP BY mes\nORDER BY mes;\n```",
+ "thinking_chars": 978,
+ "usage": {
+  "queue_time": 0.245541273,
+  "prompt_tokens": 564,
+  "prompt_time": 0.085806742,
+  "completion_tokens": 379,
+  "completion_time": 0.787443354,
+  "total_tokens": 943,
+  "total_time": 0.873250096,
+  "completion_tokens_details": {
+   "reasoning_tokens": 255
+  }
+ },
+ "latency_s": 1.47,
+ "timestamp": "2026-10-23 09:17:23",
+ "grade": {
+  "ok": false,
+  "error": "fila 1, columna 2: esperado 1085, recibido 967",
+  "code": "WITH primera_compra AS (\n    SELECT \n        cliente_id,\n        MIN(fecha_entrega) AS primera_fecha\n    FROM pedidos\n    WHERE estado = 'entregado' \n      AND fecha_entrega IS NOT NULL\n    GROUP BY cliente_id\n)\nSELECT \n    strftime('%Y-%m', primera_fecha) AS mes,\n    COUNT(*) AS nuevos_clientes\nFROM primera_compra\nWHERE primera_fecha BETWEEN '2025-01-01' AND '2025-12-31'\nGROUP BY mes\nORDER BY mes;",
+  "got": "[[\"2025-01\", 967], [\"2025-02\", 710], [\"2025-03\", 588], [\"2025-04\", 439], [\"2025-05\", 471], [\"2025-06\", 324], [\"2025-07\", 266], [\"2025-08\", 279], [\"2025-09\", 228], [\"2025-10\", 229], [\"2025-11\", 231], [\"2025-12\", 251]]"
+ }
+}

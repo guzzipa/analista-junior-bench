@@ -1,0 +1,19 @@
+{
+ "task_id": "L05",
+ "bloque": "Limpieza",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"ventas_sucursales.csv\")\n\n    # Leer el CSV con separador ';' y formato de números en español (coma como decimal, punto como miles)\n    df = pd.read_csv(\n        csv_path, sep=\";\", decimal=\",\", thousands=\".\", parse_dates=[\"fecha\"], dayfirst=True\n    )\n\n    # Filtrar el primer trimestre de 2026 (enero, febrero, marzo)\n    q1_2026 = df[(df[\"fecha\"] >= \"2026-01-01\") & (df[\"fecha\"] <= \"2026-03-31\")]\n\n    # Agrupar por sucursal y sumar las ventas\n    totales = q1_2026.groupby(\"sucursal\")[\"venta\"].sum()\n\n    # Redondear a 2 decimales y convertir a diccionario\n    resultado = totales.round(2).to_dict()\n\n    return resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 249,
+  "prompt_tokens": 723,
+  "total_tokens": 972
+ },
+ "latency_s": 2.29,
+ "timestamp": "2026-10-23 09:15:13",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:   File \"pandas/_libs/parsers.pyx\", line 574, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas/_libs/parsers.pyx\", line 663, in pandas._libs.parsers.TextReader._get_header\n  File \"pandas/_libs/parsers.pyx\", line 874, in pandas._libs.parsers.TextReader._tokenize_rows\n  File \"pandas/_libs/parsers.pyx\", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status\n  File \"pandas/_libs/parsers.pyx\", line 2053, in pandas._libs.parsers.raise_parser_error\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xf3 in position 34: invalid continuation byte",
+  "code": "import os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"ventas_sucursales.csv\")\n\n    # Leer el CSV con separador ';' y formato de números en español (coma como decimal, punto como miles)\n    df = pd.read_csv(\n        csv_path, sep=\";\", decimal=\",\", thousands=\".\", parse_dates=[\"fecha\"], dayfirst=True\n    )\n\n    # Filtrar el primer trimestre de 2026 (enero, febrero, marzo)\n    q1_2026 = df[(df[\"fecha\"] >= \"2026-01-01\") & (df[\"fecha\"] <= \"2026-03-31\")]\n\n    # Agrupar por sucursal y sumar las ventas\n    totales = q1_2026.groupby(\"sucursal\")[\"venta\"].sum()\n\n    # Redondear a 2 decimales y convertir a diccionario\n    resultado = totales.round(2).to_dict()\n\n    return resultado"
+ }
+}

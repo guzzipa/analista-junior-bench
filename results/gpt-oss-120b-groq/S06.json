@@ -1,0 +1,27 @@
+{
+ "task_id": "S06",
+ "bloque": "SQL",
+ "model": "gpt-oss-120b-groq",
+ "response": "```sql\nSELECT COUNT(*) AS clientes\nFROM (\n    SELECT cliente_id\n    FROM pedidos\n    WHERE estado = 'entregado'\n    GROUP BY cliente_id\n    HAVING \n        SUM(CASE \n                WHEN fecha BETWEEN '2025-01-01' AND '2025-12-31' \n                THEN 1 ELSE 0 \n            END) > 0\n        AND \n        SUM(CASE \n                WHEN fecha BETWEEN '2026-01-01' AND '2026-06-30' \n                THEN 1 ELSE 0 \n            END) = 0\n) AS sub;\n```",
+ "thinking_chars": 2566,
+ "usage": {
+  "queue_time": 0.312888762,
+  "prompt_tokens": 559,
+  "prompt_time": 0.036973442,
+  "completion_tokens": 850,
+  "completion_time": 1.7770968379999998,
+  "total_tokens": 1409,
+  "total_time": 1.8140702800000001,
+  "completion_tokens_details": {
+   "reasoning_tokens": 711
+  }
+ },
+ "latency_s": 2.29,
+ "timestamp": "2026-10-23 09:17:34",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT COUNT(*) AS clientes\nFROM (\n    SELECT cliente_id\n    FROM pedidos\n    WHERE estado = 'entregado'\n    GROUP BY cliente_id\n    HAVING \n        SUM(CASE \n                WHEN fecha BETWEEN '2025-01-01' AND '2025-12-31' \n                THEN 1 ELSE 0 \n            END) > 0\n        AND \n        SUM(CASE \n                WHEN fecha BETWEEN '2026-01-01' AND '2026-06-30' \n                THEN 1 ELSE 0 \n            END) = 0\n) AS sub;",
+  "got": "[[1456]]"
+ }
+}

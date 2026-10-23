@@ -1,0 +1,17 @@
+{
+ "task_id": "I10",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "Resumen Ejecutivo - H1 2026 (Tienda Pampa)\n\n* La facturación nominal alcanzó los 4.520,73 millones de pesos en H1 2026, lo que representa un crecimiento respecto a H1 2025, aunque no es posible calcular la variación real ya que no se dispone del dato exacto de inflación general del período, solo el ajuste mensual de precios de lista (2,2%).\n* Se procesaron 9.945 pedidos entregados en H1 2026, mostrando un incremento en el volumen de operaciones en comparación con los 8.799 pedidos del mismo período del año anterior.\n* La base de clientes activos creció a 4.622 usuarios en H1 2026 frente a los 3.529 registrados en H1 2025.\n* El ticket promedio se ubicó en 454,57 miles de pesos en H1 2026, superando los 359,29 miles de pesos de H1 2025, acompañado por una leve alza en el porcentaje de cancelación que pasó del 7,10% al 7,29%.\n* El canal de aplicación móvil aumentó su participación al 45,52% de los pedidos (desde el 37,26%), mientras que el puntaje de reseñas se mantuvo estable en 4,40 (vs. 4,43), operando en un semestre marcado por eventos operativos como el Hot Sale, un cambio logístico en Patagonia y un corte en el procesador de pagos.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 354,
+  "prompt_tokens": 429,
+  "total_tokens": 783
+ },
+ "latency_s": 1.88,
+ "timestamp": "2026-10-23 09:21:48",
+ "grade": {
+  "ok": null
+ }
+}

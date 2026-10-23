@@ -1,0 +1,20 @@
+{
+ "task_id": "E07",
+ "bloque": "Estadística",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"\"\"\n        SELECT \n            c.region,\n            p.fecha,\n            p.fecha_entrega\n        FROM pedidos p\n        JOIN clientes c ON p.cliente_id = c.cliente_id\n        WHERE p.estado = 'entregado'\n          AND p.fecha_entrega IS NOT NULL\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    conn.close()\n    \n    # Calcular los días de entrega\n    df['fecha'] = pd.to_datetime(df['fecha'])\n    df['fecha_entrega'] = pd.to_datetime(df['fecha_entrega'])\n    df['dias_entrega'] = (df['fecha_entrega'] - df['fecha']).dt.days\n    \n    # Calcular el percentil 90 por región usando interpolación lineal (método por defecto de pandas/numpy)\n    resultado = {}\n    for region, grupo in df.groupby('region'):\n        p90 = np.percentile(grupo['dias_entrega'], 90)\n        resultado[region] = round(float(p90), 2)\n        \n    return resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 338,
+  "prompt_tokens": 620,
+  "total_tokens": 958
+ },
+ "latency_s": 2.14,
+ "timestamp": "2026-10-23 09:19:44",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"\"\"\n        SELECT \n            c.region,\n            p.fecha,\n            p.fecha_entrega\n        FROM pedidos p\n        JOIN clientes c ON p.cliente_id = c.cliente_id\n        WHERE p.estado = 'entregado'\n          AND p.fecha_entrega IS NOT NULL\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    conn.close()\n    \n    # Calcular los días de entrega\n    df['fecha'] = pd.to_datetime(df['fecha'])\n    df['fecha_entrega'] = pd.to_datetime(df['fecha_entrega'])\n    df['dias_entrega'] = (df['fecha_entrega'] - df['fecha']).dt.days\n    \n    # Calcular el percentil 90 por región usando interpolación lineal (método por defecto de pandas/numpy)\n    resultado = {}\n    for region, grupo in df.groupby('region'):\n        p90 = np.percentile(grupo['dias_entrega'], 90)\n        resultado[region] = round(float(p90), 2)\n        \n    return resultado",
+  "got": "{\"AMBA\": 3.0, \"Centro\": 5.0, \"Cuyo\": 6.0, \"NEA\": 8.0, \"NOA\": 7.0, \"Patagonia\": 12.0}"
+ }
+}

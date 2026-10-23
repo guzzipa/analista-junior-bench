@@ -1,0 +1,27 @@
+{
+ "task_id": "L04",
+ "bloque": "Limpieza",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport pandas as pd\n\ndef solve(data_dir: str) -> float:\n    \"\"\"\n    Lee el archivo clientes_crm.csv ubicado en `data_dir`,\n    convierte la columna `monto_compras` a número (pesos argentinos)\n    y devuelve la suma total redondeada a 2 decimales.\n    \"\"\"\n    # Ruta del CSV\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Cargamos el CSV sin intentar parsear los números (los leemos como string)\n    df = pd.read_csv(csv_path, dtype=str, keep_default_na=False)\n    \n    # Si la columna tiene otro nombre (por ejemplo con espacios), buscamos la que contenga 'monto'\n    monto_col = None\n    for col in df.columns:\n        if 'monto' in col.lower():\n            monto_col = col\n            break\n    if monto_col is None:\n        raise ValueError(\"No se encontró la columna de monto_compras en el CSV.\")\n    \n    # Función de limpieza y conversión\n    def parse_amount(val: str) -> float:\n        if not val or pd.isna(val):\n            return 0.0\n        # Elimina símbolos de moneda, espacios y comillas\n        cleaned = val.replace(\"$\", \"\").replace(\" \", \"\").replace('\"', \"\").strip()\n        # Si el formato es \"27.690,27\" -> 27690.27\n        # Quitamos los puntos de miles y cambiamos la coma decimal por punto\n        cleaned = cleaned.replace(\".\", \"\").replace(\",\", \".\")\n        try:\n            return float(cleaned)\n        except ValueError:\n            # Si no se puede convertir, lo consideramos 0\n            return 0.0\n    \n    # Aplicamos la conversión\n    amounts = df[monto_col].apply(parse_amount)\n    \n    total = amounts.sum()\n    # Redondeamos a 2 decimales\n    return round(total, 2)\n```",
+ "thinking_chars": 1016,
+ "usage": {
+  "queue_time": 0.309706351,
+  "prompt_tokens": 782,
+  "prompt_time": 0.037991713,
+  "completion_tokens": 648,
+  "completion_time": 1.351486647,
+  "total_tokens": 1430,
+  "total_time": 1.38947836,
+  "completion_tokens_details": {
+   "reasoning_tokens": 225
+  }
+ },
+ "latency_s": 2.05,
+ "timestamp": "2026-10-23 09:18:32",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\ndef solve(data_dir: str) -> float:\n    \"\"\"\n    Lee el archivo clientes_crm.csv ubicado en `data_dir`,\n    convierte la columna `monto_compras` a número (pesos argentinos)\n    y devuelve la suma total redondeada a 2 decimales.\n    \"\"\"\n    # Ruta del CSV\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Cargamos el CSV sin intentar parsear los números (los leemos como string)\n    df = pd.read_csv(csv_path, dtype=str, keep_default_na=False)\n    \n    # Si la columna tiene otro nombre (por ejemplo con espacios), buscamos la que contenga 'monto'\n    monto_col = None\n    for col in df.columns:\n        if 'monto' in col.lower():\n            monto_col = col\n            break\n    if monto_col is None:\n        raise ValueError(\"No se encontró la columna de monto_compras en el CSV.\")\n    \n    # Función de limpieza y conversión\n    def parse_amount(val: str) -> float:\n        if not val or pd.isna(val):\n            return 0.0\n        # Elimina símbolos de moneda, espacios y comillas\n        cleaned = val.replace(\"$\", \"\").replace(\" \", \"\").replace('\"', \"\").strip()\n        # Si el formato es \"27.690,27\" -> 27690.27\n        # Quitamos los puntos de miles y cambiamos la coma decimal por punto\n        cleaned = cleaned.replace(\".\", \"\").replace(\",\", \".\")\n        try:\n            return float(cleaned)\n        except ValueError:\n            # Si no se puede convertir, lo consideramos 0\n            return 0.0\n    \n    # Aplicamos la conversión\n    amounts = df[monto_col].apply(parse_amount)\n    \n    total = amounts.sum()\n    # Redondeamos a 2 decimales\n    return round(total, 2)",
+  "got": "507536291.52"
+ }
+}

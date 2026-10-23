@@ -1,0 +1,17 @@
+{
+ "task_id": "I04",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "Hola, soy analista junior en Tienda Pampa. Respecto a la afirmación de Marketing sobre la campaña VUELTA10 de agosto 2025, considero que es parcialmente apresurada. Si bien los pedidos entregados crecieron a 1.745 (un 9,9% más que en julio) y la facturación subió a 677 millones de pesos, el 80,2% de las líneas con cupón fueron utilizadas por clientes que ya habían comprado antes, no por clientes nuevos (estos últimos cayeron a 272 frente a los 314 de junio). Además, se otorgaron 21,8 millones de pesos en descuentos. Con estos datos no se puede calcular la rentabilidad real de la campaña, por lo que sugiero cruzar el costo del descuento con el margen de ganancia antes de definirla como un éxito rotundo.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 193,
+  "prompt_tokens": 423,
+  "total_tokens": 616
+ },
+ "latency_s": 1.87,
+ "timestamp": "2026-10-23 09:20:55",
+ "grade": {
+  "ok": null
+ }
+}

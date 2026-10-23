@@ -1,0 +1,24 @@
+{
+ "task_id": "I02",
+ "bloque": "Insight de negocio",
+ "model": "gpt-oss-120b-groq",
+ "response": "Sí, los datos indican que la satisfacción está empeorando en Patagonia.  \n- El puntaje promedio de reseñas cayó de 4,00 en marzo a 3,06 en abril y a 2,95 en mayo, manteniéndose bajo (≈3,08) en junio.  \n- Ese deterioro coincide con un fuerte aumento de los días promedio de entrega: de 7,6 días (enero‑marzo) a 12,1 días en abril y mayo.  \n\nLa combinación de una caída marcada del puntaje y la prolongación de los plazos de entrega sugiere que la frustración de los clientes está vinculada a demoras en la entrega. Con los datos disponibles no podemos atribuir la insatisfacción a otros factores.",
+ "thinking_chars": 581,
+ "usage": {
+  "queue_time": 0.243166174,
+  "prompt_tokens": 805,
+  "prompt_time": 0.04628482,
+  "completion_tokens": 316,
+  "completion_time": 0.662530436,
+  "total_tokens": 1121,
+  "total_time": 0.708815256,
+  "completion_tokens_details": {
+   "reasoning_tokens": 145
+  }
+ },
+ "latency_s": 1.07,
+ "timestamp": "2026-10-23 09:24:12",
+ "grade": {
+  "ok": null
+ }
+}

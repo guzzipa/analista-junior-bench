@@ -1,0 +1,24 @@
+{
+ "task_id": "I04",
+ "bloque": "Insight de negocio",
+ "model": "gpt-oss-120b-groq",
+ "response": "En agosto se registraron 1 745 pedidos entregados, un +9,9 % respecto a julio (1 587) y un +16 % frente a junio (1 502). Ese aumento coincide con la vigencia del cupón VUELTA10, pero solo 504 pedidos (≈29 % del total) lo usaron y el descuento otorgado fue de 21,8 M ARS, menos del 3,3 % de la facturación del mes (677 M ARS).  \n\nSin datos de factores externos (estacionalidad, otras campañas, variaciones de tráfico) no podemos atribuir todo el crecimiento a la campaña. Por lo tanto, aunque los pedidos crecieron, no se puede afirmar con certeza que la campaña fue el factor determinante del éxito.",
+ "thinking_chars": 466,
+ "usage": {
+  "queue_time": 0.307179957,
+  "prompt_tokens": 419,
+  "prompt_time": 0.020277327,
+  "completion_tokens": 282,
+  "completion_time": 0.605424882,
+  "total_tokens": 701,
+  "total_time": 0.625702209,
+  "completion_tokens_details": {
+   "reasoning_tokens": 103
+  }
+ },
+ "latency_s": 1.05,
+ "timestamp": "2026-10-23 09:24:24",
+ "grade": {
+  "ok": null
+ }
+}

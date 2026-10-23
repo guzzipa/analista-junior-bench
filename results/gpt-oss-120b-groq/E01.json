@@ -1,0 +1,27 @@
+{
+ "task_id": "E01",
+ "bloque": "Estadística",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport sqlite3\nimport numpy as np\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula la media y la mediana del ticket (facturación por pedido) de los pedidos\n    entregados en el año 2025.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo SQLite `tienda.db`.\n\n    Retorna\n    -------\n    dict\n        {'media': float, 'mediana': float} con valores redondeados a 2 decimales.\n    \"\"\"\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    try:\n        cur = conn.cursor()\n        query = \"\"\"\n            SELECT i.pedido_id,\n                   SUM(i.cantidad * i.precio_unitario) AS ticket\n            FROM items i\n            JOIN pedidos p ON i.pedido_id = p.pedido_id\n            WHERE p.estado = 'entregado'\n              AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n            GROUP BY i.pedido_id\n        \"\"\"\n        cur.execute(query)\n        tickets = [row[1] for row in cur.fetchall()]\n\n        if not tickets:\n            # Si no hay pedidos entregados en 2025, devolvemos 0.0\n            return {'media': 0.0, 'mediana': 0.0}\n\n        media = round(float(np.mean(tickets)), 2)\n        mediana = round(float(np.median(tickets)), 2)\n\n        return {'media': media, 'mediana': mediana}\n    finally:\n        conn.close()\n```",
+ "thinking_chars": 1116,
+ "usage": {
+  "queue_time": 0.24469658,
+  "prompt_tokens": 627,
+  "prompt_time": 0.117787043,
+  "completion_tokens": 639,
+  "completion_time": 1.3508508479999999,
+  "total_tokens": 1266,
+  "total_time": 1.468637891,
+  "completion_tokens_details": {
+   "reasoning_tokens": 281
+  }
+ },
+ "latency_s": 1.92,
+ "timestamp": "2026-10-23 09:22:07",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport numpy as np\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula la media y la mediana del ticket (facturación por pedido) de los pedidos\n    entregados en el año 2025.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo SQLite `tienda.db`.\n\n    Retorna\n    -------\n    dict\n        {'media': float, 'mediana': float} con valores redondeados a 2 decimales.\n    \"\"\"\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    try:\n        cur = conn.cursor()\n        query = \"\"\"\n            SELECT i.pedido_id,\n                   SUM(i.cantidad * i.precio_unitario) AS ticket\n            FROM items i\n            JOIN pedidos p ON i.pedido_id = p.pedido_id\n            WHERE p.estado = 'entregado'\n              AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n            GROUP BY i.pedido_id\n        \"\"\"\n        cur.execute(query)\n        tickets = [row[1] for row in cur.fetchall()]\n\n        if not tickets:\n            # Si no hay pedidos entregados en 2025, devolvemos 0.0\n            return {'media': 0.0, 'mediana': 0.0}\n\n        media = round(float(np.mean(tickets)), 2)\n        mediana = round(float(np.median(tickets)), 2)\n\n        return {'media': media, 'mediana': mediana}\n    finally:\n        conn.close()",
+  "got": "{\"media\": 383213.34, \"mediana\": 180180.0}"
+ }
+}

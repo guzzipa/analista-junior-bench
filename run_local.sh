@@ -16,7 +16,7 @@ for NAME in "${MODELOS[@]}"; do
   TAG=$($PY -c "import json,sys; m={x['name']:x for x in json.load(open('models.json'))['models']}; print(m[sys.argv[1]]['model'])" "$NAME")
   echo "=== $NAME ($TAG) ==="
   ollama pull "$TAG"
-  $PY bench.py run --model "$NAME"
+  $PY bench.py run --model "$NAME" || echo "!! $NAME terminó con error, sigo con el próximo"
   ollama rm "$TAG"
 done
 echo "Listo. Siguiente: $PY bench.py review"

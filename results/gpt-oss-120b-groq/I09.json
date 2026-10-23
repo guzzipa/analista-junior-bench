@@ -1,0 +1,24 @@
+{
+ "task_id": "I09",
+ "bloque": "Insight de negocio",
+ "model": "gpt-oss-120b-groq",
+ "response": "- La semana del 6 al 12 abr muestra una caída marcada el 11 y 12 (36 y 37 pedidos), mientras que el resto de los días ronda los 60‑77 pedidos.  \n- Del 13 al 21 abr la demanda se recupera, con un pico el 15 (70 pedidos) y el 16 (71 pedidos).  \n- La proporción app/web se mantiene estable: la app aporta ~45 % y la web ~55 % del total, sin cambios significativos entre semanas.  \n- El 14 de abril (martes) registra 0 pedidos; dado que no es feriado, probablemente sea un error o falta de carga de datos.  \n- No podemos inferir causas de la variación (promociones, clima, etc.) porque esos datos no están disponibles.  \n- En general, la actividad semanal se mantiene entre 60‑70 pedidos, con una ligera tendencia al alza después del fin de semana.",
+ "thinking_chars": 294,
+ "usage": {
+  "queue_time": 0.310493701,
+  "prompt_tokens": 533,
+  "prompt_time": 0.023825723,
+  "completion_tokens": 286,
+  "completion_time": 0.59326658,
+  "total_tokens": 819,
+  "total_time": 0.617092303,
+  "completion_tokens_details": {
+   "reasoning_tokens": 69
+  }
+ },
+ "latency_s": 1.05,
+ "timestamp": "2026-10-23 09:24:52",
+ "grade": {
+  "ok": null
+ }
+}

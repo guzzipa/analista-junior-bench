@@ -1,0 +1,17 @@
+{
+ "task_id": "I08",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "Hola. Con los datos disponibles, la tabla clientes tiene 7.001 registros en total, incluyendo 1 cliente de prueba del segmento 'interno' (QA TEST). Si definimos \"clientes activos\" como aquellos con al menos un pedido entregado recientemente, la suma de los tramos a), b) y c) (desde enero hasta junio de 2026) da un total de 4.623 clientes. Si además sumamos los tramos d) y e), los clientes con pedidos entregados desde enero de 2025 alcanzan los 6.079. No es posible determinar cuántos clientes están activos sin una definición exacta del periodo de inactividad.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 147,
+  "prompt_tokens": 335,
+  "total_tokens": 482
+ },
+ "latency_s": 1.54,
+ "timestamp": "2026-10-23 09:21:31",
+ "grade": {
+  "ok": null
+ }
+}

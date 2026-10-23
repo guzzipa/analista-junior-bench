@@ -1,0 +1,17 @@
+{
+ "task_id": "I07",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "Recomiendo enfocar al equipo en el **Checkout nuevo (opción 3)**. \nJustificación: El test A/B demostró una mejora estadísticamente significativa ($p=0,016$) elevando la conversión de 3,74% a 4,20%, y el 100% de las ventas pasa por ahí, garantizando impacto transversal. Las otras opciones no sirven: el quiebre del Celular Nova X (opción 1) ya se solucionó solo en abril (206 unidades vendidas), y el cambio logístico en Patagonia (opción 2) empeoró la satisfacción (de 4,0 a 3,0), pero con los datos provistos no sabemos cuánta facturación se perdería ni si se puede revertir este trimestre.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 173,
+  "prompt_tokens": 518,
+  "total_tokens": 691
+ },
+ "latency_s": 2.04,
+ "timestamp": "2026-10-23 09:21:22",
+ "grade": {
+  "ok": null
+ }
+}

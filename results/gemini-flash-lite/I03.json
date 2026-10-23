@@ -1,0 +1,17 @@
+{
+ "task_id": "I03",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "No estoy de acuerdo. Es cierto que el ticket promedio de la app es menor que el de la web ($367.5k vs $527.0k), pero la app tiene mayor frecuencia de compra (1.9 pedidos por cliente frente a 1.7 de la web). Además, su participación en los pedidos crece constantemente (37.3% en 2025-S1, 41.4% en 2025-S2 y 45.5% en 2026-S1). Por otro lado, no contamos con datos sobre costos de adquisición ni rentabilidad por canal, por lo que no es posible asegurar que la app baje la rentabilidad general. Dejar de impulsarla podría hacer perder clientes recurrentes.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 166,
+  "prompt_tokens": 487,
+  "total_tokens": 653
+ },
+ "latency_s": 2.03,
+ "timestamp": "2026-10-23 09:20:46",
+ "grade": {
+  "ok": null
+ }
+}

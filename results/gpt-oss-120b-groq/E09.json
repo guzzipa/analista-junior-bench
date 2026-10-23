@@ -1,0 +1,27 @@
+{
+ "task_id": "E09",
+ "bloque": "Estadística",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport math\nfrom scipy.stats import norm\n\ndef solve(data_dir: str) -> int:\n    \"\"\"\n    Calcula el tamaño de muestra necesario por variante (A y B) para detectar\n    un aumento de la tasa de conversión del 3,8 % al 4,3 % con un nivel de\n    significancia del 5 % (prueba bilateral) y una potencia del 80 %.\n\n    Parámetros\n    ----------\n    data_dir: str\n        Directorio que contiene la base de datos `tienda.db`.  No se utiliza\n        en el cálculo porque los valores de conversión se dan explícitamente\n        en el enunciado.\n\n    Retorna\n    -------\n    int\n        Número de usuarios requeridos por variante, redondeado al entero\n        superior.\n    \"\"\"\n    # Tasas de conversión (p1 = control, p2 = variante)\n    p1 = 0.038   # 3,8 %\n    p2 = 0.043   # 4,3 %\n\n    # Diferencia mínima de interés\n    delta = p2 - p1\n\n    # Parámetros de la prueba\n    alpha = 0.05          # nivel de significancia (dos colas)\n    power = 0.80          # potencia deseada\n\n    # Z críticos\n    z_alpha = norm.ppf(1 - alpha / 2)   # 1.96 aproximadamente\n    z_beta  = norm.ppf(power)           # 0.84 aproximadamente\n\n    # Pooled proportion (para tamaños iguales en ambos grupos)\n    p_bar = (p1 + p2) / 2.0\n\n    # Fórmula de tamaño de muestra para dos proporciones independientes\n    term1 = z_alpha * math.sqrt(2 * p_bar * (1 - p_bar))\n    term2 = z_beta  * math.sqrt(p1 * (1 - p1) + p2 * (1 - p2))\n    n = ((term1 + term2) ** 2) / (delta ** 2)\n\n    # Redondeo hacia arriba al entero más próximo\n    return math.ceil(n)\n\n# Ejemplo de uso (no se ejecuta en el entorno de evaluación)\n# if __name__ == \"__main__\":\n#     print(solve(\"/ruta/al/directorio\"))\n```",
+ "thinking_chars": 1967,
+ "usage": {
+  "queue_time": 0.204487702,
+  "prompt_tokens": 645,
+  "prompt_time": 0.030161024,
+  "completion_tokens": 1197,
+  "completion_time": 2.510172329,
+  "total_tokens": 1842,
+  "total_time": 2.540333353,
+  "completion_tokens_details": {
+   "reasoning_tokens": 690
+  }
+ },
+ "latency_s": 2.86,
+ "timestamp": "2026-10-23 09:23:30",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport math\nfrom scipy.stats import norm\n\ndef solve(data_dir: str) -> int:\n    \"\"\"\n    Calcula el tamaño de muestra necesario por variante (A y B) para detectar\n    un aumento de la tasa de conversión del 3,8 % al 4,3 % con un nivel de\n    significancia del 5 % (prueba bilateral) y una potencia del 80 %.\n\n    Parámetros\n    ----------\n    data_dir: str\n        Directorio que contiene la base de datos `tienda.db`.  No se utiliza\n        en el cálculo porque los valores de conversión se dan explícitamente\n        en el enunciado.\n\n    Retorna\n    -------\n    int\n        Número de usuarios requeridos por variante, redondeado al entero\n        superior.\n    \"\"\"\n    # Tasas de conversión (p1 = control, p2 = variante)\n    p1 = 0.038   # 3,8 %\n    p2 = 0.043   # 4,3 %\n\n    # Diferencia mínima de interés\n    delta = p2 - p1\n\n    # Parámetros de la prueba\n    alpha = 0.05          # nivel de significancia (dos colas)\n    power = 0.80          # potencia deseada\n\n    # Z críticos\n    z_alpha = norm.ppf(1 - alpha / 2)   # 1.96 aproximadamente\n    z_beta  = norm.ppf(power)           # 0.84 aproximadamente\n\n    # Pooled proportion (para tamaños iguales en ambos grupos)\n    p_bar = (p1 + p2) / 2.0\n\n    # Fórmula de tamaño de muestra para dos proporciones independientes\n    term1 = z_alpha * math.sqrt(2 * p_bar * (1 - p_bar))\n    term2 = z_beta  * math.sqrt(p1 * (1 - p1) + p2 * (1 - p2))\n    n = ((term1 + term2) ** 2) / (delta ** 2)\n\n    # Redondeo hacia arriba al entero más próximo\n    return math.ceil(n)\n\n# Ejemplo de uso (no se ejecuta en el entorno de evaluación)\n# if __name__ == \"__main__\":\n#     print(solve(\"/ruta/al/directorio\"))",
+  "got": "24400"
+ }
+}

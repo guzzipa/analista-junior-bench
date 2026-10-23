@@ -1,0 +1,24 @@
+{
+ "task_id": "I06",
+ "bloque": "Insight de negocio",
+ "model": "gpt-oss-120b-groq",
+ "response": "El ticket promedio en mayo ( $509.612 ) subió respecto a abril ($456.995), un aumento de aproximadamente 11,5 %.  \nSin embargo, el ticket mediano apenas creció (de $208.140 a $212.940), lo que indica que la mayor parte de los pedidos se mantuvo en el mismo rango.  \nLos 8 pedidos con tickets de $9.999.999 en mayo son valores atípicos que influyen fuertemente en el promedio.  \nCon los datos disponibles no podemos afirmar que todos los clientes gastaron más; el incremento del promedio se debe mayormente a esos outliers.  \nSi se quiere comunicar el desempeño, convendría matizar que la tendencia general del gasto medio por cliente no cambió significativamente.",
+ "thinking_chars": 584,
+ "usage": {
+  "queue_time": 0.206855549,
+  "prompt_tokens": 497,
+  "prompt_time": 0.024934847,
+  "completion_tokens": 312,
+  "completion_time": 0.659744758,
+  "total_tokens": 809,
+  "total_time": 0.684679605,
+  "completion_tokens_details": {
+   "reasoning_tokens": 142
+  }
+ },
+ "latency_s": 1.05,
+ "timestamp": "2026-10-23 09:24:35",
+ "grade": {
+  "ok": null
+ }
+}

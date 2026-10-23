@@ -1,0 +1,30 @@
+{
+ "task_id": "L03",
+ "bloque": "Limpieza",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport pandas as pd\nimport csv\nfrom collections import Counter\n\ndef solve(data_dir):\n    \"\"\"\n    Lee el archivo clientes_crm.csv, normaliza la columna fecha_alta (que puede venir en\n    distintos formatos) y devuelve un diccionario con la cantidad de altas por mes del\n    año 2025.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene los archivos del proyecto (tienda.db y clientes_crm.csv).\n\n    Retorna\n    -------\n    dict\n        Diccionario con claves en formato 'YYYY-MM' y valores enteros que indican la\n        cantidad de altas en ese mes, solo para los meses del año 2025.\n    \"\"\"\n    # Ruta al CSV\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n\n    # Leemos el CSV manteniendo los campos tal cual aparecen; el separador es coma y\n    # los valores pueden estar entre comillas (por ejemplo el monto).\n    df = pd.read_csv(\n        csv_path,\n        sep=\",\",\n        dtype=str,\n        quoting=csv.QUOTE_MINIMAL,\n        skipinitialspace=True,\n        engine=\"python\"\n    )\n\n    # Normalizamos la columna de fecha. Puede venir como:\n    #   - DD/MM/YYYY  (ej. 11/04/2025)\n    #   - YYYY-MM-DD (ej. 2026-04-07)\n    #   - Posibles espacios en blanco\n    # Usamos pandas.to_datetime con dayfirst=True para que interprete correctamente\n    # el formato día/mes/año y con errors='coerce' para que valores no parseables queden NaT.\n    fechas = pd.to_datetime(df[\"fecha_alta\"].str.strip(), dayfirst=True, errors=\"coerce\")\n\n    # Filtramos solo las fechas del año 2025\n    fechas_2025 = fechas[fechas.dt.year == 2025]\n\n    # Generamos la clave 'YYYY-MM' para cada fecha\n    claves = fechas_2025.dt.strftime(\"%Y-%m\")\n\n    # Contamos ocurrencias\n    contador = Counter(claves)\n\n    # Convertimos a dict (el Counter ya es un dict‑like, pero lo convertimos explícitamente)\n    return dict(contador)\n```",
+ "thinking_chars": 1029,
+ "usage": {
+  "queue_time": 0.309015187,
+  "prompt_tokens": 806,
+  "prompt_time": 0.017233047,
+  "completion_tokens": 746,
+  "completion_time": 1.596087694,
+  "total_tokens": 1552,
+  "total_time": 1.613320741,
+  "prompt_tokens_details": {
+   "cached_tokens": 512
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 254
+  }
+ },
+ "latency_s": 2.29,
+ "timestamp": "2026-10-23 09:18:25",
+ "grade": {
+  "ok": false,
+  "error": "resultado['2025-07']: esperado 96, recibido 35",
+  "code": "import os\nimport pandas as pd\nimport csv\nfrom collections import Counter\n\ndef solve(data_dir):\n    \"\"\"\n    Lee el archivo clientes_crm.csv, normaliza la columna fecha_alta (que puede venir en\n    distintos formatos) y devuelve un diccionario con la cantidad de altas por mes del\n    año 2025.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene los archivos del proyecto (tienda.db y clientes_crm.csv).\n\n    Retorna\n    -------\n    dict\n        Diccionario con claves en formato 'YYYY-MM' y valores enteros que indican la\n        cantidad de altas en ese mes, solo para los meses del año 2025.\n    \"\"\"\n    # Ruta al CSV\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n\n    # Leemos el CSV manteniendo los campos tal cual aparecen; el separador es coma y\n    # los valores pueden estar entre comillas (por ejemplo el monto).\n    df = pd.read_csv(\n        csv_path,\n        sep=\",\",\n        dtype=str,\n        quoting=csv.QUOTE_MINIMAL,\n        skipinitialspace=True,\n        engine=\"python\"\n    )\n\n    # Normalizamos la columna de fecha. Puede venir como:\n    #   - DD/MM/YYYY  (ej. 11/04/2025)\n    #   - YYYY-MM-DD (ej. 2026-04-07)\n    #   - Posibles espacios en blanco\n    # Usamos pandas.to_datetime con dayfirst=True para que interprete correctamente\n    # el formato día/mes/año y con errors='coerce' para que valores no parseables queden NaT.\n    fechas = pd.to_datetime(df[\"fecha_alta\"].str.strip(), dayfirst=True, errors=\"coerce\")\n\n    # Filtramos solo las fechas del año 2025\n    fechas_2025 = fechas[fechas.dt.year == 2025]\n\n    # Generamos la clave 'YYYY-MM' para cada fecha\n    claves = fechas_2025.dt.strftime(\"%Y-%m\")\n\n    # Contamos ocurrencias\n    contador = Counter(claves)\n\n    # Convertimos a dict (el Counter ya es un dict‑like, pero lo convertimos explícitamente)\n    return dict(contador)",
+  "got": "{\"2025-04\": 25, \"2025-03\": 22, \"2025-05\": 24, \"2025-09\": 31, \"2025-01\": 40, \"2025-06\": 26, \"2025-07\": 35, \"2025-11\": 27, \"2025-12\": 29, \"2025-08\": 26, \"2025-10\": 29, \"2025-02\": 17}"
+ }
+}

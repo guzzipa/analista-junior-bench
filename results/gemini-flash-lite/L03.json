@@ -1,0 +1,20 @@
+{
+ "task_id": "L03",
+ "bloque": "Limpieza",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport pandas as pd\n\ndef parse_fecha(val):\n    if pd.isna(val):\n        return pd.NaT\n    val = str(val).strip()\n    # Intentar formato YYYY-MM-DD\n    try:\n        dt = pd.to_datetime(val, format='%Y-%m-%d', errors='coerce')\n        if not pd.isna(dt):\n            return dt\n    except:\n        pass\n    \n    # Intentar formato DD/MM/YYYY (sistema argentino)\n    try:\n        dt = pd.to_datetime(val, format='%d/%m/%Y', errors='coerce')\n        if not pd.isna(dt):\n            return dt\n    except:\n        pass\n    \n    # Fallback genérico de pandas\n    try:\n        dt = pd.to_datetime(val, dayfirst=True, errors='coerce')\n        return dt\n    except:\n        return pd.NaT\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    df = pd.read_csv(csv_path)\n    \n    # Limpiar nombres de columnas por si acaso\n    df.columns = [c.strip() for c in df.columns]\n    \n    fechas = df['fecha_alta'].apply(parse_fecha)\n    \n    # Filtrar solo el año 2025\n    mask = fechas.dt.year == 2025\n    fechas_2025 = fechas[mask]\n    \n    # Agrupar por mes 'YYYY-MM' y contar\n    conteo = fechas_2025.dt.strftime('%Y-%m').value_counts().sort_index()\n    \n    # Convertir a dict {'YYYY-MM': cantidad}\n    resultado = conteo.to_dict()\n    \n    return resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 442,
+  "prompt_tokens": 857,
+  "total_tokens": 1299
+ },
+ "latency_s": 2.64,
+ "timestamp": "2026-10-23 09:14:52",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\ndef parse_fecha(val):\n    if pd.isna(val):\n        return pd.NaT\n    val = str(val).strip()\n    # Intentar formato YYYY-MM-DD\n    try:\n        dt = pd.to_datetime(val, format='%Y-%m-%d', errors='coerce')\n        if not pd.isna(dt):\n            return dt\n    except:\n        pass\n    \n    # Intentar formato DD/MM/YYYY (sistema argentino)\n    try:\n        dt = pd.to_datetime(val, format='%d/%m/%Y', errors='coerce')\n        if not pd.isna(dt):\n            return dt\n    except:\n        pass\n    \n    # Fallback genérico de pandas\n    try:\n        dt = pd.to_datetime(val, dayfirst=True, errors='coerce')\n        return dt\n    except:\n        return pd.NaT\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    df = pd.read_csv(csv_path)\n    \n    # Limpiar nombres de columnas por si acaso\n    df.columns = [c.strip() for c in df.columns]\n    \n    fechas = df['fecha_alta'].apply(parse_fecha)\n    \n    # Filtrar solo el año 2025\n    mask = fechas.dt.year == 2025\n    fechas_2025 = fechas[mask]\n    \n    # Agrupar por mes 'YYYY-MM' y contar\n    conteo = fechas_2025.dt.strftime('%Y-%m').value_counts().sort_index()\n    \n    # Convertir a dict {'YYYY-MM': cantidad}\n    resultado = conteo.to_dict()\n    \n    return resultado",
+  "got": "{\"2025-01\": 96, \"2025-02\": 70, \"2025-03\": 80, \"2025-04\": 71, \"2025-05\": 80, \"2025-06\": 81, \"2025-07\": 96, \"2025-08\": 73, \"2025-09\": 80, \"2025-10\": 74, \"2025-11\": 58, \"2025-12\": 93}"
+ }
+}

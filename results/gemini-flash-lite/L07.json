@@ -1,0 +1,20 @@
+{
+ "task_id": "L07",
+ "bloque": "Limpieza",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener los montos de pagos aprobados en mayo de 2026.\n    # Excluimos pagos de prueba identificados por montos negativos, iguales a cero,\n    # o cualquier anomalía típica de QA (por ejemplo, pagos mayores a un umbral lógico\n    # o montos exactamente iguales a 1.00 / 0.01 si aplica, pero basándonos en buenas prácticas\n    # de análisis en Tienda Pampa, filtramos montos > 0 y montos absurdamente altos si los hubiera,\n    # o bien aplicando un filtro estándar contra registros de prueba comunes en la tabla pagos).\n    # Como el enunciado menciona que QA cargó pagos de prueba en producción ese mes,\n    # descartamos montos atípicos (por ejemplo, centavos exactos irreales, montos == 1.0, o similares),\n    # o revisamos si hay una condición estándar. Comúnmente las pruebas son montos simbólicos como 1 o 0.01,\n    # o pagos con montos negativos. Vamos a filtrar monto > 10 (asumiendo que en un e-commerce\n    # argentino en 2026 los productos valen más de $10) o usar un filtro seguro.\n    # Usemos un filtro que excluya montos <= 10 o valores extremadamente bajos de prueba.\n    \n    query = \"\"\"\n        SELECT monto \n        FROM pagos \n        WHERE aprobado = 1 \n          AND fecha >= '2026-05-01' \n          AND fecha <= '2026-05-31'\n          AND monto > 10\n    \"\"\"\n    \n    df = pd.read_sql(query, conn)\n    conn.close()\n    \n    if df.empty:\n        return 0.0\n        \n    promedio = float(df['monto'].mean())\n    return round(promedio, 2)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 498,
+  "prompt_tokens": 609,
+  "total_tokens": 1107
+ },
+ "latency_s": 3.33,
+ "timestamp": "2026-10-23 09:15:34",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 441547.29, recibido 499806.85",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener los montos de pagos aprobados en mayo de 2026.\n    # Excluimos pagos de prueba identificados por montos negativos, iguales a cero,\n    # o cualquier anomalía típica de QA (por ejemplo, pagos mayores a un umbral lógico\n    # o montos exactamente iguales a 1.00 / 0.01 si aplica, pero basándonos en buenas prácticas\n    # de análisis en Tienda Pampa, filtramos montos > 0 y montos absurdamente altos si los hubiera,\n    # o bien aplicando un filtro estándar contra registros de prueba comunes en la tabla pagos).\n    # Como el enunciado menciona que QA cargó pagos de prueba en producción ese mes,\n    # descartamos montos atípicos (por ejemplo, centavos exactos irreales, montos == 1.0, o similares),\n    # o revisamos si hay una condición estándar. Comúnmente las pruebas son montos simbólicos como 1 o 0.01,\n    # o pagos con montos negativos. Vamos a filtrar monto > 10 (asumiendo que en un e-commerce\n    # argentino en 2026 los productos valen más de $10) o usar un filtro seguro.\n    # Usemos un filtro que excluya montos <= 10 o valores extremadamente bajos de prueba.\n    \n    query = \"\"\"\n        SELECT monto \n        FROM pagos \n        WHERE aprobado = 1 \n          AND fecha >= '2026-05-01' \n          AND fecha <= '2026-05-31'\n          AND monto > 10\n    \"\"\"\n    \n    df = pd.read_sql(query, conn)\n    conn.close()\n    \n    if df.empty:\n        return 0.0\n        \n    promedio = float(df['monto'].mean())\n    return round(promedio, 2)",
+  "got": "499806.85"
+ }
+}

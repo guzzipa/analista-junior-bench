@@ -1,0 +1,20 @@
+{
+ "task_id": "E02",
+ "bloque": "Estadística",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nfrom scipy import stats\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"SELECT variante, convirtio FROM sesiones_ab\"\n    df = pd.read_sql(query, conn)\n    conn.close()\n    \n    # Agrupar por variante\n    grouped = df.groupby('variante')['convirtio'].agg(['count', 'sum'])\n    \n    n_a = grouped.loc['A', 'count']\n    conv_a = grouped.loc['A', 'sum']\n    tasa_a = float(conv_a / n_a)\n    \n    n_b = grouped.loc['B', 'count']\n    conv_b = grouped.loc['B', 'sum']\n    tasa_b = float(conv_b / n_b)\n    \n    # Test de proporciones de dos muestras (Z-test)\n    # Usamos statsmodels o scipy para calcular el p-valor\n    # stats.chi2_contingency sobre la tabla de contingencia da el mismo p-valor que el test z de dos colas\n    table = np.array([\n        [conv_a, n_a - conv_a],\n        [conv_b, n_b - conv_b]\n    ])\n    \n    chi2, p_valor, dof, ex = stats.chi2_contingency(table, correction=False)\n    p_valor = float(p_valor)\n    \n    significativo = bool(p_valor < 0.05)\n    \n    return {\n        'tasa_A': tasa_a,\n        'tasa_B': tasa_b,\n        'p_valor': p_valor,\n        'significativo': significativo\n    }\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 455,
+  "prompt_tokens": 655,
+  "total_tokens": 1110
+ },
+ "latency_s": 2.98,
+ "timestamp": "2026-10-23 09:18:50",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nfrom scipy import stats\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"SELECT variante, convirtio FROM sesiones_ab\"\n    df = pd.read_sql(query, conn)\n    conn.close()\n    \n    # Agrupar por variante\n    grouped = df.groupby('variante')['convirtio'].agg(['count', 'sum'])\n    \n    n_a = grouped.loc['A', 'count']\n    conv_a = grouped.loc['A', 'sum']\n    tasa_a = float(conv_a / n_a)\n    \n    n_b = grouped.loc['B', 'count']\n    conv_b = grouped.loc['B', 'sum']\n    tasa_b = float(conv_b / n_b)\n    \n    # Test de proporciones de dos muestras (Z-test)\n    # Usamos statsmodels o scipy para calcular el p-valor\n    # stats.chi2_contingency sobre la tabla de contingencia da el mismo p-valor que el test z de dos colas\n    table = np.array([\n        [conv_a, n_a - conv_a],\n        [conv_b, n_b - conv_b]\n    ])\n    \n    chi2, p_valor, dof, ex = stats.chi2_contingency(table, correction=False)\n    p_valor = float(p_valor)\n    \n    significativo = bool(p_valor < 0.05)\n    \n    return {\n        'tasa_A': tasa_a,\n        'tasa_B': tasa_b,\n        'p_valor': p_valor,\n        'significativo': significativo\n    }",
+  "got": "{\"tasa_A\": 0.03738095238095238, \"tasa_B\": 0.04195238095238095, \"p_valor\": 0.016392227847693345, \"significativo\": true}"
+ }
+}

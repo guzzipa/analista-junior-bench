@@ -1,0 +1,20 @@
+{
+ "task_id": "L04",
+ "bloque": "Limpieza",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n\n    # Leer el archivo CSV\n    df = pd.read_csv(csv_path)\n\n    # Limpiar y convertir la columna 'monto_compras'\n    # Ejemplo: \"$ 363.517,34\" -> 363517.34\n    # Ejemplo: \"27.690,27\" -> 27690.27\n    monto_limpio = (\n        df[\"monto_compras\"]\n        .astype(str)\n        .str.replace(\"$\", \"\", regex=False)\n        .str.replace(\".\", \"\", regex=False)  # Quitar separador de miles\n        .str.replace(\",\", \".\", regex=False)  # Cambiar coma decimal por punto\n        .str.strip()\n    )\n\n    # Convertir a numérico (los errores o valores 'NA' se pueden forzar a NaN y luego sumar como 0)\n    monto_numerico = pd.to_numeric(monto_limpio, errors=\"coerce\").fillna(0.0)\n\n    # Calcular la suma total y redondear a 2 decimales\n    suma_total = round(float(monto_numerico.sum()), 2)\n\n    return suma_total\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 326,
+  "prompt_tokens": 827,
+  "total_tokens": 1153
+ },
+ "latency_s": 2.37,
+ "timestamp": "2026-10-23 09:15:02",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n\n    # Leer el archivo CSV\n    df = pd.read_csv(csv_path)\n\n    # Limpiar y convertir la columna 'monto_compras'\n    # Ejemplo: \"$ 363.517,34\" -> 363517.34\n    # Ejemplo: \"27.690,27\" -> 27690.27\n    monto_limpio = (\n        df[\"monto_compras\"]\n        .astype(str)\n        .str.replace(\"$\", \"\", regex=False)\n        .str.replace(\".\", \"\", regex=False)  # Quitar separador de miles\n        .str.replace(\",\", \".\", regex=False)  # Cambiar coma decimal por punto\n        .str.strip()\n    )\n\n    # Convertir a numérico (los errores o valores 'NA' se pueden forzar a NaN y luego sumar como 0)\n    monto_numerico = pd.to_numeric(monto_limpio, errors=\"coerce\").fillna(0.0)\n\n    # Calcular la suma total y redondear a 2 decimales\n    suma_total = round(float(monto_numerico.sum()), 2)\n\n    return suma_total",
+  "got": "507536291.52"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "task_id": "S08",
+ "bloque": "SQL",
+ "model": "gemini-flash-lite",
+ "response": "```sql\nWITH ventas_regiones AS (\n    SELECT \n        c.region,\n        i.producto_id,\n        SUM(i.cantidad) AS unidades,\n        ROW_NUMBER() OVER (PARTITION BY c.region ORDER BY SUM(i.cantidad) DESC) as rn\n    FROM pedidos p\n    JOIN clientes c ON p.cliente_id = c.cliente_id\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2025-01-01'\n      AND p.fecha <= '2025-12-31'\n    GROUP BY c.region, i.producto_id\n)\nSELECT \n    region,\n    producto_id,\n    unidades\nFROM ventas_regiones\nWHERE rn = 1\nORDER BY region;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 205,
+  "prompt_tokens": 527,
+  "total_tokens": 732
+ },
+ "latency_s": 2.05,
+ "timestamp": "2026-10-23 09:14:02",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "WITH ventas_regiones AS (\n    SELECT \n        c.region,\n        i.producto_id,\n        SUM(i.cantidad) AS unidades,\n        ROW_NUMBER() OVER (PARTITION BY c.region ORDER BY SUM(i.cantidad) DESC) as rn\n    FROM pedidos p\n    JOIN clientes c ON p.cliente_id = c.cliente_id\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2025-01-01'\n      AND p.fecha <= '2025-12-31'\n    GROUP BY c.region, i.producto_id\n)\nSELECT \n    region,\n    producto_id,\n    unidades\nFROM ventas_regiones\nWHERE rn = 1\nORDER BY region;",
+  "got": "[[\"AMBA\", 1, 1114], [\"Centro\", 1, 492], [\"Cuyo\", 1, 176], [\"NEA\", 1, 172], [\"NOA\", 1, 222], [\"Patagonia\", 1, 296]]"
+ }
+}

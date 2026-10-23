@@ -1,0 +1,24 @@
+{
+ "task_id": "I08",
+ "bloque": "Insight de negocio",
+ "model": "gpt-oss-120b-groq",
+ "response": "Según los datos proporcionados, los clientes que tienen al menos un pedido entregado (considerados “activos”) se distribuyen así:\n\n- Último pedido en jun‑2026: 1 421  \n- Último pedido en abr‑may 2026: 1 995  \n- Último pedido en ene‑mar 2026: 1 207  \n- Último pedido en jul‑dic 2025: 1 138  \n- Último pedido en ene‑jun 2025: 318  \n\n**Total de clientes activos = 1 421 + 1 995 + 1 207 + 1 138 + 318 = 6 079**.  \n\nNo disponemos de información adicional para definir “activo” de otra forma, por lo que con los datos actuales podemos afirmar que hay **6 079 clientes activos**.",
+ "thinking_chars": 530,
+ "usage": {
+  "queue_time": 0.316552736,
+  "prompt_tokens": 367,
+  "prompt_time": 0.032402888,
+  "completion_tokens": 341,
+  "completion_time": 0.71856579,
+  "total_tokens": 708,
+  "total_time": 0.750968678,
+  "completion_tokens_details": {
+   "reasoning_tokens": 149
+  }
+ },
+ "latency_s": 1.22,
+ "timestamp": "2026-10-23 09:24:47",
+ "grade": {
+  "ok": null
+ }
+}

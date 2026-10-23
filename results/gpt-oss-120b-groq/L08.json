@@ -1,0 +1,27 @@
+{
+ "task_id": "L08",
+ "bloque": "Limpieza",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula la facturación por categoría a partir del archivo items_raw.csv\n    y la tabla productos de la base tienda.db.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene `tienda.db` y `items_raw.csv`.\n\n    Retorna\n    -------\n    dict\n        Diccionario {categoria: total_facturación} con valores redondeados a 2 decimales.\n    \"\"\"\n    # ---------- helpers ----------\n    def _normalize(code):\n        \"\"\"Normaliza códigos de producto: elimina caracteres no alfanuméricos y pasa a mayúsculas.\"\"\"\n        if pd.isna(code):\n            return \"\"\n        return \"\".join(ch for ch in str(code).upper() if ch.isalnum())\n\n    # ---------- cargar productos ----------\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    try:\n        prod_df = pd.read_sql_query(\n            \"SELECT producto_id, categoria FROM productos\",\n            conn,\n            dtype={\"producto_id\": str, \"categoria\": str},\n        )\n    finally:\n        conn.close()\n\n    # crear mapa normalizado → categoría\n    prod_df[\"norm_id\"] = prod_df[\"producto_id\"].apply(_normalize)\n    norm_to_cat = prod_df.set_index(\"norm_id\")[\"categoria\"].to_dict()\n\n    # ---------- cargar items_raw ----------\n    items_path = os.path.join(data_dir, \"items_raw.csv\")\n    items_df = pd.read_csv(\n        items_path,\n        dtype={\n            \"pedido_id\": str,\n            \"producto\": str,\n            \"cantidad\": float,\n            \"precio_unitario\": float,\n        },\n    )\n\n    # normalizar código de producto y asignar categoría\n    items_df[\"norm_prod\"] = items_df[\"producto\"].apply(_normalize)\n    items_df[\"categoria\"] = items_df[\"norm_prod\"].map(norm_to_cat)\n\n    # eliminar filas sin categoría (códigos que no coinciden)\n    items_df = items_df.dropna(subset=[\"categoria\"])\n\n    # facturación por fila\n    items_df[\"facturacion\"] = items_df[\"cantidad\"] * items_df[\"precio_unitario\"]\n\n    # agrupar por categoría\n    result_series = items_df.groupby(\"categoria\")[\"facturacion\"].sum().round(2)\n\n    # convertir a dict (clave → float)\n    result = result_series.to_dict()\n\n    return result\n```",
+ "thinking_chars": 1985,
+ "usage": {
+  "queue_time": 0.307228872,
+  "prompt_tokens": 712,
+  "prompt_time": 0.034353861,
+  "completion_tokens": 987,
+  "completion_time": 2.076124103,
+  "total_tokens": 1699,
+  "total_time": 2.110477964,
+  "completion_tokens_details": {
+   "reasoning_tokens": 459
+  }
+ },
+ "latency_s": 2.63,
+ "timestamp": "2026-10-23 09:19:20",
+ "grade": {
+  "ok": false,
+  "error": "resultado['belleza']: esperado 22778390.0, recibido 5931830.0",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula la facturación por categoría a partir del archivo items_raw.csv\n    y la tabla productos de la base tienda.db.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene `tienda.db` y `items_raw.csv`.\n\n    Retorna\n    -------\n    dict\n        Diccionario {categoria: total_facturación} con valores redondeados a 2 decimales.\n    \"\"\"\n    # ---------- helpers ----------\n    def _normalize(code):\n        \"\"\"Normaliza códigos de producto: elimina caracteres no alfanuméricos y pasa a mayúsculas.\"\"\"\n        if pd.isna(code):\n            return \"\"\n        return \"\".join(ch for ch in str(code).upper() if ch.isalnum())\n\n    # ---------- cargar productos ----------\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    try:\n        prod_df = pd.read_sql_query(\n            \"SELECT producto_id, categoria FROM productos\",\n            conn,\n            dtype={\"producto_id\": str, \"categoria\": str},\n        )\n    finally:\n        conn.close()\n\n    # crear mapa normalizado → categoría\n    prod_df[\"norm_id\"] = prod_df[\"producto_id\"].apply(_normalize)\n    norm_to_cat = prod_df.set_index(\"norm_id\")[\"categoria\"].to_dict()\n\n    # ---------- cargar items_raw ----------\n    items_path = os.path.join(data_dir, \"items_raw.csv\")\n    items_df = pd.read_csv(\n        items_path,\n        dtype={\n            \"pedido_id\": str,\n            \"producto\": str,\n            \"cantidad\": float,\n            \"precio_unitario\": float,\n        },\n    )\n\n    # normalizar código de producto y asignar categoría\n    items_df[\"norm_prod\"] = items_df[\"producto\"].apply(_normalize)\n    items_df[\"categoria\"] = items_df[\"norm_prod\"].map(norm_to_cat)\n\n    # eliminar filas sin categoría (códigos que no coinciden)\n    items_df = items_df.dropna(subset=[\"categoria\"])\n\n    # facturación por fila\n    items_df[\"facturacion\"] = items_df[\"cantidad\"] * items_df[\"precio_unitario\"]\n\n    # agrupar por categoría\n    result_series = items_df.groupby(\"categoria\")[\"facturacion\"].sum().round(2)\n\n    # convertir a dict (clave → float)\n    result = result_series.to_dict()\n\n    return result",
+  "got": "{\"Belleza\": 5931830.0, \"Deportes\": 9317020.0, \"Electro\": 44009820.0, \"Hogar\": 7899350.0, \"Moda\": 7187660.0, \"Tecnología\": 52465440.0}"
+ }
+}

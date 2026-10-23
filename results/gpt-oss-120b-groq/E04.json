@@ -1,0 +1,30 @@
+{
+ "task_id": "E04",
+ "bloque": "Estadística",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nfrom scipy.stats import pearsonr\n\ndef solve(data_dir: str) -> float:\n    \"\"\"\n    Calcula la correlación de Pearson entre los días de entrega y el puntaje de la reseña.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo SQLite `tienda.db`.\n\n    Retorna\n    -------\n    float\n        Correlación redondeada a 3 decimales.\n    \"\"\"\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    # Extraemos los días de entrega y el puntaje de la reseña\n    query = \"\"\"\n        SELECT \n            (julianday(p.fecha_entrega) - julianday(p.fecha)) AS delivery_days,\n            r.puntaje\n        FROM pedidos p\n        JOIN resenas r ON p.pedido_id = r.pedido_id\n        WHERE p.fecha_entrega IS NOT NULL\n    \"\"\"\n    df = pd.read_sql_query(query, conn)\n    conn.close()\n\n    # Eliminamos posibles valores nulos (aunque la cláusula WHERE ya los filtra)\n    df = df.dropna()\n\n    # Si no hay suficientes datos, devolvemos NaN\n    if len(df) < 2:\n        return float('nan')\n\n    # Calculamos la correlación de Pearson\n    corr, _ = pearsonr(df[\"delivery_days\"], df[\"puntaje\"])\n\n    # Redondeamos a 3 decimales y devolvemos\n    return round(corr, 3)\n```",
+ "thinking_chars": 1635,
+ "usage": {
+  "queue_time": 0.207733212,
+  "prompt_tokens": 628,
+  "prompt_time": 0.412253576,
+  "completion_tokens": 751,
+  "completion_time": 2.171424475,
+  "total_tokens": 1379,
+  "total_time": 2.583678051,
+  "prompt_tokens_details": {
+   "cached_tokens": 256
+  },
+  "completion_tokens_details": {
+   "reasoning_tokens": 404
+  }
+ },
+ "latency_s": 2.91,
+ "timestamp": "2026-10-23 09:22:40",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nfrom scipy.stats import pearsonr\n\ndef solve(data_dir: str) -> float:\n    \"\"\"\n    Calcula la correlación de Pearson entre los días de entrega y el puntaje de la reseña.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo SQLite `tienda.db`.\n\n    Retorna\n    -------\n    float\n        Correlación redondeada a 3 decimales.\n    \"\"\"\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n\n    # Extraemos los días de entrega y el puntaje de la reseña\n    query = \"\"\"\n        SELECT \n            (julianday(p.fecha_entrega) - julianday(p.fecha)) AS delivery_days,\n            r.puntaje\n        FROM pedidos p\n        JOIN resenas r ON p.pedido_id = r.pedido_id\n        WHERE p.fecha_entrega IS NOT NULL\n    \"\"\"\n    df = pd.read_sql_query(query, conn)\n    conn.close()\n\n    # Eliminamos posibles valores nulos (aunque la cláusula WHERE ya los filtra)\n    df = df.dropna()\n\n    # Si no hay suficientes datos, devolvemos NaN\n    if len(df) < 2:\n        return float('nan')\n\n    # Calculamos la correlación de Pearson\n    corr, _ = pearsonr(df[\"delivery_days\"], df[\"puntaje\"])\n\n    # Redondeamos a 3 decimales y devolvemos\n    return round(corr, 3)",
+  "got": "-0.436"
+ }
+}

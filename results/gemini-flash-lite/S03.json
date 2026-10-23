@@ -1,0 +1,20 @@
+{
+ "task_id": "S03",
+ "bloque": "SQL",
+ "model": "gemini-flash-lite",
+ "response": "```sql\nSELECT \n    p.canal,\n    ROUND(SUM(i.cantidad * i.precio_unitario) * 1.0 / COUNT(DISTINCT p.pedido_id), 2) AS ticket_promedio\nFROM pedidos p\nJOIN items i ON p.pedido_id = i.pedido_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2026-01-01'\n  AND p.fecha <= '2026-03-31'\nGROUP BY p.canal;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 130,
+  "prompt_tokens": 529,
+  "total_tokens": 659
+ },
+ "latency_s": 7.77,
+ "timestamp": "2026-10-23 09:13:15",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT \n    p.canal,\n    ROUND(SUM(i.cantidad * i.precio_unitario) * 1.0 / COUNT(DISTINCT p.pedido_id), 2) AS ticket_promedio\nFROM pedidos p\nJOIN items i ON p.pedido_id = i.pedido_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2026-01-01'\n  AND p.fecha <= '2026-03-31'\nGROUP BY p.canal;",
+  "got": "[[\"app\", 359228.9], [\"web\", 517505.57]]"
+ }
+}

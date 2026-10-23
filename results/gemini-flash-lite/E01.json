@@ -1,0 +1,20 @@
+{
+ "task_id": "E01",
+ "bloque": "Estadística",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"\"\"\n    SELECT \n        p.pedido_id,\n        SUM(i.cantidad * i.precio_unitario) AS ticket\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2025-01-01'\n      AND p.fecha <= '2025-12-31'\n    GROUP BY p.pedido_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    conn.close()\n    \n    if df.empty:\n        return {'media': 0.0, 'mediana': 0.0}\n    \n    media = float(round(df['ticket'].mean(), 2))\n    mediana = float(round(df['ticket'].median(), 2))\n    \n    return {'media': media, 'mediana': mediana}\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 290,
+  "prompt_tokens": 602,
+  "total_tokens": 892
+ },
+ "latency_s": 1.49,
+ "timestamp": "2026-10-23 09:18:39",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    query = \"\"\"\n    SELECT \n        p.pedido_id,\n        SUM(i.cantidad * i.precio_unitario) AS ticket\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2025-01-01'\n      AND p.fecha <= '2025-12-31'\n    GROUP BY p.pedido_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    conn.close()\n    \n    if df.empty:\n        return {'media': 0.0, 'mediana': 0.0}\n    \n    media = float(round(df['ticket'].mean(), 2))\n    mediana = float(round(df['ticket'].median(), 2))\n    \n    return {'media': media, 'mediana': mediana}",
+  "got": "{\"media\": 383213.34, \"mediana\": 180180.0}"
+ }
+}

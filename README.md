@@ -46,7 +46,7 @@ Definidos en `models.json`. Para agregar otro, sumá una entrada.
 | gemini-flash-lite | Capa gratuita de Google AI Studio | |
 | gpt-oss-20b (opcional) | Local (Ollama) | ~14 GB, muy justo en 16 GB de RAM |
 
-Todos corren con temperatura 0 y una sola vez por tarea.
+Todos corren con temperatura 0 y una sola vez por tarea, con el modo de razonamiento que traen por defecto. Los modelos locales tienen un tope de 8.192 tokens y 15 minutos por respuesta: si no terminan, la tarea cuenta como fallida.
 
 ## Cómo correrlo (Mac)
 

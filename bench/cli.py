@@ -107,12 +107,20 @@ def run_one(task, model_cfg, expected, out_dir, call):
     prompt = build_prompt(task, DATA)
     try:
         resp = call(task, prompt)
+    except llm.LLMTimeout as ex:
+        rec = dict(task_id=task["id"], bloque=task["bloque"], model=model_cfg["name"], response="",
+                   latency_s=model_cfg.get("timeout_s", 900), finish_reason="timeout",
+                   timestamp=time.strftime("%Y-%m-%d %H:%M:%S"),
+                   grade=dict(ok=False, error=f"sin respuesta: {ex}", code=None))
+        save_json(rec_path, rec)
+        print(f"  {task['id']} [MAL] timeout: {ex}", flush=True)
+        return rec
     except llm.LLMError as ex:
         print(f"  {task['id']}: ERROR del modelo: {ex}")
         return None
     rec = dict(task_id=task["id"], bloque=task["bloque"], model=model_cfg["name"], response=resp["text"],
                thinking_chars=resp.get("thinking_chars", 0), usage=resp.get("usage", {}),
-               latency_s=resp.get("latency_s"), timestamp=time.strftime("%Y-%m-%d %H:%M:%S"))
+               latency_s=resp.get("latency_s"), finish_reason=resp.get("finish_reason"), timestamp=time.strftime("%Y-%m-%d %H:%M:%S"))
     if task["kind"] in ("sql", "python"):
         rec["grade"] = grading.grade_auto(task, resp["text"], DATA, expected[task["id"]])
         estado = "OK " if rec["grade"]["ok"] else "MAL"
@@ -225,7 +233,7 @@ def cmd_review(args):
             t = BY_ID.get(rec["task_id"])
             if not t or t["kind"] not in ("viz", "text"):
                 continue
-            if t["kind"] == "viz" and not rec["grade"].get("ok"):
+            if rec["grade"].get("ok") is False:
                 continue  # no corrió: vale 0, no hace falta revisarlo
             if rec["task_id"] in scores.get(name, {}):
                 continue
@@ -290,7 +298,7 @@ def task_score(t, rec, human):
         return None
     if t["kind"] in ("sql", "python"):
         return 1.0 if rec["grade"]["ok"] else 0.0
-    if t["kind"] == "viz" and not rec["grade"].get("ok"):
+    if rec["grade"].get("ok") is False:
         return 0.0
     s = human.get(t["id"])
     return None if s is None else (s - 1) / 4

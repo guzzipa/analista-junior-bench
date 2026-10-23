@@ -1,0 +1,20 @@
+{
+ "task_id": "L06",
+ "bloque": "Limpieza",
+ "model": "gemini-flash-lite",
+ "response": "```python\nimport os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    df = pd.read_csv(csv_path)\n\n    # Un teléfono se considera no válido si es NaN o si es igual a \"NA\" (case-insensitive o con espacios)\n    # También podemos limpiar posibles espacios alrededor\n    telefonos = df[\"telefono\"].astype(str).str.strip().str.upper()\n\n    invalid_mask = (df[\"telefono\"].isna()) | (telefonos == \"NA\") | (telefonos == \"NAN\")\n\n    return int(invalid_mask.sum())\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 155,
+  "prompt_tokens": 813,
+  "total_tokens": 968
+ },
+ "latency_s": 2.32,
+ "timestamp": "2026-10-23 09:15:23",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 400, recibido 241",
+  "code": "import os\nimport pandas as pd\n\n\ndef solve(data_dir):\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    df = pd.read_csv(csv_path)\n\n    # Un teléfono se considera no válido si es NaN o si es igual a \"NA\" (case-insensitive o con espacios)\n    # También podemos limpiar posibles espacios alrededor\n    telefonos = df[\"telefono\"].astype(str).str.strip().str.upper()\n\n    invalid_mask = (df[\"telefono\"].isna()) | (telefonos == \"NA\") | (telefonos == \"NAN\")\n\n    return int(invalid_mask.sum())",
+  "got": "241"
+ }
+}

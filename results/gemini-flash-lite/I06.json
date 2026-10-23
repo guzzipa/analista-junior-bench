@@ -1,0 +1,17 @@
+{
+ "task_id": "I06",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "Hola, jefe. El ticket promedio de mayo subió a $509.612, pero es una métrica engañosa. Detecté 8 pedidos anómalos del mismo cliente (ID 999999) por exactamente $9.999.999 cada uno. Estos valores extremos inflan artificialmente el promedio. Te recomiendo usar el ticket mediano, que en mayo fue de $212.940 y muestra una tendencia estable. No tengo datos para saber si estos 8 pedidos son compras reales o errores de sistema.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 122,
+  "prompt_tokens": 607,
+  "total_tokens": 729
+ },
+ "latency_s": 1.87,
+ "timestamp": "2026-10-23 09:21:13",
+ "grade": {
+  "ok": null
+ }
+}

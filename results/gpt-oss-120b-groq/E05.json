@@ -1,0 +1,27 @@
+{
+ "task_id": "E05",
+ "bloque": "Estadística",
+ "model": "gpt-oss-120b-groq",
+ "response": "```python\nimport os\nimport sqlite3\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula el crecimiento interanual de la facturación (pedidos entregados)\n    del primer trimestre de 2026 respecto al primer trimestre de 2025.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo SQLite `tienda.db`.\n\n    Retorna\n    -------\n    float\n        Crecimiento como fracción, redondeado a 4 decimales.\n        (por ejemplo 0.25 significa +25%).\n    \"\"\"\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    cur = conn.cursor()\n\n    # Función auxiliar para obtener la facturación de un rango de fechas\n    def facturacion(start_date, end_date):\n        query = \"\"\"\n            SELECT SUM(i.cantidad * i.precio_unitario) AS fact\n            FROM pedidos p\n            JOIN items i ON p.pedido_id = i.pedido_id\n            WHERE p.estado = 'entregado'\n              AND p.fecha BETWEEN ? AND ?\n        \"\"\"\n        cur.execute(query, (start_date, end_date))\n        result = cur.fetchone()[0]\n        # Si no hay pedidos, SUM devuelve None\n        return result if result is not None else 0.0\n\n    # Primer trimestre 2025\n    fact_2025 = facturacion('2025-01-01', '2025-03-31')\n    # Primer trimestre 2026\n    fact_2026 = facturacion('2026-01-01', '2026-03-31')\n\n    conn.close()\n\n    # Evitar división por cero; si la facturación 2025 es 0, devolvemos 0.0\n    if fact_2025 == 0:\n        growth = 0.0\n    else:\n        growth = (fact_2026 - fact_2025) / fact_2025\n\n    return round(growth, 4)\n```",
+ "thinking_chars": 983,
+ "usage": {
+  "queue_time": 0.207369867,
+  "prompt_tokens": 638,
+  "prompt_time": 0.028634599,
+  "completion_tokens": 687,
+  "completion_time": 1.4331371640000001,
+  "total_tokens": 1325,
+  "total_time": 1.461771763,
+  "completion_tokens_details": {
+   "reasoning_tokens": 253
+  }
+ },
+ "latency_s": 1.83,
+ "timestamp": "2026-10-23 09:22:51",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\n\ndef solve(data_dir):\n    \"\"\"\n    Calcula el crecimiento interanual de la facturación (pedidos entregados)\n    del primer trimestre de 2026 respecto al primer trimestre de 2025.\n\n    Parámetros\n    ----------\n    data_dir : str\n        Ruta al directorio que contiene el archivo SQLite `tienda.db`.\n\n    Retorna\n    -------\n    float\n        Crecimiento como fracción, redondeado a 4 decimales.\n        (por ejemplo 0.25 significa +25%).\n    \"\"\"\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    cur = conn.cursor()\n\n    # Función auxiliar para obtener la facturación de un rango de fechas\n    def facturacion(start_date, end_date):\n        query = \"\"\"\n            SELECT SUM(i.cantidad * i.precio_unitario) AS fact\n            FROM pedidos p\n            JOIN items i ON p.pedido_id = i.pedido_id\n            WHERE p.estado = 'entregado'\n              AND p.fecha BETWEEN ? AND ?\n        \"\"\"\n        cur.execute(query, (start_date, end_date))\n        result = cur.fetchone()[0]\n        # Si no hay pedidos, SUM devuelve None\n        return result if result is not None else 0.0\n\n    # Primer trimestre 2025\n    fact_2025 = facturacion('2025-01-01', '2025-03-31')\n    # Primer trimestre 2026\n    fact_2026 = facturacion('2026-01-01', '2026-03-31')\n\n    conn.close()\n\n    # Evitar división por cero; si la facturación 2025 es 0, devolvemos 0.0\n    if fact_2025 == 0:\n        growth = 0.0\n    else:\n        growth = (fact_2026 - fact_2025) / fact_2025\n\n    return round(growth, 4)",
+  "got": "0.369"
+ }
+}

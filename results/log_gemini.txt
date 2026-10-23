@@ -1,0 +1,51 @@
+Corriendo 50 tareas con gemini-flash-lite (gemini-3.5-flash-lite)
+  S02 [OK ]    1.9s
+  S03 [OK ]    7.8s
+  S04 [OK ]    1.9s
+  S05 [OK ]    4.9s
+  S06 [OK ]    1.9s
+  S07 [OK ]    1.5s
+  S08 [OK ]    2.0s
+  S09 [OK ]    2.0s
+  S10 [OK ]    2.0s
+  L01 [OK ]    1.8s
+  L02 [MAL]    3.8s  resultado['caba']: esperado 728, recibido 283
+  L03 [OK ]    2.6s
+  L04 [OK ]    2.4s
+  L05 [MAL]    2.3s  error al ejecutar:   File "pandas/_libs/parsers.pyx", line 574, in pandas._libs.parsers.TextReader.__cinit__
+  L06 [MAL]    2.3s  resultado: esperado 400, recibido 241
+  L07 [MAL]    3.3s  resultado: esperado 441547.29, recibido 499806.85
+  L08 [MAL]    2.6s  error al ejecutar:     op = _MergeOperation(
+  L09 [OK ]    2.3s
+  L10 [OK ]   12.3s
+  V01 [PNG]    4.6s
+  V02 [PNG]    3.0s
+  V03 [PNG]    3.7s
+  V04 [PNG]    3.8s
+  V05 [PNG]   14.8s
+  V06 [PNG]    3.4s
+  V07 [PNG]    4.3s
+  V08 [PNG]    3.7s
+  V09 [PNG]    4.6s
+  V10 [PNG]    3.8s
+  E01 [OK ]    1.5s
+  E02 [OK ]    3.0s
+  E03 [OK ]    2.0s
+  E04 [OK ]    2.3s
+  E05 [OK ]    2.0s
+  E06 [OK ]    1.9s
+  E07 [OK ]    2.1s
+  E08 [OK ]    1.9s
+  E09 [OK ]    2.6s
+  E10 [OK ]    2.4s
+  I01 [TXT]    1.5s
+  I02 [TXT]    1.8s
+  I03 [TXT]    2.0s
+  I04 [TXT]    1.9s
+  I05 [TXT]    2.0s
+  I06 [TXT]    1.9s
+  I07 [TXT]    2.0s
+  I08 [TXT]    1.5s
+  I09 [TXT]    1.2s
+  I10 [TXT]    1.9s
+Terminado. Siguiente paso: python bench.py review  (y después python bench.py report)

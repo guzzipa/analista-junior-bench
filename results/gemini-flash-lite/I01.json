@@ -1,0 +1,17 @@
+{
+ "task_id": "I01",
+ "bloque": "Insight de negocio",
+ "model": "gemini-flash-lite",
+ "response": "Hola. Las ventas totales de marzo 2026 cayeron un 11% frente a febrero 2026, impulsadas principalmente por la categoría Tecnología, que bajó de 235.6M a 163.9M ARS. Dentro de tecnología, el modelo Celular Nova X se derrumbó de 172 a 21 unidades vendidas, mientras que el Nova Lite subió. Además, en marzo hubo un problema crítico en la pasarela de pagos con tarjeta: entre el 10 y el 16 de marzo la aprobación cayó abruptamente a rangos de 46% a 59%. Los pedidos cancelados también subieron a 181 en marzo, el pico del año.",
+ "thinking_chars": 0,
+ "usage": {
+  "completion_tokens": 161,
+  "prompt_tokens": 1559,
+  "total_tokens": 1720
+ },
+ "latency_s": 1.49,
+ "timestamp": "2026-10-23 09:20:28",
+ "grade": {
+  "ok": null
+ }
+}
