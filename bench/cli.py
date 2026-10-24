@@ -14,7 +14,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data")
 RESULTS = os.path.join(ROOT, "results")
 EXPECTED = os.path.join(DATA, "expected.json")
-SCORES = os.path.join(RESULTS, "puntajes_humanos.json")
+SCORES = os.path.join(RESULTS, "puntajes.json")
 
 # Criterio de "aprobó el período de prueba". Fijado ANTES de correr cualquier modelo.
 APRUEBA_TOTAL = 0.70
@@ -311,7 +311,10 @@ def cmd_report(args):
     lines = ["# Resultados: analista junior vs. IA gratis", "",
              f"Criterio de aprobación (fijado antes de correr): total ≥ {APRUEBA_TOTAL:.0%} y ningún bloque "
              f"por debajo de {APRUEBA_MIN_BLOQUE:.0%}.", ""]
-    header = "| Modelo | " + " | ".join(BLOQUES) + " | Total | ¿Aprobó? | Tiempo total | Costo |"
+    corrector = load_json(SCORES, {}).get("_corrector")
+    if corrector:
+        lines += [f"Visualización e insight de negocio: {corrector}", ""]
+    header ="| Modelo | " + " | ".join(BLOQUES) + " | Total | ¿Aprobó? | Tiempo total | Costo |"
     lines += [header, "|" + "---|" * (len(BLOQUES) + 5)]
     summary = []
     pending_total = 0

@@ -1,6 +1,6 @@
 modelo,total,aprobo,minutos,tareas_respondidas,pendientes_humanos,SQL,Limpieza,Visualización,Estadística,Insight de negocio
-gemini-flash-lite,,,2.5,50,20,1.0,0.5,,1.0,
-gemma4-12b,,,32.7,50,17,1.0,0.1,,0.8,
-gpt-oss-120b-groq,,,2.4,50,18,0.8,0.4,,1.0,
-qwen3.5-4b,,,23.1,50,11,0.3,0.1,,0.1,
-qwen3.5-9b,,,28.8,50,17,0.6,0.0,,0.5,
+gemini-flash-lite,0.82,True,2.5,50,0,1.0,0.5,0.875,1.0,0.725
+gemma4-12b,0.555,False,32.7,50,0,1.0,0.1,0.375,0.8,0.5
+gpt-oss-120b-groq,0.6900000000000001,False,2.4,50,0,0.8,0.4,0.575,1.0,0.675
+qwen3.5-4b,0.14500000000000002,False,23.1,50,0,0.3,0.1,0.025,0.1,0.2
+qwen3.5-9b,0.32,False,28.8,50,0,0.6,0.0,0.125,0.5,0.375

@@ -4,7 +4,15 @@
 
 ## Resultados
 
-_Pendiente: se completa con `python bench.py report` (ver `results/reporte.md`)._
+| Modelo | Dónde corre | SQL | Limpieza | Visualización | Estadística | Insight | Total | ¿Aprobó? |
+|---|---|---|---|---|---|---|---|---|
+| Gemini 3.5 Flash-Lite | API gratis | 100% | 50% | 88% | 100% | 72% | **82%** | **Sí** |
+| gpt-oss-120b | API gratis (Groq) | 80% | 40% | 57% | 100% | 68% | 69% | No |
+| Gemma 4 12B | Notebook | 100% | 10% | 38% | 80% | 50% | 56% | No |
+| Qwen 3.5 9B | Notebook | 60% | 0% | 12% | 50% | 38% | 32% | No |
+| Qwen 3.5 4B | Notebook | 30% | 10% | 2% | 10% | 20% | 15% | No |
+
+Visualización e insight corregidos por IA a ciegas (ver abajo). Detalle de cada fallo en `results/reporte.md`.
 
 ## Qué evalúa
 
@@ -29,9 +37,11 @@ Fijado **antes** de correr cualquier modelo (ver `APRUEBA_TOTAL` en `bench/cli.p
 
 En los bloques humanos, un puntaje de 1 a 5 se convierte en 0% a 100%. Un gráfico cuyo código no corre vale 0.
 
-### Corrección humana a ciegas
+### Corrección a ciegas de gráficos e insights
 
 `python bench.py review` muestra las respuestas de gráficos e insights en orden aleatorio y **sin decir qué modelo las escribió**, junto con los puntos clave que tiene que tener una buena respuesta.
+
+**En esta corrida, esos dos bloques los corrigió una IA (Claude), no una persona.** Se hizo así a pedido del autor: las 83 respuestas se anonimizaron y mezclaron, se puntuaron con la rúbrica y los puntos clave de `bench/tasks.py` sin ver el modelo, y recién después se cruzaron con la tabla de correspondencias. Los puntajes están en `results/puntajes.json`. Si querés auditarlos o reemplazarlos por una corrección humana, borrá ese archivo y corré `bench.py review`.
 
 ## Modelos
 

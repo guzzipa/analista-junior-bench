@@ -2,15 +2,15 @@
 
 Criterio de aprobación (fijado antes de correr): total ≥ 70% y ningún bloque por debajo de 50%.
 
+Visualización e insight de negocio: Claude (IA), a ciegas: respuestas anonimizadas y mezcladas, con la rúbrica y los puntos clave de bench/tasks.py, a pedido de Pablo. No es corrección humana.
+
 | Modelo | SQL | Limpieza | Visualización | Estadística | Insight de negocio | Total | ¿Aprobó? | Tiempo total | Costo |
 |---|---|---|---|---|---|---|---|---|---|
-| gemini-flash-lite | 100% | 50% | pendiente | 100% | pendiente | pendiente | pendiente | 3 min | USD 0 |
-| gemma4-12b | 100% | 10% | pendiente | 80% | pendiente | pendiente | pendiente | 33 min | USD 0 |
-| gpt-oss-120b-groq | 80% | 40% | pendiente | 100% | pendiente | pendiente | pendiente | 2 min | USD 0 |
-| qwen3.5-4b | 30% | 10% | pendiente | 10% | pendiente | pendiente | pendiente | 23 min | USD 0 |
-| qwen3.5-9b | 60% | 0% | pendiente | 50% | pendiente | pendiente | pendiente | 29 min | USD 0 |
-
-Faltan 83 correcciones humanas (o tareas sin correr). Corré `python bench.py review` para completarlas.
+| gemini-flash-lite | 100% | 50% | 88% | 100% | 72% | 82% | SÍ | 3 min | USD 0 |
+| gemma4-12b | 100% | 10% | 38% | 80% | 50% | 56% | NO | 33 min | USD 0 |
+| gpt-oss-120b-groq | 80% | 40% | 57% | 100% | 68% | 69% | NO | 2 min | USD 0 |
+| qwen3.5-4b | 30% | 10% | 2% | 10% | 20% | 15% | NO | 23 min | USD 0 |
+| qwen3.5-9b | 60% | 0% | 12% | 50% | 38% | 32% | NO | 29 min | USD 0 |
 
 ## Fallos de las tareas autocorregidas
 
