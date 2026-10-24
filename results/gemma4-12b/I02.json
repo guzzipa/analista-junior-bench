@@ -1,0 +1,17 @@
+{
+ "task_id": "I02",
+ "bloque": "Insight de negocio",
+ "model": "gemma4-12b",
+ "response": "Es cierto que la satisfacción en Patagonia está disminuyendo. El puntaje de reseñas cayó drásticamente de 3.94 en enero a 3.08 en junio. Esto se explica por un aumento significativo en los días de entrega: pasaron de 7.4 días a 12.0 días a partir de abril. Los datos muestran una correlación directa entre la demora en la logística y la baja en la calificación de los clientes.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 854,
+  "completion_tokens": 93
+ },
+ "latency_s": 25.41,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:09:32",
+ "grade": {
+  "ok": null
+ }
+}

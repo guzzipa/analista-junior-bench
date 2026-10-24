@@ -1,0 +1,20 @@
+{
+ "task_id": "S07",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "Hola equipo, aquí tenés la consulta solicitada para el reporte de facturación mensual 2025 (pedidos entregados) con su acumulado desde enero.\n\n```sql\nSELECT\n    strftime('%Y-%m', p.fecha) AS mes,\n    SUM(i.cantidad * i.precio_unitario) AS facturacion,\n    SUM(SUM(i.cantidad * i.precio_unitario)) OVER (ORDER BY strftime('%Y-%m', p.fecha)) AS acumulado\nFROM items i\nJOIN pedidos p ON i.pedido_id = p.pedido_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2025-01-01'\n  AND p.fecha <= '2025-12-31'\nGROUP BY strftime('%Y-%m', p.fecha)\nORDER BY mes;\n```",
+ "thinking_chars": 17504,
+ "usage": {
+  "prompt_tokens": 523,
+  "completion_tokens": 4955
+ },
+ "latency_s": 233.05,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 10:35:58",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT\n    strftime('%Y-%m', p.fecha) AS mes,\n    SUM(i.cantidad * i.precio_unitario) AS facturacion,\n    SUM(SUM(i.cantidad * i.precio_unitario)) OVER (ORDER BY strftime('%Y-%m', p.fecha)) AS acumulado\nFROM items i\nJOIN pedidos p ON i.pedido_id = p.pedido_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2025-01-01'\n  AND p.fecha <= '2025-12-31'\nGROUP BY strftime('%Y-%m', p.fecha)\nORDER BY mes;",
+  "got": "[[\"2025-01\", 479314260.0, 479314260.0], [\"2025-02\", 488141740.0, 967456000.0], [\"2025-03\", 485802610.0, 1453258610.0], [\"2025-04\", 502568200.0, 1955826810.0], [\"2025-05\", 632772380.0, 2588599190.0], [\"2025-06\", 572794670.0, 3161393860.0], [\"2025-07\", 594745220.0, 3756139080.0], [\"2025-08\", 677002620.0, 4433141700.0], [\"2025-09\", 586965790.0, 5020107490.0], [\"2025-10\", 652338740.0, 5672446230.0], [\"2025-11\", 745358930.0, 6417805160.0], [\"2025-12\", 1147209470.0, 7565014630.0]]"
+ }
+}

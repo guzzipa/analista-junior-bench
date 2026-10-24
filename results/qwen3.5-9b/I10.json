@@ -1,0 +1,17 @@
+{
+ "task_id": "I10",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-9b",
+ "response": "**Resumen Ejecutivo Primer Semestre 2026 – Tienda Pampa**\n\n1. La facturación creció un **43% interanual**, alcanzando los $4.520 millones en H1 2026 frente a los $3.161 millones del año anterior, impulsada principalmente por el aumento del ticket promedio (+26%) y la expansión de la base de clientes activos (+31%).\n\n2. El volumen de operaciones se consolidó con un incremento del **13% en pedidos entregados** (de 8.799 a 9.945) y una fuerte migración al canal digital, donde el porcentaje de pedidos vía App subió **18 puntos porcentuales**, llegando al 45,52%.\n\n3. La calidad del servicio mostró estabilidad con un puntaje de reseñas casi inalterable (4,40 vs 4,43), aunque la tasa de cancelación experimentó una ligera erosión de **0,19 puntos porcentuales** (de 7,10% a 7,29%), lo que sugiere posibles fricciones operativas o de stock en el cierre del período.\n\n4. Es imposible determinar el impacto financiero específico de los eventos disruptivos (quiebre de stock del Nova X, corte de procesador y cambio logístico) sobre la facturación total, ya que no se dispone de datos desagregados por fecha ni de métricas de pérdida de ventas o costos asociados a dichos incidentes.\n\n5. No es posible calcular el impacto neto del test A/B de checkout en mayo ni del Hot Sale sobre los resultados totales del semestre, dado que faltan las métricas de conversión específicas de esos eventos y la descomposición temporal de la facturación por semana o día.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 445,
+  "completion_tokens": 383
+ },
+ "latency_s": 30.25,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:27:24",
+ "grade": {
+  "ok": null
+ }
+}

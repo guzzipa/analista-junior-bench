@@ -1,0 +1,19 @@
+{
+ "task_id": "S10",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "```sql\nSELECT \n    CAST(SUM(CASE WHEN p2.fecha IS NOT NULL THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) AS tasa\nFROM (\n    SELECT cliente_id\n    FROM pedidos\n    WHERE estado = 'entregado'\n      AND fecha >= '2025-01-01'\n      AND fecha <= '2025-01-31'\n    GROUP BY cliente_id\n) c\nJOIN pedidos p ON c.cliente_id = p.cliente_id\nWHERE p.estado = 'entregado'\n  AND p.fecha > (SELECT MIN(fecha) FROM pedidos WHERE pedido_id = p.pedido_id)\n  AND p.fecha <= (SELECT MIN(fecha) + INTERVAL '90 days' FROM pedidos WHERE pedido_id = p.pedido_id);\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 557,
+  "completion_tokens": 178
+ },
+ "latency_s": 9.51,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:23:39",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar: no such column: p2.fecha",
+  "code": "SELECT \n    CAST(SUM(CASE WHEN p2.fecha IS NOT NULL THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*) AS tasa\nFROM (\n    SELECT cliente_id\n    FROM pedidos\n    WHERE estado = 'entregado'\n      AND fecha >= '2025-01-01'\n      AND fecha <= '2025-01-31'\n    GROUP BY cliente_id\n) c\nJOIN pedidos p ON c.cliente_id = p.cliente_id\nWHERE p.estado = 'entregado'\n  AND p.fecha > (SELECT MIN(fecha) FROM pedidos WHERE pedido_id = p.pedido_id)\n  AND p.fecha <= (SELECT MIN(fecha) + INTERVAL '90 days' FROM pedidos WHERE pedido_id = p.pedido_id);"
+ }
+}

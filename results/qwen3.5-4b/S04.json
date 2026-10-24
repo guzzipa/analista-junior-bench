@@ -1,0 +1,19 @@
+{
+ "task_id": "S04",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "```sql\nSELECT \n    strftime('%Y-%m', fecha_entrega) AS mes,\n    COUNT(DISTINCT cliente_id) AS nuevos_clientes\nFROM pedidos p\nJOIN clientes c ON p.cliente_id = c.cliente_id\nWHERE p.estado = 'entregado'\n  AND p.fecha_entrega IS NOT NULL\n  AND (SELECT MAX(p2.fecha_entrega) \n       FROM pedidos p2 \n       WHERE p2.cliente_id = c.cliente_id \n         AND p2.estado = 'entregado' \n         AND p2.fecha_entrega IS NOT NULL) \n    <= p.fecha_entrega\nGROUP BY mes\nORDER BY mes;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 531,
+  "completion_tokens": 143
+ },
+ "latency_s": 8.3,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:22:43",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar: ambiguous column name: cliente_id",
+  "code": "SELECT \n    strftime('%Y-%m', fecha_entrega) AS mes,\n    COUNT(DISTINCT cliente_id) AS nuevos_clientes\nFROM pedidos p\nJOIN clientes c ON p.cliente_id = c.cliente_id\nWHERE p.estado = 'entregado'\n  AND p.fecha_entrega IS NOT NULL\n  AND (SELECT MAX(p2.fecha_entrega) \n       FROM pedidos p2 \n       WHERE p2.cliente_id = c.cliente_id \n         AND p2.estado = 'entregado' \n         AND p2.fecha_entrega IS NOT NULL) \n    <= p.fecha_entrega\nGROUP BY mes\nORDER BY mes;"
+ }
+}

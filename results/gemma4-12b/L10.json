@@ -1,0 +1,19 @@
+{
+ "task_id": "L10",
+ "bloque": "Limpieza",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    # Conectar a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Leer el archivo ventas_wide.csv\n    # El archivo tiene categorías en filas y meses en columnas\n    csv_path = os.path.join(data_dir, \"ventas_wide.csv\")\n    df_wide = pd.read_csv(csv_path)\n    \n    # El archivo contiene los meses de 2025 (columnas de la 1 a la 12)\n    # Necesitamos sumar los valores de las columnas que corresponden a 2025\n    # Los valores vienen con el símbolo '$' y comas, por lo que hay que limpiarlos\n    \n    # Identificar columnas de 2025 (ej: 2025-01, 2025-02, ..., 2025-12)\n    cols_2025 = [col for col in df_wide.columns if col.startswith('2025-')]\n    \n    # Convertir los valores a numéricos eliminando el símbolo $ y la coma\n    # Usamos applymap o apply para limpiar la matriz de datos\n    df_cleaned = df_wide.copy()\n    for col in cols_2025:\n        df_cleaned[col] = df_wide[col].astype(str).str.replace('$', '').str.replace(',', '').astype(float)\n    \n    # Sumar por fila para obtener el total anual de cada categoría\n    # El resultado es una serie donde el índice es la categoría\n    totals = df_cleaned[cols_2025].sum(axis=1)\n    \n    # Convertir a diccionario con valores enteros\n    result = {row[0]: int(row[1]) for row in totals.items()}\n    \n    conn.close()\n    return result\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 1174,
+  "completion_tokens": 471
+ },
+ "latency_s": 54.83,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:47:53",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:     new_values = astype_array(values, dtype, copy=copy)\n  File \"/Users/guzzipa/projects/analista-junior-bench/.venv/lib/python3.9/site-packages/pandas/core/dtypes/astype.py\", line 182, in astype_array\n    values = _astype_nansafe(values, dtype, copy=copy)\n  File \"/Users/guzzipa/projects/analista-junior-bench/.venv/lib/python3.9/site-packages/pandas/core/dtypes/astype.py\", line 133, in _astype_nansafe\n    return arr.astype(dtype, copy=True)\nValueError: could not convert string to float: ' 38.954.795'",
+  "code": "import sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    # Conectar a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Leer el archivo ventas_wide.csv\n    # El archivo tiene categorías en filas y meses en columnas\n    csv_path = os.path.join(data_dir, \"ventas_wide.csv\")\n    df_wide = pd.read_csv(csv_path)\n    \n    # El archivo contiene los meses de 2025 (columnas de la 1 a la 12)\n    # Necesitamos sumar los valores de las columnas que corresponden a 2025\n    # Los valores vienen con el símbolo '$' y comas, por lo que hay que limpiarlos\n    \n    # Identificar columnas de 2025 (ej: 2025-01, 2025-02, ..., 2025-12)\n    cols_2025 = [col for col in df_wide.columns if col.startswith('2025-')]\n    \n    # Convertir los valores a numéricos eliminando el símbolo $ y la coma\n    # Usamos applymap o apply para limpiar la matriz de datos\n    df_cleaned = df_wide.copy()\n    for col in cols_2025:\n        df_cleaned[col] = df_wide[col].astype(str).str.replace('$', '').str.replace(',', '').astype(float)\n    \n    # Sumar por fila para obtener el total anual de cada categoría\n    # El resultado es una serie donde el índice es la categoría\n    totals = df_cleaned[cols_2025].sum(axis=1)\n    \n    # Convertir a diccionario con valores enteros\n    result = {row[0]: int(row[1]) for row in totals.items()}\n    \n    conn.close()\n    return result"
+ }
+}

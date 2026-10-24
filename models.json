@@ -7,7 +7,8 @@
       "num_ctx": 16384,
       "nota": "Local, ~3,5 GB. El más chico: corre en casi cualquier notebook.",
       "num_predict": 8192,
-      "timeout_s": 900
+      "timeout_s": 900,
+      "think": false
     },
     {
       "name": "qwen3.5-9b",
@@ -16,7 +17,8 @@
       "num_ctx": 16384,
       "nota": "Local, ~7 GB.",
       "num_predict": 8192,
-      "timeout_s": 900
+      "timeout_s": 900,
+      "think": false
     },
     {
       "name": "gemma4-12b",
@@ -25,7 +27,8 @@
       "num_ctx": 16384,
       "nota": "Local, ~8 GB.",
       "num_predict": 8192,
-      "timeout_s": 900
+      "timeout_s": 900,
+      "think": false
     },
     {
       "name": "gpt-oss-120b-groq",
@@ -52,7 +55,8 @@
       "num_ctx": 8192,
       "nota": "OPCIONAL. Local, ~14 GB: en una Mac de 16 GB anda muy justo y necesita casi todo el disco libre.",
       "num_predict": 8192,
-      "timeout_s": 900
+      "timeout_s": 900,
+      "think": false
     },
     {
       "name": "gemini-flash",

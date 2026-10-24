@@ -1,0 +1,19 @@
+{
+ "task_id": "L06",
+ "bloque": "Limpieza",
+ "model": "gemma4-12b",
+ "response": "```python\nimport pandas as pd\nimport os\nimport sqlite3\n\ndef solve(data_dir):\n    # Ruta del archivo CSV\n    file_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leemos el archivo. El archivo tiene una estructura donde el teléfono \n    # puede ser \"NA\" o estar vacío.\n    # Según la muestra, la columna es 'telefono'.\n    df = pd.read_csv(file_path, dtype={'telefono': str})\n    \n    # Definimos qué es un teléfono válido:\n    # En el contexto de este dataset, \"NA\" no es un teléfono válido.\n    # También evaluamos si el valor es nulo o está vacío.\n    \n    # Filtramos filas donde el teléfono no es válido\n    # Un teléfono no válido es aquel que es \"NA\", es nulo o está vacío.\n    invalid_mask = (\n        df['telefono'].isna() | \n        (df['telefono'].astype(str).str.strip() == \"\") | \n        (df['telefono'].astype(str).str.strip().upper() == \"NA\")\n    )\n    \n    count = invalid_mask.sum()\n    \n    return int(count)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 829,
+  "completion_tokens": 282
+ },
+ "latency_s": 24.83,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:44:35",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:     res = mod.solve(data_dir)\n  File \"/tmp/bench_jpir7wi4/solution.py\", line 23, in solve\n    (df['telefono'].astype(str).str.strip().upper() == \"NA\")\n  File \"/Users/guzzipa/projects/analista-junior-bench/.venv/lib/python3.9/site-packages/pandas/core/generic.py\", line 6321, in __getattr__\n    return object.__getattribute__(self, name)\nAttributeError: 'Series' object has no attribute 'upper'",
+  "code": "import pandas as pd\nimport os\nimport sqlite3\n\ndef solve(data_dir):\n    # Ruta del archivo CSV\n    file_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leemos el archivo. El archivo tiene una estructura donde el teléfono \n    # puede ser \"NA\" o estar vacío.\n    # Según la muestra, la columna es 'telefono'.\n    df = pd.read_csv(file_path, dtype={'telefono': str})\n    \n    # Definimos qué es un teléfono válido:\n    # En el contexto de este dataset, \"NA\" no es un teléfono válido.\n    # También evaluamos si el valor es nulo o está vacío.\n    \n    # Filtramos filas donde el teléfono no es válido\n    # Un teléfono no válido es aquel que es \"NA\", es nulo o está vacío.\n    invalid_mask = (\n        df['telefono'].isna() | \n        (df['telefono'].astype(str).str.strip() == \"\") | \n        (df['telefono'].astype(str).str.strip().upper() == \"NA\")\n    )\n    \n    count = invalid_mask.sum()\n    \n    return int(count)"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "task_id": "I03",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-9b",
+ "response": "No estoy de acuerdo; la App atrae un mix de categorías mucho más favorable (Belleza y Deportes) que Web, lo cual eleva el ticket promedio del cliente final a pesar de tener pedidos individuales más bajos. Además, la participación de la App en los pedidos creció 8 puntos porcentuales desde S1 2025, demostrando su capacidad de crecimiento orgánico. Dejarla fuera eliminaría una fuente clave de adquisición y diversificación de categorías, no solo un canal de ventas más barato.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 504,
+  "completion_tokens": 106
+ },
+ "latency_s": 13.11,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:25:22",
+ "grade": {
+  "ok": null
+ }
+}

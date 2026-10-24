@@ -1,0 +1,20 @@
+{
+ "task_id": "S08",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "```sql\nSELECT \n    c.region AS region,\n    p.producto_id AS producto_id,\n    SUM(i.cantidad) AS unidades\nFROM clientes c\nJOIN pedidos ped ON c.cliente_id = ped.cliente_id\nJOIN items i ON ped.pedido_id = i.pedido_id\nJOIN productos p ON i.producto_id = p.producto_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha >= '2025-01-01'\n  AND ped.fecha <= '2025-12-31'\nGROUP BY c.region, p.producto_id\nORDER BY c.region;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 525,
+  "completion_tokens": 140
+ },
+ "latency_s": 8.14,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:23:23",
+ "grade": {
+  "ok": false,
+  "error": "esperaba 6 filas, recibió 210",
+  "code": "SELECT \n    c.region AS region,\n    p.producto_id AS producto_id,\n    SUM(i.cantidad) AS unidades\nFROM clientes c\nJOIN pedidos ped ON c.cliente_id = ped.cliente_id\nJOIN items i ON ped.pedido_id = i.pedido_id\nJOIN productos p ON i.producto_id = p.producto_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha >= '2025-01-01'\n  AND ped.fecha <= '2025-12-31'\nGROUP BY c.region, p.producto_id\nORDER BY c.region;",
+  "got": "[[\"AMBA\", 1, 1114], [\"AMBA\", 2, 370], [\"AMBA\", 3, 246], [\"AMBA\", 4, 627], [\"AMBA\", 5, 332], [\"AMBA\", 6, 204], [\"AMBA\", 7, 492], [\"AMBA\", 8, 470], [\"AMBA\", 9, 222], [\"AMBA\", 10, 245], [\"AMBA\", 11, 378], [\"AMBA\", 12, 352], [\"AMBA\", 13, 462], [\"AMBA\", 14, 242], [\"AMBA\", 15, 495], [\"AMBA\", 16, 438], [\"AMBA\", 17, 247], [\"AMBA\", 18, 331], [\"AMBA\", 19, 336], [\"AMBA\", 20, 147], [\"AMBA\", 21, 636], [\"AMBA\", 22, 125], [\"AMBA\", 23, 274], [\"AMBA\", 24, 400], [\"AMBA\", 25, 456], [\"AMBA\", 26, 748], [\"AMBA\", 27, 584], [\"AMBA\", 28, 311], [\"AMBA\", 29, 475], [\"AMBA\", 30, 463], [\"AMBA\", 31, 674], [\"AMBA\", 32, 937],…"
+ }
+}

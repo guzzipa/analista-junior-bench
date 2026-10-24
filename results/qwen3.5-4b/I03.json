@@ -1,0 +1,17 @@
+{
+ "task_id": "I03",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-4b",
+ "response": "No estoy de acuerdo; el ticket promedio menor en la app (367.5 vs 527.0) es un efecto de composición por mayor volumen de pedidos y menor frecuencia de compra (1.9 vs 1.7). La app genera más facturación total por cliente (704.8 vs 898.0) y domina el mix de categorías de alto valor como Tecnología (37.2%) y Electro (29.4%), mientras que la web se enfoca en Belleza y Deportes. Además, la participación de la app en los pedidos creció del 37.3% al 45.5%, impulsando el crecimiento general. Dejar de empujarla sacrificaría volumen y diversificación sin mejorar necesariamente el ticket promedio global.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 504,
+  "completion_tokens": 166
+ },
+ "latency_s": 9.88,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:45:10",
+ "grade": {
+  "ok": null
+ }
+}

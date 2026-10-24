@@ -1,0 +1,20 @@
+{
+ "task_id": "S03",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "Aquí está la consulta SQL solicitada para calcular el ticket promedio por canal en el primer trimestre de 2026:\n\n```sql\nSELECT canal, ROUND(AVG(t.ticket), 2) AS ticket_promedio\nFROM (\n    SELECT p.canal, SUM(i.cantidad * i.precio_unitario) AS ticket\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha BETWEEN '2026-01-01' AND '2026-03-31'\n    GROUP BY p.pedido_id, p.canal\n) t\nGROUP BY canal;\n```",
+ "thinking_chars": 19098,
+ "usage": {
+  "prompt_tokens": 527,
+  "completion_tokens": 5377
+ },
+ "latency_s": 237.92,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 10:15:19",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT canal, ROUND(AVG(t.ticket), 2) AS ticket_promedio\nFROM (\n    SELECT p.canal, SUM(i.cantidad * i.precio_unitario) AS ticket\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha BETWEEN '2026-01-01' AND '2026-03-31'\n    GROUP BY p.pedido_id, p.canal\n) t\nGROUP BY canal;",
+  "got": "[[\"app\", 359228.9], [\"web\", 517505.57]]"
+ }
+}

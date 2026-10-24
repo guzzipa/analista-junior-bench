@@ -1,0 +1,20 @@
+{
+ "task_id": "E06",
+ "bloque": "Estadística",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport numpy as np\nimport os\n\ndef solve(data_dir):\n    # Conexión a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener la facturación mensual de pedidos entregados en 2025\n    # Unimos pedidos con items para obtener el precio_unitario y cantidad\n    # Filtramos por estado 'entregado' y fecha en 2025\n    query = \"\"\"\n    SELECT \n        strftime('%m', p.fecha) as mes_str,\n        SUM(i.cantidad * i.precio_unitario) as facturacion\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado' \n      AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n    GROUP BY mes_str\n    ORDER BY mes_str ASC\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha'])\n    \n    # Si no hay datos en el rango, la pendiente es 0\n    if df.empty:\n        conn.close()\n        return 0.0\n    \n    # Convertimos el mes a valor numérico (1 a 12)\n    # strftime('%m') devuelve '01', '02', etc.\n    df['mes_num'] = df['mes_str'].astype(int)\n    \n    # Ajuste de regresión lineal: y = mx + b\n    # x = mes_num, y = facturacion\n    # Usamos polyfit para obtener la pendiente (m)\n    x = df['mes_num'].values\n    y = df['facturacion'].values\n    \n    # polyfit devuelve [pendiente, intercepto] para grado 1\n    m, _ = np.polyfit(x, y, 1)\n    \n    conn.close()\n    \n    # Retornamos la pendiente redondeada a 0 decimales\n    return float(round(m, 0))\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 631,
+  "completion_tokens": 522
+ },
+ "latency_s": 49.93,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:05:34",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import sqlite3\nimport pandas as pd\nimport numpy as np\nimport os\n\ndef solve(data_dir):\n    # Conexión a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener la facturación mensual de pedidos entregados en 2025\n    # Unimos pedidos con items para obtener el precio_unitario y cantidad\n    # Filtramos por estado 'entregado' y fecha en 2025\n    query = \"\"\"\n    SELECT \n        strftime('%m', p.fecha) as mes_str,\n        SUM(i.cantidad * i.precio_unitario) as facturacion\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado' \n      AND p.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n    GROUP BY mes_str\n    ORDER BY mes_str ASC\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha'])\n    \n    # Si no hay datos en el rango, la pendiente es 0\n    if df.empty:\n        conn.close()\n        return 0.0\n    \n    # Convertimos el mes a valor numérico (1 a 12)\n    # strftime('%m') devuelve '01', '02', etc.\n    df['mes_num'] = df['mes_str'].astype(int)\n    \n    # Ajuste de regresión lineal: y = mx + b\n    # x = mes_num, y = facturacion\n    # Usamos polyfit para obtener la pendiente (m)\n    x = df['mes_num'].values\n    y = df['facturacion'].values\n    \n    # polyfit devuelve [pendiente, intercepto] para grado 1\n    m, _ = np.polyfit(x, y, 1)\n    \n    conn.close()\n    \n    # Retornamos la pendiente redondeada a 0 decimales\n    return float(round(m, 0))",
+  "got": "39874770.0"
+ }
+}

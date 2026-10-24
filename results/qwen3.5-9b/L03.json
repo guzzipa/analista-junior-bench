@@ -1,0 +1,20 @@
+{
+ "task_id": "L03",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport pandas as pd\nfrom datetime import datetime\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leer el CSV\n    df = pd.read_csv(csv_path)\n    \n    # Normalizar la columna fecha_alta para manejar los diferentes formatos\n    # El formato argentino es DD/MM/YYYY o YYYY-MM-DD.\n    # Vamos a intentar parsear asumiendo primero DD/MM/YYYY y si falla, YYYY-MM-DD.\n    def parse_date_argentina(date_str):\n        date_str = date_str.strip()\n        try:\n            # Intento 1: Formato argentino DD/MM/YYYY (ej: 11/04/2025)\n            return datetime.strptime(date_str, \"%d/%m/%Y\")\n        except ValueError:\n            try:\n                # Intento 2: Formato estándar YYYY-MM-DD (ej: 2026-04-07)\n                return datetime.strptime(date_str, \"%Y-%m-%d\")\n            except ValueError:\n                # Si no coincide con ninguno, devolver None o manejar el error\n                return None\n\n    df['fecha_alta_parsed'] = df['fecha_alta'].apply(parse_date_argentina)\n    \n    # Filtrar solo las fechas del año 2025\n    df_2025 = df[df['fecha_alta_parsed'].notna() & (df['fecha_alta_parsed'].dt.year == 2025)]\n    \n    # Extraer el mes en formato 'YYYY-MM' y contar\n    df_2025['mes'] = df_2025['fecha_alta_parsed'].dt.to_period('M').astype(str)\n    \n    conteo = df_2025['mes'].value_counts().to_dict()\n    \n    return conteo\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 833,
+  "completion_tokens": 421
+ },
+ "latency_s": 23.69,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:00:27",
+ "grade": {
+  "ok": false,
+  "error": "resultado['2025-07']: esperado 96, recibido 67",
+  "code": "import os\nimport pandas as pd\nfrom datetime import datetime\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leer el CSV\n    df = pd.read_csv(csv_path)\n    \n    # Normalizar la columna fecha_alta para manejar los diferentes formatos\n    # El formato argentino es DD/MM/YYYY o YYYY-MM-DD.\n    # Vamos a intentar parsear asumiendo primero DD/MM/YYYY y si falla, YYYY-MM-DD.\n    def parse_date_argentina(date_str):\n        date_str = date_str.strip()\n        try:\n            # Intento 1: Formato argentino DD/MM/YYYY (ej: 11/04/2025)\n            return datetime.strptime(date_str, \"%d/%m/%Y\")\n        except ValueError:\n            try:\n                # Intento 2: Formato estándar YYYY-MM-DD (ej: 2026-04-07)\n                return datetime.strptime(date_str, \"%Y-%m-%d\")\n            except ValueError:\n                # Si no coincide con ninguno, devolver None o manejar el error\n                return None\n\n    df['fecha_alta_parsed'] = df['fecha_alta'].apply(parse_date_argentina)\n    \n    # Filtrar solo las fechas del año 2025\n    df_2025 = df[df['fecha_alta_parsed'].notna() & (df['fecha_alta_parsed'].dt.year == 2025)]\n    \n    # Extraer el mes en formato 'YYYY-MM' y contar\n    df_2025['mes'] = df_2025['fecha_alta_parsed'].dt.to_period('M').astype(str)\n    \n    conteo = df_2025['mes'].value_counts().to_dict()\n    \n    return conteo",
+  "got": "{\"2025-01\": 72, \"2025-07\": 67, \"2025-12\": 59, \"2025-10\": 57, \"2025-04\": 51, \"2025-09\": 51, \"2025-08\": 51, \"2025-03\": 48, \"2025-06\": 48, \"2025-05\": 47, \"2025-11\": 41, \"2025-02\": 38}"
+ }
+}

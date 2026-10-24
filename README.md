@@ -46,7 +46,7 @@ Definidos en `models.json`. Para agregar otro, sumá una entrada.
 | gemini-flash-lite | Capa gratuita de Google AI Studio | |
 | gpt-oss-20b (opcional) | Local (Ollama) | ~14 GB, muy justo en 16 GB de RAM |
 
-Todos corren con temperatura 0 y una sola vez por tarea, con el modo de razonamiento que traen por defecto. Los modelos locales tienen un tope de 8.192 tokens y 15 minutos por respuesta: si no terminan, la tarea cuenta como fallida.
+Todos corren con temperatura 0 y una sola vez por tarea. Los modelos por API usan el razonamiento que traen por defecto. Los modelos locales corren **sin modo de razonamiento** (`"think": false`): en una prueba con razonamiento activado, qwen3.5-4b se quedó sin terminar de pensar (tope de 8.192 tokens, unos 6 minutos por tarea) en 6 de las primeras 11 tareas, lo que hacía la corrida inviable en una notebook (más de 20 horas para los tres modelos). Esa corrida parcial quedó guardada en `results/_qwen3.5-4b-con-razonamiento/`. Los locales tienen además un tope de 8.192 tokens y 15 minutos por respuesta: si no terminan, la tarea cuenta como fallida.
 
 ## Cómo correrlo (Mac)
 

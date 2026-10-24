@@ -1,0 +1,20 @@
+{
+ "task_id": "L04",
+ "bloque": "Limpieza",
+ "model": "gemma4-12b",
+ "response": "```python\nimport pandas as pd\nimport sqlite3\nimport os\n\ndef solve(data_dir):\n    # Ruta del archivo CSV\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leer el archivo CSV\n    # El archivo tiene un formato donde la columna monto_compras incluye el símbolo \"$\" y comas para decimales\n    df = pd.read_csv(csv_path)\n    \n    # Función para limpiar y convertir la columna monto_compras\n    def clean_currency(value):\n        if pd.isna(value):\n            return 0.0\n        if isinstance(value, str):\n            # Quitar el símbolo de peso, espacios y reemplazar la coma por punto\n            clean_val = value.replace('$', '').replace(' ', '').replace(',', '.')\n            try:\n                return float(clean_val)\n            except ValueError:\n                return 0.0\n        return float(value)\n\n    # Aplicar la conversión\n    df['monto_compras_numeric'] = df['monto_compras'].apply(clean_currency)\n    \n    # Calcular la suma total\n    total_sum = df['monto_compras_numeric'].sum()\n    \n    # Retornar el resultado redondeado a 2 decimales\n    return round(float(total_sum), 2)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 843,
+  "completion_tokens": 312
+ },
+ "latency_s": 31.66,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:43:35",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 507536291.52, recibido 942.29",
+  "code": "import pandas as pd\nimport sqlite3\nimport os\n\ndef solve(data_dir):\n    # Ruta del archivo CSV\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leer el archivo CSV\n    # El archivo tiene un formato donde la columna monto_compras incluye el símbolo \"$\" y comas para decimales\n    df = pd.read_csv(csv_path)\n    \n    # Función para limpiar y convertir la columna monto_compras\n    def clean_currency(value):\n        if pd.isna(value):\n            return 0.0\n        if isinstance(value, str):\n            # Quitar el símbolo de peso, espacios y reemplazar la coma por punto\n            clean_val = value.replace('$', '').replace(' ', '').replace(',', '.')\n            try:\n                return float(clean_val)\n            except ValueError:\n                return 0.0\n        return float(value)\n\n    # Aplicar la conversión\n    df['monto_compras_numeric'] = df['monto_compras'].apply(clean_currency)\n    \n    # Calcular la suma total\n    total_sum = df['monto_compras_numeric'].sum()\n    \n    # Retornar el resultado redondeado a 2 decimales\n    return round(float(total_sum), 2)",
+  "got": "942.29"
+ }
+}

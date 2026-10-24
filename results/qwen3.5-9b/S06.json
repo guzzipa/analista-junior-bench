@@ -1,0 +1,20 @@
+{
+ "task_id": "S06",
+ "bloque": "SQL",
+ "model": "qwen3.5-9b",
+ "response": "```sql\nSELECT COUNT(DISTINCT c.cliente_id) AS clientes\nFROM clientes c\nJOIN pedidos p ON c.cliente_id = p.cliente_id\nWHERE p.estado = 'entregado'\n  AND (p.fecha_entrega >= '2025-01-01' AND p.fecha_entrega < '2026-01-01')\n  AND NOT EXISTS (\n    SELECT 1\n    FROM pedidos p2\n    WHERE p2.cliente_id = c.cliente_id\n      AND p2.estado = 'entregado'\n      AND p2.fecha_entrega >= '2026-01-01'\n      AND p2.fecha_entrega < '2026-07-01'\n  );\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 535,
+  "completion_tokens": 171
+ },
+ "latency_s": 5.98,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:58:23",
+ "grade": {
+  "ok": false,
+  "error": "fila 1, columna 1: esperado 1456, recibido 1426",
+  "code": "SELECT COUNT(DISTINCT c.cliente_id) AS clientes\nFROM clientes c\nJOIN pedidos p ON c.cliente_id = p.cliente_id\nWHERE p.estado = 'entregado'\n  AND (p.fecha_entrega >= '2025-01-01' AND p.fecha_entrega < '2026-01-01')\n  AND NOT EXISTS (\n    SELECT 1\n    FROM pedidos p2\n    WHERE p2.cliente_id = c.cliente_id\n      AND p2.estado = 'entregado'\n      AND p2.fecha_entrega >= '2026-01-01'\n      AND p2.fecha_entrega < '2026-07-01'\n  );",
+  "got": "[[1426]]"
+ }
+}

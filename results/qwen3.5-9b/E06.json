@@ -1,0 +1,19 @@
+{
+ "task_id": "E06",
+ "bloque": "Estadística",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport sqlite3\nimport numpy as np\nfrom scipy import stats\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    conn = sqlite3.connect(db_path)\n    \n    # 1. Obtener la facturación mensual de los pedidos entregados en 2025\n    query = \"\"\"\n        SELECT \n            strftime('%Y-%m', fecha) as mes,\n            SUM(cantidad * precio_unitario) as facturacion_mensual\n        FROM items i\n        JOIN pedidos p ON i.pedido_id = p.pedido_id\n        WHERE p.estado = 'entregado' \n          AND strftime('%Y', p.fecha) = '2025'\n        GROUP BY mes\n        ORDER BY mes\n    \"\"\"\n    \n    df_mensual = pd.read_sql_query(query, conn)\n    \n    # Verificar si hay datos suficientes (necesitamos al menos 2 puntos para una regresión)\n    if len(df_mensual) < 2:\n        raise ValueError(\"No se encontraron suficientes pedidos entregados en 2025 para realizar la regresión.\")\n\n    # 2. Preparar los datos para la regresión lineal\n    # X: número de mes (1 a 12)\n    # Y: facturación mensual\n    df_mensual['num_mes'] = pd.to_datetime(df_mensual['mes']).dt.month\n    \n    X = df_mensual['num_mes'].values.reshape(-1, 1)\n    y = df_mensual['facturacion_mensual'].values\n\n    # 3. Ajustar la regresión lineal por mínimos cuadrados\n    # Usamos stats.linregress que devuelve (pendiente, intercepto, r_value, p_value, std_err)\n    pendiente, _, _, _, _ = stats.linregress(X, y)\n\n    # 4. Redondear la pendiente a 0 decimales\n    resultado = round(pendiente, 0)\n\n    conn.close()\n    return resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 611,
+  "completion_tokens": 443
+ },
+ "latency_s": 31.16,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:21:12",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:     main()\n  File \"/Users/guzzipa/projects/analista-junior-bench/bench/_runner.py\", line 60, in main\n    res = mod.solve(data_dir)\n  File \"/tmp/bench_65ojevpc/solution.py\", line 24, in solve\n    df_mensual = pd.read_sql_query(query, conn)\nNameError: name 'pd' is not defined",
+  "code": "import os\nimport sqlite3\nimport numpy as np\nfrom scipy import stats\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    conn = sqlite3.connect(db_path)\n    \n    # 1. Obtener la facturación mensual de los pedidos entregados en 2025\n    query = \"\"\"\n        SELECT \n            strftime('%Y-%m', fecha) as mes,\n            SUM(cantidad * precio_unitario) as facturacion_mensual\n        FROM items i\n        JOIN pedidos p ON i.pedido_id = p.pedido_id\n        WHERE p.estado = 'entregado' \n          AND strftime('%Y', p.fecha) = '2025'\n        GROUP BY mes\n        ORDER BY mes\n    \"\"\"\n    \n    df_mensual = pd.read_sql_query(query, conn)\n    \n    # Verificar si hay datos suficientes (necesitamos al menos 2 puntos para una regresión)\n    if len(df_mensual) < 2:\n        raise ValueError(\"No se encontraron suficientes pedidos entregados en 2025 para realizar la regresión.\")\n\n    # 2. Preparar los datos para la regresión lineal\n    # X: número de mes (1 a 12)\n    # Y: facturación mensual\n    df_mensual['num_mes'] = pd.to_datetime(df_mensual['mes']).dt.month\n    \n    X = df_mensual['num_mes'].values.reshape(-1, 1)\n    y = df_mensual['facturacion_mensual'].values\n\n    # 3. Ajustar la regresión lineal por mínimos cuadrados\n    # Usamos stats.linregress que devuelve (pendiente, intercepto, r_value, p_value, std_err)\n    pendiente, _, _, _, _ = stats.linregress(X, y)\n\n    # 4. Redondear la pendiente a 0 decimales\n    resultado = round(pendiente, 0)\n\n    conn.close()\n    return resultado"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "task_id": "E05",
+ "bloque": "Estadística",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    # Conectar a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener la facturación por pedido entregado\n    # Unimos pedidos con items para obtener el precio_unitario y cantidad\n    # Filtramos por estado 'entregado'\n    query = \"\"\"\n    SELECT \n        p.fecha,\n        p.pedido_id,\n        SUM(i.cantidad * i.precio_unitario) as total_facturado\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n    GROUP BY p.pedido_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha'])\n    conn.close()\n    \n    # Convertir la fecha a periodo para facilitar el filtrado por trimestre\n    df['fecha'] = pd.to_datetime(df['fecha'])\n    \n    # Definir los trimestres\n    # Q1 2025: 2025-01-01 a 2025-03-31\n    # Q1 2026: 2026-01-01 a 2026-03-31\n    \n    q1_2025 = df[(df['fecha'] >= '2025-01-01') & (df['fecha'] <= '2025-03-31')]\n    q1_2026 = df[(df['fecha'] >= '2026-01-01') & (df['fecha'] <= '2026-03-31')]\n    \n    facturacion_2025 = q1_2025['total_facturado'].sum()\n    facturacion_2026 = q1_2026['total_facturado'].sum()\n    \n    if facturacion_2025 == 0:\n        return 0.0\n    \n    # Cálculo del crecimiento interanual\n    # Variación = (Valor Final - Valor Inicial) / Valor Inicial\n    crecimiento = (facturacion_2026 - facturacion_2025) / facturacion_2025\n    \n    return round(crecimiento, 4)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 632,
+  "completion_tokens": 595
+ },
+ "latency_s": 52.57,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:04:42",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    # Conectar a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener la facturación por pedido entregado\n    # Unimos pedidos con items para obtener el precio_unitario y cantidad\n    # Filtramos por estado 'entregado'\n    query = \"\"\"\n    SELECT \n        p.fecha,\n        p.pedido_id,\n        SUM(i.cantidad * i.precio_unitario) as total_facturado\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n    GROUP BY p.pedido_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha'])\n    conn.close()\n    \n    # Convertir la fecha a periodo para facilitar el filtrado por trimestre\n    df['fecha'] = pd.to_datetime(df['fecha'])\n    \n    # Definir los trimestres\n    # Q1 2025: 2025-01-01 a 2025-03-31\n    # Q1 2026: 2026-01-01 a 2026-03-31\n    \n    q1_2025 = df[(df['fecha'] >= '2025-01-01') & (df['fecha'] <= '2025-03-31')]\n    q1_2026 = df[(df['fecha'] >= '2026-01-01') & (df['fecha'] <= '2026-03-31')]\n    \n    facturacion_2025 = q1_2025['total_facturado'].sum()\n    facturacion_2026 = q1_2026['total_facturado'].sum()\n    \n    if facturacion_2025 == 0:\n        return 0.0\n    \n    # Cálculo del crecimiento interanual\n    # Variación = (Valor Final - Valor Inicial) / Valor Inicial\n    crecimiento = (facturacion_2026 - facturacion_2025) / facturacion_2025\n    \n    return round(crecimiento, 4)",
+  "got": "0.369"
+ }
+}

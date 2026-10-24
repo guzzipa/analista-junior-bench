@@ -1,0 +1,19 @@
+{
+ "task_id": "S03",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "```sql\nSELECT \n    p.canal,\n    ROUND(AVG(i.facturacion), 2) AS ticket_promedio\nFROM pedidos p\nJOIN items i ON p.pedido_id = i.pedido_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2026-01-01'\n  AND p.fecha <= '2026-03-31'\nGROUP BY p.canal;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 529,
+  "completion_tokens": 101
+ },
+ "latency_s": 4.78,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:22:34",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar: no such column: i.facturacion",
+  "code": "SELECT \n    p.canal,\n    ROUND(AVG(i.facturacion), 2) AS ticket_promedio\nFROM pedidos p\nJOIN items i ON p.pedido_id = i.pedido_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2026-01-01'\n  AND p.fecha <= '2026-03-31'\nGROUP BY p.canal;"
+ }
+}

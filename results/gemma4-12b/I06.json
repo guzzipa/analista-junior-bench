@@ -1,0 +1,17 @@
+{
+ "task_id": "I06",
+ "bloque": "Insight de negocio",
+ "model": "gemma4-12b",
+ "response": "Hola, entiendo el entusiasmo por el aumento del ticket promedio en mayo, pero antes de anunciarlo, debemos tener cuidado. El valor de $509,612 está fuertemente distorsionado por 8 pedidos de $9,999,999 que pertenecen a un mismo cliente. El ticket mediano de $212,940 es un indicador mucho más realista del comportamiento de compra habitual. Sugiero presentar el crecimiento con cautela, aclarando que hubo operaciones atípicas que inflaron el promedio.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 623,
+  "completion_tokens": 113
+ },
+ "latency_s": 21.07,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:10:50",
+ "grade": {
+  "ok": null
+ }
+}

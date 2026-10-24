@@ -1,0 +1,20 @@
+{
+ "task_id": "E10",
+ "bloque": "Estadística",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    csv_path = os.path.join(data_dir, \"devoluciones_envio.csv\")\n    \n    # Cargar el CSV de devoluciones\n    df = pd.read_csv(csv_path)\n    \n    # Asegurar que devuelto sea numérico\n    df['devuelto'] = df['devuelto'].astype(int)\n    \n    # Calcular tasas por método\n    # Tasa = (Suma de devueltos) / (Total de envíos)\n    def calc_rate(subset):\n        return subset['devuelto'].sum() / len(subset)\n\n    # Tasas globales por método\n    moto_global = calc_rate(df[df['metodo'] == 'Moto'])\n    correo_global = calc_rate(df[df['metodo'] == 'Correo'])\n    \n    # Tasas por segmento y método\n    # AMBA\n    amba_moto = calc_rate(df[(df['metodo'] == 'Moto') & (df['segmento'] == 'AMBA')])\n    amba_correo = calc_rate(df[(df['metodo'] == 'Correo') & (df['segmento'] == 'AMBA')])\n    \n    # Interior\n    interior_moto = calc_rate(df[(df['metodo'] == 'Moto') & (df['segmento'] == 'Interior')])\n    interior_correo = calc_rate(df[(df['metodo'] == 'Correo') & (df['segmento'] == 'Interior')])\n    \n    # Determinar mejores (menor tasa)\n    mejor_global = 'Moto' if moto_global < correo_global else 'Correo'\n    mejor_amba = 'Moto' if amba_moto < amba_correo else 'Correo'\n    mejor_interior = 'Moto' if interior_moto < interior_correo else 'Correo'\n    \n    return {\n        'tasa_moto': float(moto_global),\n        'tasa_correo': float(correo_global),\n        'mejor_global': mejor_global,\n        'mejor_amba': mejor_amba,\n        'mejor_interior': mejor_interior\n    }\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 757,
+  "completion_tokens": 531
+ },
+ "latency_s": 54.37,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:08:19",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    csv_path = os.path.join(data_dir, \"devoluciones_envio.csv\")\n    \n    # Cargar el CSV de devoluciones\n    df = pd.read_csv(csv_path)\n    \n    # Asegurar que devuelto sea numérico\n    df['devuelto'] = df['devuelto'].astype(int)\n    \n    # Calcular tasas por método\n    # Tasa = (Suma de devueltos) / (Total de envíos)\n    def calc_rate(subset):\n        return subset['devuelto'].sum() / len(subset)\n\n    # Tasas globales por método\n    moto_global = calc_rate(df[df['metodo'] == 'Moto'])\n    correo_global = calc_rate(df[df['metodo'] == 'Correo'])\n    \n    # Tasas por segmento y método\n    # AMBA\n    amba_moto = calc_rate(df[(df['metodo'] == 'Moto') & (df['segmento'] == 'AMBA')])\n    amba_correo = calc_rate(df[(df['metodo'] == 'Correo') & (df['segmento'] == 'AMBA')])\n    \n    # Interior\n    interior_moto = calc_rate(df[(df['metodo'] == 'Moto') & (df['segmento'] == 'Interior')])\n    interior_correo = calc_rate(df[(df['metodo'] == 'Correo') & (df['segmento'] == 'Interior')])\n    \n    # Determinar mejores (menor tasa)\n    mejor_global = 'Moto' if moto_global < correo_global else 'Correo'\n    mejor_amba = 'Moto' if amba_moto < amba_correo else 'Correo'\n    mejor_interior = 'Moto' if interior_moto < interior_correo else 'Correo'\n    \n    return {\n        'tasa_moto': float(moto_global),\n        'tasa_correo': float(correo_global),\n        'mejor_global': mejor_global,\n        'mejor_amba': mejor_amba,\n        'mejor_interior': mejor_interior\n    }",
+  "got": "{\"tasa_moto\": 0.052, \"tasa_correo\": 0.078, \"mejor_global\": \"Moto\", \"mejor_amba\": \"Correo\", \"mejor_interior\": \"Correo\"}"
+ }
+}

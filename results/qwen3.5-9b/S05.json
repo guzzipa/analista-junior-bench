@@ -1,0 +1,20 @@
+{
+ "task_id": "S05",
+ "bloque": "SQL",
+ "model": "qwen3.5-9b",
+ "response": "```sql\nSELECT \n    strftime('%Y-%m', fecha) AS mes,\n    ROUND(\n        SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) * 1.0 / COUNT(*),\n        4\n    ) AS tasa_cancelacion\nFROM pedidos\nWHERE fecha >= '2026-01-01' AND fecha < '2026-05-01'\nGROUP BY mes\nORDER BY mes;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 549,
+  "completion_tokens": 106
+ },
+ "latency_s": 4.2,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:58:17",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT \n    strftime('%Y-%m', fecha) AS mes,\n    ROUND(\n        SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) * 1.0 / COUNT(*),\n        4\n    ) AS tasa_cancelacion\nFROM pedidos\nWHERE fecha >= '2026-01-01' AND fecha < '2026-05-01'\nGROUP BY mes\nORDER BY mes;",
+  "got": "[[\"2026-01\", 0.0622], [\"2026-02\", 0.0753], [\"2026-03\", 0.1029], [\"2026-04\", 0.0673]]"
+ }
+}

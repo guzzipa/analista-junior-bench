@@ -1,0 +1,20 @@
+{
+ "task_id": "L10",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport pandas as pd\nimport sqlite3\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    csv_path = os.path.join(data_dir, \"ventas_wide.csv\")\n    \n    # Leer el CSV con la categoría como índice y los meses como columnas\n    df_ventas = pd.read_csv(csv_path, index_col=0)\n    \n    # Sumar las ventas de todas las columnas (meses de 2025) para cada categoría\n    total_ventas_2025 = df_ventas.sum(axis=1)\n    \n    # Convertir los valores a enteros (quitando el símbolo de moneda si lo hubiera, \n    # aunque pandas suele leerlo como string o float dependiendo del separador. \n    # Asumiendo que el CSV tiene separadores claros y pandas lee números o strings con '$ ').\n    # Si pandas leyó strings con '$ ', necesitamos limpiar.\n    # Dado el ejemplo: \"$ 38.954.795\", pandas con default no lo leerá como float automáticamente \n    # si hay espacios después del $. Usamos replace para limpiar y pd.to_numeric.\n    \n    total_ventas_2025 = total_ventas_2025.replace(r'[^\\d]', '', regex=True)\n    total_ventas_2025 = pd.to_numeric(total_ventas_2025, errors='coerce').astype(int)\n    \n    # Devolver el diccionario solicitado\n    return total_ventas_2025.to_dict()\n\n# Nota: Esta función debe ser llamada desde un script que tenga acceso a data_dir.\n# El bloque de código final es solo la definición de la función y sus dependencias.\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 1150,
+  "completion_tokens": 383
+ },
+ "latency_s": 32.81,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:03:54",
+ "grade": {
+  "ok": false,
+  "error": "resultado['belleza']: esperado 211291376, recibido 9223372036854775807",
+  "code": "import os\nimport pandas as pd\nimport sqlite3\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    csv_path = os.path.join(data_dir, \"ventas_wide.csv\")\n    \n    # Leer el CSV con la categoría como índice y los meses como columnas\n    df_ventas = pd.read_csv(csv_path, index_col=0)\n    \n    # Sumar las ventas de todas las columnas (meses de 2025) para cada categoría\n    total_ventas_2025 = df_ventas.sum(axis=1)\n    \n    # Convertir los valores a enteros (quitando el símbolo de moneda si lo hubiera, \n    # aunque pandas suele leerlo como string o float dependiendo del separador. \n    # Asumiendo que el CSV tiene separadores claros y pandas lee números o strings con '$ ').\n    # Si pandas leyó strings con '$ ', necesitamos limpiar.\n    # Dado el ejemplo: \"$ 38.954.795\", pandas con default no lo leerá como float automáticamente \n    # si hay espacios después del $. Usamos replace para limpiar y pd.to_numeric.\n    \n    total_ventas_2025 = total_ventas_2025.replace(r'[^\\d]', '', regex=True)\n    total_ventas_2025 = pd.to_numeric(total_ventas_2025, errors='coerce').astype(int)\n    \n    # Devolver el diccionario solicitado\n    return total_ventas_2025.to_dict()\n\n# Nota: Esta función debe ser llamada desde un script que tenga acceso a data_dir.\n# El bloque de código final es solo la definición de la función y sus dependencias.",
+  "got": "{\"Tecnología\": 9223372036854775807, \"Electro\": 9223372036854775807, \"Hogar\": 9223372036854775807, \"Deportes\": 9223372036854775807, \"Moda\": 9223372036854775807, \"Belleza\": 9223372036854775807}"
+ }
+}

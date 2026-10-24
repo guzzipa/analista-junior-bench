@@ -1,0 +1,20 @@
+{
+ "task_id": "L07",
+ "bloque": "Limpieza",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener pagos aprobados de mayo de 2026\n    # Excluimos los pagos de prueba (que no tienen fecha de entrega asociada o no están en la tabla pedidos con estado 'entregado')\n    # Sin embargo, la instrucción específica es \"pagos aprobados de mayo de 2026\" excluyendo \"pagos de prueba\".\n    # En el contexto de e-commerce, los pagos de prueba suelen tener un monto 0 o no estar asociados a un pedido real.\n    # Pero la regla estándar para \"pagos aprobados\" es filtrar por estado aprobado = 1.\n    # Para excluir los de prueba, filtramos aquellos que no están asociados a un pedido con estado 'entregado'.\n    \n    query = \"\"\"\n    SELECT p.monto\n    FROM pagos p\n    JOIN pedidos ord ON p.pedido_id = ord.pedido_id\n    WHERE p.aprobado = 1\n      AND ord.estado = 'entregado'\n      AND p.fecha BETWEEN '2026-05-01' AND '2026-05-31'\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha'])\n    \n    if df.empty:\n        return 0.0\n    \n    # Calculamos el promedio\n    resultado = df['monto'].mean()\n    \n    conn.close()\n    return round(float(resultado), 2)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 625,
+  "completion_tokens": 395
+ },
+ "latency_s": 43.81,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:45:20",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 441547.29, recibido 509611.99",
+  "code": "import sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener pagos aprobados de mayo de 2026\n    # Excluimos los pagos de prueba (que no tienen fecha de entrega asociada o no están en la tabla pedidos con estado 'entregado')\n    # Sin embargo, la instrucción específica es \"pagos aprobados de mayo de 2026\" excluyendo \"pagos de prueba\".\n    # En el contexto de e-commerce, los pagos de prueba suelen tener un monto 0 o no estar asociados a un pedido real.\n    # Pero la regla estándar para \"pagos aprobados\" es filtrar por estado aprobado = 1.\n    # Para excluir los de prueba, filtramos aquellos que no están asociados a un pedido con estado 'entregado'.\n    \n    query = \"\"\"\n    SELECT p.monto\n    FROM pagos p\n    JOIN pedidos ord ON p.pedido_id = ord.pedido_id\n    WHERE p.aprobado = 1\n      AND ord.estado = 'entregado'\n      AND p.fecha BETWEEN '2026-05-01' AND '2026-05-31'\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha'])\n    \n    if df.empty:\n        return 0.0\n    \n    # Calculamos el promedio\n    resultado = df['monto'].mean()\n    \n    conn.close()\n    return round(float(resultado), 2)",
+  "got": "509611.99"
+ }
+}

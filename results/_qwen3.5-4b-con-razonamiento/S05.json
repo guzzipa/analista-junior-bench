@@ -1,0 +1,20 @@
+{
+ "task_id": "S05",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "Aquí está la consulta SQL para calcular la tasa de cancelación mensual solicitada:\n\n```sql\nSELECT\n    strftime('%Y-%m', p.fecha) AS mes,\n    ROUND(CAST(SUM(CASE WHEN p.estado = 'cancelado' THEN 1 ELSE 0 END) AS REAL) / COUNT(*), 4) AS tasa_cancelacion\nFROM pedidos p\nWHERE p.fecha >= '2026-01-01' AND p.fecha <= '2026-04-30'\nGROUP BY strftime('%Y-%m', p.fecha)\nORDER BY mes;\n```",
+ "thinking_chars": 20678,
+ "usage": {
+  "prompt_tokens": 547,
+  "completion_tokens": 5641
+ },
+ "latency_s": 258.69,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 10:25:53",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT\n    strftime('%Y-%m', p.fecha) AS mes,\n    ROUND(CAST(SUM(CASE WHEN p.estado = 'cancelado' THEN 1 ELSE 0 END) AS REAL) / COUNT(*), 4) AS tasa_cancelacion\nFROM pedidos p\nWHERE p.fecha >= '2026-01-01' AND p.fecha <= '2026-04-30'\nGROUP BY strftime('%Y-%m', p.fecha)\nORDER BY mes;",
+  "got": "[[\"2026-01\", 0.0622], [\"2026-02\", 0.0753], [\"2026-03\", 0.1029], [\"2026-04\", 0.0673]]"
+ }
+}

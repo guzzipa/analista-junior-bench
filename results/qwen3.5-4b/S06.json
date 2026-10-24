@@ -1,0 +1,20 @@
+{
+ "task_id": "S06",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "```sql\nSELECT COUNT(DISTINCT c.cliente_id) AS clientes\nFROM clientes c\nINNER JOIN pedidos p ON c.cliente_id = p.cliente_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2025-01-01'\n  AND p.fecha <= '2025-12-31'\n  AND NOT EXISTS (\n    SELECT 1\n    FROM pedidos p2\n    WHERE p2.cliente_id = c.cliente_id\n      AND p2.estado = 'entregado'\n      AND p2.fecha >= '2026-01-01'\n      AND p2.fecha <= '2026-06-30'\n  );\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 535,
+  "completion_tokens": 165
+ },
+ "latency_s": 8.73,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:22:56",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT COUNT(DISTINCT c.cliente_id) AS clientes\nFROM clientes c\nINNER JOIN pedidos p ON c.cliente_id = p.cliente_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2025-01-01'\n  AND p.fecha <= '2025-12-31'\n  AND NOT EXISTS (\n    SELECT 1\n    FROM pedidos p2\n    WHERE p2.cliente_id = c.cliente_id\n      AND p2.estado = 'entregado'\n      AND p2.fecha >= '2026-01-01'\n      AND p2.fecha <= '2026-06-30'\n  );",
+  "got": "[[1456]]"
+ }
+}

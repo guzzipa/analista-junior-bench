@@ -1,0 +1,20 @@
+{
+ "task_id": "E07",
+ "bloque": "Estadística",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    conn = sqlite3.connect(db_path)\n    \n    # Consultar los datos necesarios: región del cliente y días de entrega para pedidos entregados\n    query = \"\"\"\n        SELECT \n            c.region,\n            julianday(p.fecha_entrega) - julianday(p.fecha) as dias_entrega\n        FROM pedidos p\n        JOIN clientes c ON p.cliente_id = c.cliente_id\n        WHERE p.estado = 'entregado'\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    conn.close()\n    \n    # Calcular el percentil 90 por región usando interpolación lineal (método por defecto de numpy/pandas)\n    result = {}\n    \n    for region in df['region'].unique():\n        subset = df[df['region'] == region]['dias_entrega']\n        p90 = np.percentile(subset, 90, method='linear')\n        result[region] = round(p90, 2)\n        \n    return result\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 615,
+  "completion_tokens": 264
+ },
+ "latency_s": 17.9,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:21:31",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    conn = sqlite3.connect(db_path)\n    \n    # Consultar los datos necesarios: región del cliente y días de entrega para pedidos entregados\n    query = \"\"\"\n        SELECT \n            c.region,\n            julianday(p.fecha_entrega) - julianday(p.fecha) as dias_entrega\n        FROM pedidos p\n        JOIN clientes c ON p.cliente_id = c.cliente_id\n        WHERE p.estado = 'entregado'\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    conn.close()\n    \n    # Calcular el percentil 90 por región usando interpolación lineal (método por defecto de numpy/pandas)\n    result = {}\n    \n    for region in df['region'].unique():\n        subset = df[df['region'] == region]['dias_entrega']\n        p90 = np.percentile(subset, 90, method='linear')\n        result[region] = round(p90, 2)\n        \n    return result",
+  "got": "{\"Centro\": 5.0, \"NEA\": 8.0, \"AMBA\": 3.0, \"NOA\": 7.0, \"Patagonia\": 12.0, \"Cuyo\": 6.0}"
+ }
+}

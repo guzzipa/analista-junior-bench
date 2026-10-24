@@ -1,0 +1,20 @@
+{
+ "task_id": "L03",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-4b",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nfrom datetime import datetime\n\ndef solve(data_dir):\n    # Cargar la base de datos SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consultar el conteo de clientes por mes en 2025 desde la tabla 'clientes'\n    query = \"\"\"\n        SELECT strftime('%Y-%m', fecha_alta) as mes, COUNT(*) as cantidad \n        FROM clientes \n        WHERE strftime('%Y-%m', fecha_alta) LIKE '2025%' \n        GROUP BY mes \n        ORDER BY mes\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    \n    # Crear el diccionario resultante\n    resultado = {row['mes']: row['cantidad'] for _, row in df.iterrows()}\n    \n    return resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 833,
+  "completion_tokens": 200
+ },
+ "latency_s": 10.59,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:24:40",
+ "grade": {
+  "ok": false,
+  "error": "resultado['2025-07']: esperado 96, recibido 204",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nfrom datetime import datetime\n\ndef solve(data_dir):\n    # Cargar la base de datos SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consultar el conteo de clientes por mes en 2025 desde la tabla 'clientes'\n    query = \"\"\"\n        SELECT strftime('%Y-%m', fecha_alta) as mes, COUNT(*) as cantidad \n        FROM clientes \n        WHERE strftime('%Y-%m', fecha_alta) LIKE '2025%' \n        GROUP BY mes \n        ORDER BY mes\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    \n    # Crear el diccionario resultante\n    resultado = {row['mes']: row['cantidad'] for _, row in df.iterrows()}\n    \n    return resultado",
+  "got": "{\"2025-01\": 190, \"2025-02\": 172, \"2025-03\": 167, \"2025-04\": 164, \"2025-05\": 184, \"2025-06\": 164, \"2025-07\": 204, \"2025-08\": 177, \"2025-09\": 169, \"2025-10\": 159, \"2025-11\": 164, \"2025-12\": 193}"
+ }
+}

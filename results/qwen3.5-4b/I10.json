@@ -1,0 +1,17 @@
+{
+ "task_id": "I10",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-4b",
+ "response": "**Resumen Ejecutivo: Primer Semestre 2026 – Tienda Pampa**\n\n1. **Crecimiento de facturación y volumen:** La facturación total aumentó un 42,7% (de $3.161 a $4.520 millones) y el número de pedidos entregados creció un 13,1%, impulsando la expansión del negocio en el primer semestre.\n2. **Aumento sostenido del ticket promedio:** El ticket promedio subió un 26,5% (de $359 a $454 mil), reflejando la estrategia de precios que elevó los montos en un 2,2% mensualmente y un 30% respecto al año anterior.\n3. **Expansión de la base de clientes:** La cartera de clientes activos creció un 31,2% (de 3.529 a 4.622), lo que indica una mayor penetración en el mercado y una mejora significativa en la retención o adquisición de usuarios.\n4. **Adopción móvil y reducción de cancelaciones:** El porcentaje de pedidos realizados desde la app subió un 21,8% (de 37,26% a 45,52%), coincidiendo con el exitoso test A/B del checkout en mayo, mientras que la tasa de cancelación se mantuvo estable y baja al 7,29%.\n5. **Impacto de eventos y logística:** El Hot Sale de mayo fue un motor clave de crecimiento junto a la optimización logística tras el cambio de operador en Patagonia, aunque los cortes del procesador de tarjetas en marzo representaron una interrupción temporal que se recuperó rápidamente en el segundo trimestre.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 445,
+  "completion_tokens": 372
+ },
+ "latency_s": 19.47,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:46:24",
+ "grade": {
+  "ok": null
+ }
+}

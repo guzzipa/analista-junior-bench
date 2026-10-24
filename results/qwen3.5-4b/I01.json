@@ -1,0 +1,17 @@
+{
+ "task_id": "I01",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-4b",
+ "response": "La caída de ventas en marzo se debe principalmente a una drástica reducción del volumen de pedidos entregados (1523 vs 1491 en enero), impulsada por un aumento significativo en cancelaciones y devoluciones. Además, la aprobación de pagos con tarjeta colapsó durante los días 10 al 16, bajando del 97% al 50%, lo que probablemente frenó las compras online ese periodo. Finalmente, aunque la categoría Tecnología mantuvo su liderazgo, el producto \"Celular Nova X\" tuvo un pico de unidades vendidas en enero y febrero que no se replicó en marzo, sugiriendo una saturación temporal o cambios en preferencias del consumidor.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 1591,
+  "completion_tokens": 145
+ },
+ "latency_s": 14.4,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:44:51",
+ "grade": {
+  "ok": null
+ }
+}

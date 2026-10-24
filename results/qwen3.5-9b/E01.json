@@ -1,0 +1,20 @@
+{
+ "task_id": "E01",
+ "bloque": "Estadística",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport sqlite3\nimport numpy as np\nfrom scipy import stats\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    conn = sqlite3.connect(db_path)\n    \n    # Consulta SQL para obtener la facturación de los pedidos entregados en 2025\n    query = \"\"\"\n        SELECT SUM(i.cantidad * i.precio_unitario) as ticket\n        FROM items i\n        JOIN pedidos p ON i.pedido_id = p.pedido_id\n        WHERE p.estado = 'entregado' \n          AND strftime('%Y', p.fecha) = '2025'\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    \n    if len(df) == 0:\n        return {'media': 0.0, 'mediana': 0.0}\n        \n    tickets = df['ticket'].values\n    \n    media = np.mean(tickets)\n    mediana = np.median(tickets)\n    \n    conn.close()\n    \n    return {\n        'media': round(media, 2),\n        'mediana': round(mediana, 2)\n    }\n\n# Importación necesaria para que el código funcione si se ejecuta directamente o en un entorno con pandas\nimport pandas as pd\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 598,
+  "completion_tokens": 287
+ },
+ "latency_s": 19.41,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:18:08",
+ "grade": {
+  "ok": false,
+  "error": "resultado['media']: esperado 383213.34, recibido 7565014630.0",
+  "code": "import os\nimport sqlite3\nimport numpy as np\nfrom scipy import stats\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    conn = sqlite3.connect(db_path)\n    \n    # Consulta SQL para obtener la facturación de los pedidos entregados en 2025\n    query = \"\"\"\n        SELECT SUM(i.cantidad * i.precio_unitario) as ticket\n        FROM items i\n        JOIN pedidos p ON i.pedido_id = p.pedido_id\n        WHERE p.estado = 'entregado' \n          AND strftime('%Y', p.fecha) = '2025'\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn)\n    \n    if len(df) == 0:\n        return {'media': 0.0, 'mediana': 0.0}\n        \n    tickets = df['ticket'].values\n    \n    media = np.mean(tickets)\n    mediana = np.median(tickets)\n    \n    conn.close()\n    \n    return {\n        'media': round(media, 2),\n        'mediana': round(mediana, 2)\n    }\n\n# Importación necesaria para que el código funcione si se ejecuta directamente o en un entorno con pandas\nimport pandas as pd",
+  "got": "{\"media\": 7565014630.0, \"mediana\": 7565014630.0}"
+ }
+}

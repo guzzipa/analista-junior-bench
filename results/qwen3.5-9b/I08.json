@@ -1,0 +1,17 @@
+{
+ "task_id": "I08",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-9b",
+ "response": "Tenemos 7.001 registros totales en la tabla de clientes, pero solo podemos identificar como \"activos\" a aquellos con al menos un pedido entregado hasta hoy (1 de julio de 2026). De estos, 1.421 clientes tienen su último pedido en junio de 2026, lo que los clasifica como activos según la fecha actual. Los demás tramos corresponden a pedidos realizados en meses anteriores o años pasados. No se puede determinar el total exacto de clientes activos sin saber si existen registros marcados como \"internos\" (como el caso del cliente QA TEST) que no tengan pedidos entregados, ya que la definición de activo depende de la actividad reciente y no solo del conteo total de filas.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 353,
+  "completion_tokens": 160
+ },
+ "latency_s": 13.59,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:26:40",
+ "grade": {
+  "ok": null
+ }
+}

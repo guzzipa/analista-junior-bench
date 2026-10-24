@@ -1,0 +1,20 @@
+{
+ "task_id": "L07",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    conn = sqlite3.connect(db_path)\n    \n    # Consulta SQL para obtener el promedio de los pagos aprobados en mayo de 2026\n    # Filtramos por fecha entre '2026-05-01' y '2026-05-31', estado 'aprobado' (1)\n    query = \"\"\"\n        SELECT AVG(monto) as avg_monto\n        FROM pagos\n        WHERE fecha >= '2026-05-01' \n          AND fecha <= '2026-05-31'\n          AND aprobado = 1;\n    \"\"\"\n    \n    result = pd.read_sql_query(query, conn)\n    \n    # Si no hay resultados (por ejemplo, si la tabla está vacía para ese rango), devolver 0.0\n    if result.empty:\n        return 0.0\n    \n    avg_monto = result['avg_monto'].values[0]\n    \n    conn.close()\n    \n    return round(avg_monto, 2)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 604,
+  "completion_tokens": 267
+ },
+ "latency_s": 22.2,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:01:46",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 441547.29, recibido 498793.46",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    conn = sqlite3.connect(db_path)\n    \n    # Consulta SQL para obtener el promedio de los pagos aprobados en mayo de 2026\n    # Filtramos por fecha entre '2026-05-01' y '2026-05-31', estado 'aprobado' (1)\n    query = \"\"\"\n        SELECT AVG(monto) as avg_monto\n        FROM pagos\n        WHERE fecha >= '2026-05-01' \n          AND fecha <= '2026-05-31'\n          AND aprobado = 1;\n    \"\"\"\n    \n    result = pd.read_sql_query(query, conn)\n    \n    # Si no hay resultados (por ejemplo, si la tabla está vacía para ese rango), devolver 0.0\n    if result.empty:\n        return 0.0\n    \n    avg_monto = result['avg_monto'].values[0]\n    \n    conn.close()\n    \n    return round(avg_monto, 2)",
+  "got": "498793.46"
+ }
+}

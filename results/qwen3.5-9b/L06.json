@@ -1,0 +1,20 @@
+{
+ "task_id": "L06",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport pandas as pd\nimport sqlite3\n\ndef solve(data_dir):\n    # Ruta al archivo CSV\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Cargar el DataFrame desde el CSV\n    df = pd.read_csv(csv_path)\n    \n    # La columna de teléfono se llama 'telefono'. \n    # Un teléfono es válido si no está vacío (NaN o string vacía).\n    # Contamos las filas donde la columna 'telefono' es nula.\n    filas_sin_telefono = df['telefono'].isna().sum()\n    \n    return int(filas_sin_telefono)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 790,
+  "completion_tokens": 142
+ },
+ "latency_s": 11.3,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:01:23",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 400, recibido 241",
+  "code": "import os\nimport pandas as pd\nimport sqlite3\n\ndef solve(data_dir):\n    # Ruta al archivo CSV\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Cargar el DataFrame desde el CSV\n    df = pd.read_csv(csv_path)\n    \n    # La columna de teléfono se llama 'telefono'. \n    # Un teléfono es válido si no está vacío (NaN o string vacía).\n    # Contamos las filas donde la columna 'telefono' es nula.\n    filas_sin_telefono = df['telefono'].isna().sum()\n    \n    return int(filas_sin_telefono)",
+  "got": "241"
+ }
+}

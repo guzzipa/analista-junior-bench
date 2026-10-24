@@ -1,0 +1,20 @@
+{
+ "task_id": "S10",
+ "bloque": "SQL",
+ "model": "qwen3.5-9b",
+ "response": "```sql\nWITH primera_compra AS (\n    SELECT \n        c.cliente_id,\n        MIN(p.fecha) AS fecha_primer_pedido\n    FROM clientes c\n    JOIN pedidos p ON c.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n      AND strftime('%Y-%m', p.fecha) = '2025-01'\n    GROUP BY c.cliente_id\n),\nclientes_con_segunda_compra AS (\n    SELECT \n        pc.cliente_id,\n        COUNT(*) AS total_pedidos_entregados\n    FROM primera_compra pc\n    JOIN pedidos p ON pc.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha > pc.fecha_primer_pedido\n      AND julianday(p.fecha) - julianday(pc.fecha_primer_pedido) <= 90\n    GROUP BY pc.cliente_id\n),\ntotal_clientes AS (\n    SELECT COUNT(*) AS total FROM primera_compra\n),\nclientes_con_segunda_compra_total AS (\n    SELECT COUNT(*) AS total FROM clientes_con_segunda_compra\n)\nSELECT \n    CAST(tcs.total AS REAL) / CAST(tc.total AS REAL) AS tasa\nFROM clientes_con_segunda_compra_total tcs, total_clientes tc;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 557,
+  "completion_tokens": 284
+ },
+ "latency_s": 10.9,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:59:00",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "WITH primera_compra AS (\n    SELECT \n        c.cliente_id,\n        MIN(p.fecha) AS fecha_primer_pedido\n    FROM clientes c\n    JOIN pedidos p ON c.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n      AND strftime('%Y-%m', p.fecha) = '2025-01'\n    GROUP BY c.cliente_id\n),\nclientes_con_segunda_compra AS (\n    SELECT \n        pc.cliente_id,\n        COUNT(*) AS total_pedidos_entregados\n    FROM primera_compra pc\n    JOIN pedidos p ON pc.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha > pc.fecha_primer_pedido\n      AND julianday(p.fecha) - julianday(pc.fecha_primer_pedido) <= 90\n    GROUP BY pc.cliente_id\n),\ntotal_clientes AS (\n    SELECT COUNT(*) AS total FROM primera_compra\n),\nclientes_con_segunda_compra_total AS (\n    SELECT COUNT(*) AS total FROM clientes_con_segunda_compra\n)\nSELECT \n    CAST(tcs.total AS REAL) / CAST(tc.total AS REAL) AS tasa\nFROM clientes_con_segunda_compra_total tcs, total_clientes tc;",
+  "got": "[[0.6377880184331797]]"
+ }
+}

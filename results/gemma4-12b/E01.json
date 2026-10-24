@@ -1,0 +1,19 @@
+{
+ "task_id": "E01",
+ "bloque": "Estadística",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport numpy as np\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener la facturación de pedidos entregados en 2025\n    # Unimos pedidos con items para obtener el precio_unitario y cantidad\n    query = \"\"\"\n    SELECT \n        p.pedido_id,\n        SUM(i.cantidad * i.precio_unitario) as total_facturacion\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2025-01-01'\n      AND p.fecha <= '2025-12-31'\n    GROUP BY p.pedido_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, index_col=False)\n    conn.close()\n    \n    if df.empty:\n        return {'media': 0.0, 'mediana': 0.0}\n    \n    # Cálculo de media y mediana\n    media = df['total_facturacion'].mean()\n    mediana = df['total_facturacion'].median()\n    \n    return {\n        'media': round(float(media), 2),\n        'mediana': round(float(mediana), 2)\n    }\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 618,
+  "completion_tokens": 361
+ },
+ "latency_s": 36.77,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:00:57",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:     frame = _wrap_result(\n  File \"/Users/guzzipa/projects/analista-junior-bench/.venv/lib/python3.9/site-packages/pandas/io/sql.py\", line 214, in _wrap_result\n    frame = frame.set_index(index_col)\n  File \"/Users/guzzipa/projects/analista-junior-bench/.venv/lib/python3.9/site-packages/pandas/core/frame.py\", line 6144, in set_index\n    raise KeyError(f\"None of {missing} are in the columns\")\nKeyError: 'None of [False] are in the columns'",
+  "code": "import sqlite3\nimport pandas as pd\nimport numpy as np\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener la facturación de pedidos entregados en 2025\n    # Unimos pedidos con items para obtener el precio_unitario y cantidad\n    query = \"\"\"\n    SELECT \n        p.pedido_id,\n        SUM(i.cantidad * i.precio_unitario) as total_facturacion\n    FROM pedidos p\n    JOIN items i ON p.pedido_id = i.pedido_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2025-01-01'\n      AND p.fecha <= '2025-12-31'\n    GROUP BY p.pedido_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, index_col=False)\n    conn.close()\n    \n    if df.empty:\n        return {'media': 0.0, 'mediana': 0.0}\n    \n    # Cálculo de media y mediana\n    media = df['total_facturacion'].mean()\n    mediana = df['total_facturacion'].median()\n    \n    return {\n        'media': round(float(media), 2),\n        'mediana': round(float(mediana), 2)\n    }"
+ }
+}

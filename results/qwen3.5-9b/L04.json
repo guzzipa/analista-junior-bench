@@ -1,0 +1,20 @@
+{
+ "task_id": "L04",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport re\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    # Leer el archivo CSV\n    df = pd.read_csv(os.path.join(data_dir, \"clientes_crm.csv\"))\n    \n    # Función para limpiar y convertir la columna 'monto_compras'\n    def parse_monto(x):\n        if pd.isna(x) or x == \"NA\":\n            return 0.0\n        \n        s = str(x).strip()\n        \n        # Eliminar el símbolo de pesos '$ ' si existe al inicio\n        if s.startswith('$'):\n            s = s[1:]\n            \n        # Reemplazar comas por puntos para decimales (formato argentino)\n        s = s.replace(',', '.')\n        \n        try:\n            return float(s)\n        except ValueError:\n            return 0.0\n\n    # Aplicar la función y sumar\n    df['monto_compras'] = df['monto_compras'].apply(parse_monto)\n    total_suma = df['monto_compras'].sum()\n    \n    # Redondear a 2 decimales\n    return round(total_suma, 2)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 806,
+  "completion_tokens": 272
+ },
+ "latency_s": 15.63,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:00:44",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 507536291.52, recibido 942.29",
+  "code": "import os\nimport re\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    # Leer el archivo CSV\n    df = pd.read_csv(os.path.join(data_dir, \"clientes_crm.csv\"))\n    \n    # Función para limpiar y convertir la columna 'monto_compras'\n    def parse_monto(x):\n        if pd.isna(x) or x == \"NA\":\n            return 0.0\n        \n        s = str(x).strip()\n        \n        # Eliminar el símbolo de pesos '$ ' si existe al inicio\n        if s.startswith('$'):\n            s = s[1:]\n            \n        # Reemplazar comas por puntos para decimales (formato argentino)\n        s = s.replace(',', '.')\n        \n        try:\n            return float(s)\n        except ValueError:\n            return 0.0\n\n    # Aplicar la función y sumar\n    df['monto_compras'] = df['monto_compras'].apply(parse_monto)\n    total_suma = df['monto_compras'].sum()\n    \n    # Redondear a 2 decimales\n    return round(total_suma, 2)",
+  "got": "942.29"
+ }
+}

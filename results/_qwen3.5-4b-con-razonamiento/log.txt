@@ -1,0 +1,16 @@
+=== qwen3.5-4b (qwen3.5:4b) ===
+[?2026h[?25l[1Gpulling manifest ⠋ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠙ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠹ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠸ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠼ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠴ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠦ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠧ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠇ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠏ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠋ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠙ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest [K
+writing manifest [K
+success [K[?25h[?2026l
+Corriendo 50 tareas con qwen3.5-4b (qwen3.5:4b)
+  S01 [MAL]  332.5s  no encontré un bloque de código en la respuesta
+  S02 [OK ]  193.8s
+  S03 [OK ]  237.9s
+  S04 [MAL]  375.1s  no encontré un bloque de código en la respuesta
+  S05 [OK ]  258.7s
+  S06 [OK ]  372.0s
+  S07 [OK ]  233.1s
+  S08 [MAL]  392.9s  no encontré un bloque de código en la respuesta
+  S09 [MAL]  399.0s  no encontré un bloque de código en la respuesta
+  S10 [MAL]  400.8s  no encontré un bloque de código en la respuesta
+  L01 [MAL]  407.2s  no encontré un bloque de código en la respuesta

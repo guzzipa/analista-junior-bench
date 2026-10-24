@@ -1,0 +1,20 @@
+{
+ "task_id": "S06",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "```sql\nSELECT COUNT(*) AS clientes\nFROM (\n    SELECT p.cliente_id\n    FROM pedidos p\n    JOIN clientes cl ON p.cliente_id = cl.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2025-01-01'\n      AND p.fecha <= '2025-12-31'\n    GROUP BY p.cliente_id\n) AS c_2025\nLEFT JOIN (\n    SELECT p.cliente_id\n    FROM pedidos p\n    JOIN clientes cl ON p.cliente_id = cl.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2026-01-01'\n      AND p.fecha <= '2026-06-30'\n    GROUP BY p.cliente_id\n) AS c_2026 ON c_2025.cliente_id = c_2026.cliente_id\nWHERE c_2026.cliente_id IS NULL;\n```",
+ "thinking_chars": 28328,
+ "usage": {
+  "prompt_tokens": 533,
+  "completion_tokens": 7941
+ },
+ "latency_s": 371.99,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 10:32:05",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT COUNT(*) AS clientes\nFROM (\n    SELECT p.cliente_id\n    FROM pedidos p\n    JOIN clientes cl ON p.cliente_id = cl.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2025-01-01'\n      AND p.fecha <= '2025-12-31'\n    GROUP BY p.cliente_id\n) AS c_2025\nLEFT JOIN (\n    SELECT p.cliente_id\n    FROM pedidos p\n    JOIN clientes cl ON p.cliente_id = cl.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha >= '2026-01-01'\n      AND p.fecha <= '2026-06-30'\n    GROUP BY p.cliente_id\n) AS c_2026 ON c_2025.cliente_id = c_2026.cliente_id\nWHERE c_2026.cliente_id IS NULL;",
+  "got": "[[1456]]"
+ }
+}

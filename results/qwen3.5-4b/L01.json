@@ -1,0 +1,19 @@
+{
+ "task_id": "L01",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-4b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    # Conectamos a la base de datos SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Leemos el archivo CSV para obtener los emails de los clientes registrados en el CRM\n    # Nota: El formato del CSV tiene comillas dobles alrededor de los montos y espacios extra.\n    # Usamos read_csv con engine='csv' o parse_dates=False para manejar correctamente las fechas y strings.\n    df_crm = pd.read_csv(os.path.join(data_dir, \"clientes_crm.csv\"), header=0)\n    \n    # Extraemos la columna 'email'. \n    # El archivo muestra columnas: id_crm, nombre, email, provincia, fecha_alta, telefono, monto_compras.\n    # Asumimos que el orden de las columnas es el estándar del CSV descrito.\n    emails_crm = df_crm['email'].tolist()\n    \n    # Consultamos la base de datos para obtener todos los clientes únicos basados en su email\n    # La tabla 'clientes' tiene la columna 'email'.\n    query = \"\"\"SELECT COUNT(DISTINCT email) FROM clientes\"\"\"\n    \n    result = conn.execute(query).fetchone()[0]\n    \n    # Cerramos la conexión\n    conn.close()\n    \n    return int(result)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 805,
+  "completion_tokens": 309
+ },
+ "latency_s": 15.57,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:23:55",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:     main()\n  File \"/Users/guzzipa/projects/analista-junior-bench/bench/_runner.py\", line 60, in main\n    res = mod.solve(data_dir)\n  File \"/tmp/bench_ray3toqo/solution.py\", line 6, in solve\n    db_path = os.path.join(data_dir, \"tienda.db\")\nNameError: name 'os' is not defined",
+  "code": "import sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    # Conectamos a la base de datos SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Leemos el archivo CSV para obtener los emails de los clientes registrados en el CRM\n    # Nota: El formato del CSV tiene comillas dobles alrededor de los montos y espacios extra.\n    # Usamos read_csv con engine='csv' o parse_dates=False para manejar correctamente las fechas y strings.\n    df_crm = pd.read_csv(os.path.join(data_dir, \"clientes_crm.csv\"), header=0)\n    \n    # Extraemos la columna 'email'. \n    # El archivo muestra columnas: id_crm, nombre, email, provincia, fecha_alta, telefono, monto_compras.\n    # Asumimos que el orden de las columnas es el estándar del CSV descrito.\n    emails_crm = df_crm['email'].tolist()\n    \n    # Consultamos la base de datos para obtener todos los clientes únicos basados en su email\n    # La tabla 'clientes' tiene la columna 'email'.\n    query = \"\"\"SELECT COUNT(DISTINCT email) FROM clientes\"\"\"\n    \n    result = conn.execute(query).fetchone()[0]\n    \n    # Cerramos la conexión\n    conn.close()\n    \n    return int(result)"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "task_id": "S02",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "```sql\nSELECT p.producto_id, p.nombre, COUNT(i.cantidad) AS unidades\nFROM productos p\nJOIN items i ON p.producto_id = i.producto_id\nJOIN pedidos ped ON i.pedido_id = ped.pedido_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha >= '2025-01-01'\n  AND ped.fecha <= '2025-12-31'\nGROUP BY p.producto_id, p.nombre\nORDER BY unidades DESC\nLIMIT 5;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 520,
+  "completion_tokens": 119
+ },
+ "latency_s": 6.35,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:22:30",
+ "grade": {
+  "ok": false,
+  "error": "fila 1, columna 3: esperado 2472, recibido 2388",
+  "code": "SELECT p.producto_id, p.nombre, COUNT(i.cantidad) AS unidades\nFROM productos p\nJOIN items i ON p.producto_id = i.producto_id\nJOIN pedidos ped ON i.pedido_id = ped.pedido_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha >= '2025-01-01'\n  AND ped.fecha <= '2025-12-31'\nGROUP BY p.producto_id, p.nombre\nORDER BY unidades DESC\nLIMIT 5;",
+  "got": "[[1, \"Celular Nova X\", 2388], [26, \"Remera Dry Fit\", 1436], [4, \"Auriculares Bluetooth Pulse\", 1421], [21, \"Zapatillas Running Viento\", 1157], [27, \"Jean Clásico\", 1133]]"
+ }
+}

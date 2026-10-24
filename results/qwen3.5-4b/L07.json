@@ -1,0 +1,20 @@
+{
+ "task_id": "L07",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-4b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    # Conectar a la base de datos SQLite\n    db_path = f\"{data_dir}/tienda.db\"\n    conn = sqlite3.connect(db_path)\n    \n    try:\n        # Consultar la tabla 'pagos' filtrando por mes y estado aprobado\n        # Seleccionamos solo los pagos aprobados (aprobado = 1) del mes de mayo 2026\n        query = \"\"\"\n            SELECT monto \n            FROM pagos \n            WHERE fecha >= '2026-05-01' AND fecha < '2026-06-01' \n              AND aprobado = 1\n        \"\"\"\n        \n        # Ejecutar la consulta y obtener los resultados como DataFrame\n        df_pagos = pd.read_sql_query(query, conn)\n        \n        if df_pagos.empty:\n            return 0.0\n        \n        # Calcular el promedio del monto de los pagos aprobados\n        promedio_monto = df_pagos['monto'].mean()\n        \n        # Redondear a 2 decimales y devolver\n        return round(promedio_monto, 2)\n    \n    finally:\n        conn.close()\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 604,
+  "completion_tokens": 270
+ },
+ "latency_s": 15.16,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:26:49",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 441547.29, recibido 498793.46",
+  "code": "import sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    # Conectar a la base de datos SQLite\n    db_path = f\"{data_dir}/tienda.db\"\n    conn = sqlite3.connect(db_path)\n    \n    try:\n        # Consultar la tabla 'pagos' filtrando por mes y estado aprobado\n        # Seleccionamos solo los pagos aprobados (aprobado = 1) del mes de mayo 2026\n        query = \"\"\"\n            SELECT monto \n            FROM pagos \n            WHERE fecha >= '2026-05-01' AND fecha < '2026-06-01' \n              AND aprobado = 1\n        \"\"\"\n        \n        # Ejecutar la consulta y obtener los resultados como DataFrame\n        df_pagos = pd.read_sql_query(query, conn)\n        \n        if df_pagos.empty:\n            return 0.0\n        \n        # Calcular el promedio del monto de los pagos aprobados\n        promedio_monto = df_pagos['monto'].mean()\n        \n        # Redondear a 2 decimales y devolver\n        return round(promedio_monto, 2)\n    \n    finally:\n        conn.close()",
+  "got": "498793.46"
+ }
+}

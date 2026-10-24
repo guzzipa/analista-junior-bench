@@ -1,0 +1,19 @@
+{
+ "task_id": "L06",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-4b",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    # 1. Cargar la base de datos SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # 2. Cargar el archivo CSV de clientes CRM\n    # El formato del archivo muestra fechas en 'DD/MM/YYYY' o 'YYYY-MM-DD', y montos con comas\n    df_crm = pd.read_csv(os.path.join(data_dir, \"clientes_crm.csv\"), sep=',')\n    \n    # 3. Limpiar el CSV: eliminar espacios extra alrededor de los valores (especialmente en nombre)\n    # El primer ejemplo tiene espacios alrededor del nombre, otros no parecen tenerlos explícitamente en la muestra, \n    # pero es buena práctica limpiar.\n    df_crm = df_crm.str.strip()\n    \n    # 4. Identificar columnas relevantes para el teléfono\n    # Basado en el header visible: id_crm, nombre, email, provincia, fecha_alta, telefono, monto_compras\n    # Asumimos que la columna 'telefono' es la correcta según el formato de muestra.\n    \n    # 5. Filtrar filas donde 'telefono' no es válido (NaN o vacío)\n    # En pandas, las celdas vacías se representan como NaN.\n    # También verificamos si está vacío explícitamente por seguridad, aunque NaN cubre lo más común en CSVs cargados mal.\n    \n    # Contar filas sin teléfono válido\n    count_no_phone = df_crm['telefono'].isna().sum()\n    \n    # Cerrar conexión\n    conn.close()\n    \n    return int(count_no_phone)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 790,
+  "completion_tokens": 379
+ },
+ "latency_s": 18.11,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:26:33",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:     res = mod.solve(data_dir)\n  File \"/tmp/bench_5eq29_e8/solution.py\", line 17, in solve\n    df_crm = df_crm.str.strip()\n  File \"/Users/guzzipa/projects/analista-junior-bench/.venv/lib/python3.9/site-packages/pandas/core/generic.py\", line 6321, in __getattr__\n    return object.__getattribute__(self, name)\nAttributeError: 'DataFrame' object has no attribute 'str'",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\n\ndef solve(data_dir):\n    # 1. Cargar la base de datos SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # 2. Cargar el archivo CSV de clientes CRM\n    # El formato del archivo muestra fechas en 'DD/MM/YYYY' o 'YYYY-MM-DD', y montos con comas\n    df_crm = pd.read_csv(os.path.join(data_dir, \"clientes_crm.csv\"), sep=',')\n    \n    # 3. Limpiar el CSV: eliminar espacios extra alrededor de los valores (especialmente en nombre)\n    # El primer ejemplo tiene espacios alrededor del nombre, otros no parecen tenerlos explícitamente en la muestra, \n    # pero es buena práctica limpiar.\n    df_crm = df_crm.str.strip()\n    \n    # 4. Identificar columnas relevantes para el teléfono\n    # Basado en el header visible: id_crm, nombre, email, provincia, fecha_alta, telefono, monto_compras\n    # Asumimos que la columna 'telefono' es la correcta según el formato de muestra.\n    \n    # 5. Filtrar filas donde 'telefono' no es válido (NaN o vacío)\n    # En pandas, las celdas vacías se representan como NaN.\n    # También verificamos si está vacío explícitamente por seguridad, aunque NaN cubre lo más común en CSVs cargados mal.\n    \n    # Contar filas sin teléfono válido\n    count_no_phone = df_crm['telefono'].isna().sum()\n    \n    # Cerrar conexión\n    conn.close()\n    \n    return int(count_no_phone)"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "task_id": "L09",
+ "bloque": "Limpieza",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport os\nfrom datetime import datetime, timedelta\n\ndef solve(data_dir):\n    # Ruta del archivo de eventos\n    events_path = os.path.join(data_dir, \"eventos.csv\")\n    \n    # Leer el archivo CSV\n    # El archivo tiene timestamp en UTC\n    df = pd.read_csv(events_path)\n    \n    # Convertir la columna timestamp a datetime en formato UTC\n    df['timestamp_utc'] = pd.to_datetime(df['timestamp_utc'])\n    \n    # Convertir a hora de Argentina (UTC-3)\n    # Usamos timedelta para el ajuste de zona horaria\n    df['timestamp_arg'] = df['timestamp_utc'] - pd.Timedelta(hours=3)\n    \n    # Extraer la fecha en formato YYYY-MM-DD\n    df['fecha_arg'] = df['timestamp_arg'].dt.strftime('%Y-%m-%d')\n    \n    # Agrupar por fecha y contar eventos\n    resultado = df.groupby('fecha_arg').size().to_dict()\n    \n    # Ordenar el diccionario por fecha (opcional, pero ayuda a la consistencia)\n    sorted_keys = sorted(resultado.keys())\n    sorted_resultado = {k: resultado[k] for k in sorted_keys}\n    \n    return sorted_resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 715,
+  "completion_tokens": 319
+ },
+ "latency_s": 30.34,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:46:57",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import sqlite3\nimport pandas as pd\nimport os\nfrom datetime import datetime, timedelta\n\ndef solve(data_dir):\n    # Ruta del archivo de eventos\n    events_path = os.path.join(data_dir, \"eventos.csv\")\n    \n    # Leer el archivo CSV\n    # El archivo tiene timestamp en UTC\n    df = pd.read_csv(events_path)\n    \n    # Convertir la columna timestamp a datetime en formato UTC\n    df['timestamp_utc'] = pd.to_datetime(df['timestamp_utc'])\n    \n    # Convertir a hora de Argentina (UTC-3)\n    # Usamos timedelta para el ajuste de zona horaria\n    df['timestamp_arg'] = df['timestamp_utc'] - pd.Timedelta(hours=3)\n    \n    # Extraer la fecha en formato YYYY-MM-DD\n    df['fecha_arg'] = df['timestamp_arg'].dt.strftime('%Y-%m-%d')\n    \n    # Agrupar por fecha y contar eventos\n    resultado = df.groupby('fecha_arg').size().to_dict()\n    \n    # Ordenar el diccionario por fecha (opcional, pero ayuda a la consistencia)\n    sorted_keys = sorted(resultado.keys())\n    sorted_resultado = {k: resultado[k] for k in sorted_keys}\n    \n    return sorted_resultado",
+  "got": "{\"2026-06-01\": 883, \"2026-06-02\": 903, \"2026-06-03\": 833, \"2026-06-04\": 866, \"2026-06-05\": 812, \"2026-06-06\": 857, \"2026-06-07\": 846}"
+ }
+}

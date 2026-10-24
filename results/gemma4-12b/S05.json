@@ -1,0 +1,20 @@
+{
+ "task_id": "S05",
+ "bloque": "SQL",
+ "model": "gemma4-12b",
+ "response": "```sql\nSELECT \n    strftime('%Y-%m', fecha) AS mes,\n    ROUND(CAST(SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*), 4) AS tasa_cancelacion\nFROM pedidos\nWHERE strftime('%Y-%m', fecha) BETWEEN '2026-01' AND '2026-04'\nGROUP BY mes\nORDER BY mes;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 565,
+  "completion_tokens": 102
+ },
+ "latency_s": 5.33,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:39:48",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT \n    strftime('%Y-%m', fecha) AS mes,\n    ROUND(CAST(SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) AS FLOAT) / COUNT(*), 4) AS tasa_cancelacion\nFROM pedidos\nWHERE strftime('%Y-%m', fecha) BETWEEN '2026-01' AND '2026-04'\nGROUP BY mes\nORDER BY mes;",
+  "got": "[[\"2026-01\", 0.0622], [\"2026-02\", 0.0753], [\"2026-03\", 0.1029], [\"2026-04\", 0.0673]]"
+ }
+}

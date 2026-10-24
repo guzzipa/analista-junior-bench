@@ -1,0 +1,20 @@
+{
+ "task_id": "E04",
+ "bloque": "Estadística",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport numpy as np\nfrom scipy.stats import pearsonr\nimport os\n\ndef solve(data_dir):\n    # Conectar a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener los datos necesarios\n    # Unimos pedidos con resenas para filtrar los que tienen puntaje\n    # Y con items/productos para asegurar que el pedido tenga datos válidos\n    query = \"\"\"\n    SELECT \n        p.fecha, \n        p.fecha_entrega, \n        r.puntaje\n    FROM pedidos p\n    JOIN resenas r ON p.pedido_id = r.pedido_id\n    WHERE p.estado = 'entregado'\n    AND p.fecha_entrega IS NOT NULL\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha', 'fecha_entrega'])\n    conn.close()\n    \n    if df.empty:\n        return 0.0\n    \n    # Calcular días de entrega\n    # La diferencia es en días (datetime - datetime)\n    df['dias_entrega'] = (df['fecha_entrega'] - df['fecha']).dt.days\n    \n    # Eliminar filas donde el puntaje o los días de entrega sean nulos\n    df = df.dropna(subset=['dias_entrega', 'puntaje'])\n    \n    if len(df) < 2:\n        return 0.0\n    \n    # Calcular correlación de Pearson\n    # pearsonr devuelve (correlación, p-value)\n    corr, _ = pearsonr(df['dias_entrega'], df['puntaje'])\n    \n    return round(float(corr), 3)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 619,
+  "completion_tokens": 430
+ },
+ "latency_s": 41.27,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:03:47",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import sqlite3\nimport pandas as pd\nimport numpy as np\nfrom scipy.stats import pearsonr\nimport os\n\ndef solve(data_dir):\n    # Conectar a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener los datos necesarios\n    # Unimos pedidos con resenas para filtrar los que tienen puntaje\n    # Y con items/productos para asegurar que el pedido tenga datos válidos\n    query = \"\"\"\n    SELECT \n        p.fecha, \n        p.fecha_entrega, \n        r.puntaje\n    FROM pedidos p\n    JOIN resenas r ON p.pedido_id = r.pedido_id\n    WHERE p.estado = 'entregado'\n    AND p.fecha_entrega IS NOT NULL\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha', 'fecha_entrega'])\n    conn.close()\n    \n    if df.empty:\n        return 0.0\n    \n    # Calcular días de entrega\n    # La diferencia es en días (datetime - datetime)\n    df['dias_entrega'] = (df['fecha_entrega'] - df['fecha']).dt.days\n    \n    # Eliminar filas donde el puntaje o los días de entrega sean nulos\n    df = df.dropna(subset=['dias_entrega', 'puntaje'])\n    \n    if len(df) < 2:\n        return 0.0\n    \n    # Calcular correlación de Pearson\n    # pearsonr devuelve (correlación, p-value)\n    corr, _ = pearsonr(df['dias_entrega'], df['puntaje'])\n    \n    return round(float(corr), 3)",
+  "got": "-0.436"
+ }
+}

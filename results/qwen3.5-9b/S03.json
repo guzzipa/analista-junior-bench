@@ -1,0 +1,20 @@
+{
+ "task_id": "S03",
+ "bloque": "SQL",
+ "model": "qwen3.5-9b",
+ "response": "```sql\nSELECT \n    p.canal,\n    ROUND(SUM(i.cantidad * i.precio_unitario) / COUNT(p.pedido_id), 2) AS ticket_promedio\nFROM pedidos p\nJOIN items i ON p.pedido_id = i.pedido_id\nWHERE p.estado = 'entregado'\n    AND p.fecha BETWEEN '2026-01-01' AND '2026-03-31'\nGROUP BY p.canal;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 529,
+  "completion_tokens": 107
+ },
+ "latency_s": 4.6,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:58:06",
+ "grade": {
+  "ok": false,
+  "error": "fila 1, columna 2: esperado 359228.9, recibido 240496.59",
+  "code": "SELECT \n    p.canal,\n    ROUND(SUM(i.cantidad * i.precio_unitario) / COUNT(p.pedido_id), 2) AS ticket_promedio\nFROM pedidos p\nJOIN items i ON p.pedido_id = i.pedido_id\nWHERE p.estado = 'entregado'\n    AND p.fecha BETWEEN '2026-01-01' AND '2026-03-31'\nGROUP BY p.canal;",
+  "got": "[[\"app\", 240496.59], [\"web\", 346313.38]]"
+ }
+}

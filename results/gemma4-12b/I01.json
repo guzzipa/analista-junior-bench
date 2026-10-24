@@ -1,0 +1,17 @@
+{
+ "task_id": "I01",
+ "bloque": "Insight de negocio",
+ "model": "gemma4-12b",
+ "response": "Hola, analicé los datos de marzo de 2026 y la caída en la facturación de Tecnología (de 235.6M a 163.9M) se explica principalmente por una baja drástica en las unidades vendidas del \"Celular Nova X\", que pasó de 172 en febrero a solo 21 en marzo. Además, la categoría de Electro también mostró una baja en facturación. Por otro lado, la tasa de aprobación de tarjetas tuvo una caída crítica entre el 10 y el 16 de marzo, lo que pudo afectar la conversión de ventas. No cuento con datos sobre stock o precios para confirmar si la baja fue por falta de mercadería.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 1575,
+  "completion_tokens": 149
+ },
+ "latency_s": 45.05,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:09:06",
+ "grade": {
+  "ok": null
+ }
+}

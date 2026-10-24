@@ -1,0 +1,19 @@
+{
+ "task_id": "E08",
+ "bloque": "Estadística",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport numpy as np\nfrom scipy.stats import chi2_contingency\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener la región y el medio de pago de todos los intentos de pago\n    # Unimos clientes con pagos para saber la región de cada transacción\n    query = \"\"\"\n    SELECT \n        c.region, \n        p.medio\n    FROM pagos p\n    JOIN pedidos ped ON p.pedido_id = ped.pedido_id\n    JOIN clientes c ON ped.cliente_id = c.cliente_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, conn.execute().description)\n    conn.close()\n    \n    # Crear tabla de contingencia (frecuencias cruzadas)\n    contingency_table = pd.crosstab(df['region'], df['medio'])\n    \n    # Realizar el test chi-cuadrado de independencia\n    chi2, p_value, dof, expected = chi2_contingency(contingency_table)\n    \n    # Determinar si es significativo al 5%\n    significativo = bool(p_value < 0.05)\n    \n    return {\n        'chi2': float(chi2),\n        'p_valor': float(p_value),\n        'significativo': significativo\n    }\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 641,
+  "completion_tokens": 360
+ },
+ "latency_s": 36.65,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:06:46",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:     main()\n  File \"/Users/guzzipa/projects/analista-junior-bench/bench/_runner.py\", line 60, in main\n    res = mod.solve(data_dir)\n  File \"/tmp/bench_leibcnd8/solution.py\", line 22, in solve\n    df = pd.read_sql_query(query, conn, conn.execute().description)\nTypeError: function takes at least 1 argument (0 given)",
+  "code": "import sqlite3\nimport pandas as pd\nimport numpy as np\nfrom scipy.stats import chi2_contingency\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener la región y el medio de pago de todos los intentos de pago\n    # Unimos clientes con pagos para saber la región de cada transacción\n    query = \"\"\"\n    SELECT \n        c.region, \n        p.medio\n    FROM pagos p\n    JOIN pedidos ped ON p.pedido_id = ped.pedido_id\n    JOIN clientes c ON ped.cliente_id = c.cliente_id\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, conn.execute().description)\n    conn.close()\n    \n    # Crear tabla de contingencia (frecuencias cruzadas)\n    contingency_table = pd.crosstab(df['region'], df['medio'])\n    \n    # Realizar el test chi-cuadrado de independencia\n    chi2, p_value, dof, expected = chi2_contingency(contingency_table)\n    \n    # Determinar si es significativo al 5%\n    significativo = bool(p_value < 0.05)\n    \n    return {\n        'chi2': float(chi2),\n        'p_valor': float(p_value),\n        'significativo': significativo\n    }"
+ }
+}

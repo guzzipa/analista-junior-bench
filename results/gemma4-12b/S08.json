@@ -1,0 +1,20 @@
+{
+ "task_id": "S08",
+ "bloque": "SQL",
+ "model": "gemma4-12b",
+ "response": "```sql\nSELECT\n  c.region,\n  p.producto_id,\n  SUM(i.cantidad) AS unidades\nFROM clientes c\nJOIN pedidos ped ON c.cliente_id = ped.cliente_id\nJOIN items i ON ped.pedido_id = i.pedido_id\nJOIN productos p ON i.producto_id = p.producto_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha BETWEEN '2025-01-01' AND '2025-12-31'\nGROUP BY c.region, p.producto_id\nORDER BY c.region, unidades DESC\nQUALIFY ROW_NUMBER() OVER (PARTITION BY c.region ORDER BY SUM(i.cantidad) DESC) = 1;\n```\n\n*Nota: Dado que SQLite no soporta `QUALIFY`, la consulta estándar compatible con todas las versiones de SQLite para obtener el máximo por grupo es:*\n\n```sql\nSELECT region, producto_id, unidades\nFROM (\n    SELECT \n        c.region, \n        p.producto_id, \n        SUM(i.cantidad) AS unidades,\n        RANK() OVER (PARTITION BY c.region ORDER BY SUM(i.cantidad) DESC) as ranking\n    FROM clientes c\n    JOIN pedidos ped ON c.cliente_id = ped.cliente_id\n    JOIN items i ON ped.pedido_id = i.pedido_id\n    JOIN productos p ON i.producto_id = p.producto_id\n    WHERE ped.estado = 'entregado'\n      AND ped.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n    GROUP BY c.region, p.producto_id\n) AS subquery\nWHERE ranking = 1\nORDER BY region;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 543,
+  "completion_tokens": 408
+ },
+ "latency_s": 18.13,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:40:19",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT region, producto_id, unidades\nFROM (\n    SELECT \n        c.region, \n        p.producto_id, \n        SUM(i.cantidad) AS unidades,\n        RANK() OVER (PARTITION BY c.region ORDER BY SUM(i.cantidad) DESC) as ranking\n    FROM clientes c\n    JOIN pedidos ped ON c.cliente_id = ped.cliente_id\n    JOIN items i ON ped.pedido_id = i.pedido_id\n    JOIN productos p ON i.producto_id = p.producto_id\n    WHERE ped.estado = 'entregado'\n      AND ped.fecha BETWEEN '2025-01-01' AND '2025-12-31'\n    GROUP BY c.region, p.producto_id\n) AS subquery\nWHERE ranking = 1\nORDER BY region;",
+  "got": "[[\"AMBA\", 1, 1114], [\"Centro\", 1, 492], [\"Cuyo\", 1, 176], [\"NEA\", 1, 172], [\"NOA\", 1, 222], [\"Patagonia\", 1, 296]]"
+ }
+}

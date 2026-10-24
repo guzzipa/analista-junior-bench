@@ -1,0 +1,19 @@
+{
+ "task_id": "L09",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport pandas as pd\nfrom datetime import datetime, timedelta\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    events_path = os.path.join(data_dir, \"eventos.csv\")\n    \n    # Leer el archivo de eventos\n    df_events = pd.read_csv(events_path)\n    \n    # Convertir la columna timestamp a datetime object (UTC)\n    df_events['timestamp_utc'] = pd.to_datetime(df_events['timestamp_utc'])\n    \n    # Definir la zona horaria de Argentina (UTC-3)\n    tz_argentina = 'America/Argentina/Buenos_Aires'\n    \n    # Convertir el timestamp UTC a hora local de Argentina\n    df_events['hora_argentina'] = df_events['timestamp_utc'].dt.tz_localize('UTC').dt.tz_convert(tz_argentina)\n    \n    # Extraer la fecha en formato YYYY-MM-DD de la hora argentina\n    df_events['fecha_argentina'] = df_events['hora_argentina'].dt.date\n    \n    # Agrupar por fecha y contar la cantidad de eventos\n    conteo_eventos = df_events.groupby('fecha_argentina').size().reset_index(name='cantidad_de_eventos')\n    \n    # Formatear el resultado como un diccionario {YYYY-MM-DD: cantidad}\n    resultado = {}\n    for _, row in conteo_eventos.iterrows():\n        fecha_str = row['fecha_argentina'].strftime('%Y-%m-%d')\n        resultado[fecha_str] = int(row['cantidad_de_eventos'])\n    \n    return resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 686,
+  "completion_tokens": 344
+ },
+ "latency_s": 20.8,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:03:20",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:     arr = self._data.tz_localize(tz, ambiguous, nonexistent)\n  File \"/Users/guzzipa/projects/analista-junior-bench/.venv/lib/python3.9/site-packages/pandas/core/arrays/_mixins.py\", line 81, in method\n    return meth(self, *args, **kwargs)\n  File \"/Users/guzzipa/projects/analista-junior-bench/.venv/lib/python3.9/site-packages/pandas/core/arrays/datetimes.py\", line 1085, in tz_localize\n    raise TypeError(\"Already tz-aware, use tz_convert to convert.\")\nTypeError: Already tz-aware, use tz_convert to convert.",
+  "code": "import os\nimport pandas as pd\nfrom datetime import datetime, timedelta\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    events_path = os.path.join(data_dir, \"eventos.csv\")\n    \n    # Leer el archivo de eventos\n    df_events = pd.read_csv(events_path)\n    \n    # Convertir la columna timestamp a datetime object (UTC)\n    df_events['timestamp_utc'] = pd.to_datetime(df_events['timestamp_utc'])\n    \n    # Definir la zona horaria de Argentina (UTC-3)\n    tz_argentina = 'America/Argentina/Buenos_Aires'\n    \n    # Convertir el timestamp UTC a hora local de Argentina\n    df_events['hora_argentina'] = df_events['timestamp_utc'].dt.tz_localize('UTC').dt.tz_convert(tz_argentina)\n    \n    # Extraer la fecha en formato YYYY-MM-DD de la hora argentina\n    df_events['fecha_argentina'] = df_events['hora_argentina'].dt.date\n    \n    # Agrupar por fecha y contar la cantidad de eventos\n    conteo_eventos = df_events.groupby('fecha_argentina').size().reset_index(name='cantidad_de_eventos')\n    \n    # Formatear el resultado como un diccionario {YYYY-MM-DD: cantidad}\n    resultado = {}\n    for _, row in conteo_eventos.iterrows():\n        fecha_str = row['fecha_argentina'].strftime('%Y-%m-%d')\n        resultado[fecha_str] = int(row['cantidad_de_eventos'])\n    \n    return resultado"
+ }
+}

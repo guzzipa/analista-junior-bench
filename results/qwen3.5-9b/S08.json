@@ -1,0 +1,19 @@
+{
+ "task_id": "S08",
+ "bloque": "SQL",
+ "model": "qwen3.5-9b",
+ "response": "```sql\nSELECT \n    c.region,\n    p.producto_id,\n    SUM(i.cantidad) AS unidades\nFROM clientes c\nJOIN pedidos p ON c.cliente_id = p.cliente_id\nJOIN items i ON p.pedido_id = i.pedido_id\nJOIN productos prod ON i.producto_id = prod.producto_id\nWHERE \n    p.estado = 'entregado'\n    AND p.fecha >= '2025-01-01'\n    AND p.fecha <= '2025-12-31'\nGROUP BY c.region, p.pedido_id, i.producto_id\nORDER BY c.region, unidades DESC, p.pedido_id ASC;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 525,
+  "completion_tokens": 151
+ },
+ "latency_s": 6.11,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:58:45",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar: no such column: p.producto_id",
+  "code": "SELECT \n    c.region,\n    p.producto_id,\n    SUM(i.cantidad) AS unidades\nFROM clientes c\nJOIN pedidos p ON c.cliente_id = p.cliente_id\nJOIN items i ON p.pedido_id = i.pedido_id\nJOIN productos prod ON i.producto_id = prod.producto_id\nWHERE \n    p.estado = 'entregado'\n    AND p.fecha >= '2025-01-01'\n    AND p.fecha <= '2025-12-31'\nGROUP BY c.region, p.pedido_id, i.producto_id\nORDER BY c.region, unidades DESC, p.pedido_id ASC;"
+ }
+}

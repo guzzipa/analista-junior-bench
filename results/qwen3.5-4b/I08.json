@@ -1,0 +1,17 @@
+{
+ "task_id": "I08",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-4b",
+ "response": "No podemos determinar el número exacto de clientes activos hoy (1 de julio) porque la tabla solo muestra el último pedido entregado hasta junio 2026. Los clientes con pedidos en \"jul-dic 2025\" podrían haber comprado en julio, pero no tenemos datos de ventas del mes actual para confirmar su actividad reciente. Además, el registro de prueba (QA TEST) debe excluirse manualmente al contar usuarios reales.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 353,
+  "completion_tokens": 90
+ },
+ "latency_s": 5.75,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:45:54",
+ "grade": {
+  "ok": null
+ }
+}

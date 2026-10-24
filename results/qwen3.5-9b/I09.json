@@ -1,0 +1,17 @@
+{
+ "task_id": "I09",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-9b",
+ "response": "El volumen de pedidos mostró una caída significativa el martes 14 de abril (0 pedidos), lo cual es inusual dado que no fue feriado ni hubo interrupción en App o Web. El resto de la semana presenta fluctuaciones normales con un promedio diario cercano a los 60 pedidos, donde la web suele representar entre el 50% y 60% del total. No se puede determinar si la caída del día 14 fue por error técnico, falta de stock o problema en la medición, ya que no tenemos datos de conversión ni inventario.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 612,
+  "completion_tokens": 118
+ },
+ "latency_s": 14.38,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:26:54",
+ "grade": {
+  "ok": null
+ }
+}

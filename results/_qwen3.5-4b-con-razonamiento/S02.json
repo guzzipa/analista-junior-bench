@@ -1,0 +1,20 @@
+{
+ "task_id": "S02",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "Hola, colega. Aquí tenés la consulta SQL para extraer los productos con mayor volumen de ventas en pedidos entregados del año 2025, tal como lo solicitaste para el reporte inicial.\n\n```sql\nSELECT p.producto_id, p.nombre, SUM(i.cantidad) AS unidades\nFROM items i\nJOIN productos p ON i.producto_id = p.producto_id\nJOIN pedidos ped ON i.pedido_id = ped.pedido_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha >= '2025-01-01'\n  AND ped.fecha <= '2025-12-31'\nGROUP BY p.producto_id, p.nombre\nORDER BY unidades DESC\nLIMIT 5;\n```",
+ "thinking_chars": 16188,
+ "usage": {
+  "prompt_tokens": 518,
+  "completion_tokens": 4532
+ },
+ "latency_s": 193.79,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 10:11:21",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT p.producto_id, p.nombre, SUM(i.cantidad) AS unidades\nFROM items i\nJOIN productos p ON i.producto_id = p.producto_id\nJOIN pedidos ped ON i.pedido_id = ped.pedido_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha >= '2025-01-01'\n  AND ped.fecha <= '2025-12-31'\nGROUP BY p.producto_id, p.nombre\nORDER BY unidades DESC\nLIMIT 5;",
+  "got": "[[1, \"Celular Nova X\", 2472], [32, \"Crema Facial Hidratante\", 2029], [34, \"Protector Solar FPS50\", 1915], [35, \"Shampoo Sólido Natural\", 1754], [26, \"Remera Dry Fit\", 1706]]"
+ }
+}

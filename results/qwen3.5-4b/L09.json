@@ -1,0 +1,20 @@
+{
+ "task_id": "L09",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-4b",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nfrom datetime import timezone, timedelta\n\ndef solve(data_dir):\n    # Conectar a la base de datos SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Cargar los eventos desde el archivo CSV\n    events_df = pd.read_csv(os.path.join(data_dir, \"eventos.csv\"), dtype={'timestamp_utc': str})\n    \n    # Definir la zona horaria de Argentina (UTC-3)\n    argentina_tz = timezone(timedelta(hours=-3))\n    \n    # Convertir los timestamps UTC a hora local argentina\n    events_df['timestamp_local'] = pd.to_datetime(events_df['timestamp_utc'], utc=True).dt.tz_convert(argentina_tz)\n    \n    # Extraer el año, mes y día para agrupar por fecha en formato YYYY-MM-DD\n    events_df['fecha_argentina'] = events_df['timestamp_local'].dt.strftime('%Y-%m-%d')\n    \n    # Agrupar por fecha argentina y contar la cantidad de eventos\n    resultado = events_df.groupby('fecha_argentina').size().to_dict()\n    \n    # Cerrar la conexión a la base de datos\n    conn.close()\n    \n    return resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 686,
+  "completion_tokens": 282
+ },
+ "latency_s": 14.69,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:27:40",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nfrom datetime import timezone, timedelta\n\ndef solve(data_dir):\n    # Conectar a la base de datos SQLite\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Cargar los eventos desde el archivo CSV\n    events_df = pd.read_csv(os.path.join(data_dir, \"eventos.csv\"), dtype={'timestamp_utc': str})\n    \n    # Definir la zona horaria de Argentina (UTC-3)\n    argentina_tz = timezone(timedelta(hours=-3))\n    \n    # Convertir los timestamps UTC a hora local argentina\n    events_df['timestamp_local'] = pd.to_datetime(events_df['timestamp_utc'], utc=True).dt.tz_convert(argentina_tz)\n    \n    # Extraer el año, mes y día para agrupar por fecha en formato YYYY-MM-DD\n    events_df['fecha_argentina'] = events_df['timestamp_local'].dt.strftime('%Y-%m-%d')\n    \n    # Agrupar por fecha argentina y contar la cantidad de eventos\n    resultado = events_df.groupby('fecha_argentina').size().to_dict()\n    \n    # Cerrar la conexión a la base de datos\n    conn.close()\n    \n    return resultado",
+  "got": "{\"2026-06-01\": 883, \"2026-06-02\": 903, \"2026-06-03\": 833, \"2026-06-04\": 866, \"2026-06-05\": 812, \"2026-06-06\": 857, \"2026-06-07\": 846}"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "task_id": "I07",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-9b",
+ "response": "Enfocar la iniciativa en **Logística Patagonia**. El cambio de operador redujo el puntaje de 4.0 a 3.0 y generó un aumento del 23% en reseñas negativas (182 vs 147), lo que amenaza la reputación y retención; además, con una facturación regional de 470 M ARS, cualquier mejora en satisfacción impacta directamente en el LTV. No priorizar el **Checkout nuevo** porque el test A/B mostró un desempeño inferior (3,74% vs 4,20%) y su implementación tardaría 6 semanas, consumiendo recursos sin retorno inmediato. Finalmente, no abordar los **Quiebres de stock del Nova X** como iniciativa principal, ya que la caída en marzo fue temporal y el volumen se recuperó en abril, indicando que el problema fue puntual y no estructural a nivel trimestral.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 542,
+  "completion_tokens": 193
+ },
+ "latency_s": 18.5,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:26:26",
+ "grade": {
+  "ok": null
+ }
+}

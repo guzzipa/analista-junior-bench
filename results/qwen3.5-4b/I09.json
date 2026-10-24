@@ -1,0 +1,17 @@
+{
+ "task_id": "I09",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-4b",
+ "response": "El volumen total de pedidos cayó un 20% respecto a la media semanal, impulsado por una caída drástica el 14 de abril (día martes sin feriados) que dejó el día en cero. La app mantiene su liderazgo con un promedio del 27% más alto que la web, aunque ambos canales mostraron una tendencia descendente clara entre el 6 y el 20 de abril. El 13 de abril fue el día con mayor volumen (68 pedidos), mientras que el 14 marcó el mínimo absoluto. No se puede determinar si esta caída es cíclica o atípica sin datos históricos comparativos, pero la recuperación parcial desde el 15 sugiere un evento puntual. Se recomienda investigar causas externas para el día 14 y monitorear si el volumen vuelve a estabilizarse en los niveles anteriores.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 612,
+  "completion_tokens": 179
+ },
+ "latency_s": 11.07,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:46:05",
+ "grade": {
+  "ok": null
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "task_id": "I05",
+ "bloque": "Insight de negocio",
+ "model": "gemma4-12b",
+ "response": "Hola, te comparto los resultados del experimento de checkout de mayo 2026. La variante B (un solo paso) mostró una conversión superior del 4.20% frente al 3.74% de la variante A, con un p-valor de 0.0164. Dado que el p-valor es menor a 0.05, el resultado es estadísticamente significativo. Recomiendo implementar el nuevo checkout, ya que mantiene un mejor desempeño en todos los períodos analizados.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 352,
+  "completion_tokens": 109
+ },
+ "latency_s": 14.55,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:10:29",
+ "grade": {
+  "ok": null
+ }
+}

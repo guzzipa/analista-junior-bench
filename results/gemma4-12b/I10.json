@@ -1,0 +1,17 @@
+{
+ "task_id": "I10",
+ "bloque": "Insight de negocio",
+ "model": "gemma4-12b",
+ "response": "Estimados miembros del Directorio,\n\nA continuación, presento el resumen ejecutivo del desempeño de Tienda Pampa correspondiente al primer semestre de 2026:\n\n1. Crecimiento de facturación y volumen: La facturación total aumentó un 42,3% interanual, alcanzando los 4.520,73 millones de ARS, impulsada por un incremento del 13,6% en la cantidad de pedidos entregados (9.945 unidades).\n2. Expansión de la base de clientes y ticket promedio: El número de clientes activos creció un 31,2% (4.622 clientes), mientras que el ticket promedio subió un 26,3% (454,57 miles), superando el incremento promedio del 30% en los precios de lista.\n3. Evolución de canales y retención: Se registró un crecimiento significativo en el uso de la aplicación (45,52% de los pedidos), aunque el porcentaje de cancelación aumentó levemente del 7,10% al 7,29%.\n4. Calidad de servicio y experiencia de usuario: El puntaje de reseñas se mantuvo estable con una mínima variación, pasando de 4,43 a 4,40. No es posible determinar con los datos proporcionados el impacto específico del cambio de operador logístico en Patagonia ni el resultado exacto del test A/B de checkout.\n5. Impacto de eventos operativos: Durante el periodo se registraron quiebres de stock del Celular Nova X, fallas en el procesador de tarjetas y la participación en el Hot Sale, pero los datos no permiten cuantificar el impacto económico individual de cada uno de estos eventos sobre los KPIs finales.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 445,
+  "completion_tokens": 372
+ },
+ "latency_s": 42.65,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:12:38",
+ "grade": {
+  "ok": null
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "task_id": "E09",
+ "bloque": "Estadística",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport sqlite3\nimport pandas as pd\nfrom scipy import stats\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    # Conectar a la base de datos\n    conn = sqlite3.connect(db_path)\n    \n    # Leer las tablas necesarias para el cálculo del test A/B\n    # Necesitamos: sesiones_ab (para los usuarios y variantes), \n    # y asegurarnos de que solo consideremos conversiones exitosas.\n    # La columna 'convirtio' en sesiones_ab indica si hubo conversión (1) o no (0).\n    \n    df_sesiones = pd.read_sql_query(\"SELECT variante, convirtio FROM sesiones_ab\", conn)\n    conn.close()\n    \n    # Definición de los parámetros del test\n    p1 = 0.038  # Conversión actual (Grupo A o B, asumimos que es la base)\n    p2 = 0.043  # Conversión objetivo (la mejora deseada)\n    alpha = 0.05  # Significancia (5%)\n    power = 0.80  # Potencia (80%)\n    \n    # Calcular el tamaño de muestra necesario por grupo usando la prueba Z para proporciones\n    # Fórmula aproximada para muestras iguales:\n    # n = [Z_alpha/2 * sqrt(p_bar * (1-p_bar)) + Z_beta * sqrt(p1*(1-p1) + p2*(1-p2))]^2 / (p1 - p2)^2\n    # Donde p_bar es el promedio de las proporciones.\n    \n    p_bar = (p1 + p2) / 2\n    \n    # Valores críticos Z\n    z_alpha = stats.norm.ppf(1 - alpha / 2)\n    z_beta = stats.norm.ppf(power)\n    \n    # Cálculo del tamaño de muestra\n    numerator = (z_alpha * ((p_bar * (1 - p_bar)) ** 0.5) + \n                 z_beta * (((p1 * (1 - p1)) ** 0.5) + ((p2 * (1 - p2)) ** 0.5))) ** 2\n    \n    denominator = (p1 - p2) ** 2\n    \n    n_sample = numerator / denominator\n    \n    # Redondear hacia arriba para obtener un entero\n    result = int(n_sample)\n    \n    return result\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 614,
+  "completion_tokens": 536
+ },
+ "latency_s": 40.14,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:23:03",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 24400, recibido 20621",
+  "code": "import os\nimport sqlite3\nimport pandas as pd\nfrom scipy import stats\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    \n    # Conectar a la base de datos\n    conn = sqlite3.connect(db_path)\n    \n    # Leer las tablas necesarias para el cálculo del test A/B\n    # Necesitamos: sesiones_ab (para los usuarios y variantes), \n    # y asegurarnos de que solo consideremos conversiones exitosas.\n    # La columna 'convirtio' en sesiones_ab indica si hubo conversión (1) o no (0).\n    \n    df_sesiones = pd.read_sql_query(\"SELECT variante, convirtio FROM sesiones_ab\", conn)\n    conn.close()\n    \n    # Definición de los parámetros del test\n    p1 = 0.038  # Conversión actual (Grupo A o B, asumimos que es la base)\n    p2 = 0.043  # Conversión objetivo (la mejora deseada)\n    alpha = 0.05  # Significancia (5%)\n    power = 0.80  # Potencia (80%)\n    \n    # Calcular el tamaño de muestra necesario por grupo usando la prueba Z para proporciones\n    # Fórmula aproximada para muestras iguales:\n    # n = [Z_alpha/2 * sqrt(p_bar * (1-p_bar)) + Z_beta * sqrt(p1*(1-p1) + p2*(1-p2))]^2 / (p1 - p2)^2\n    # Donde p_bar es el promedio de las proporciones.\n    \n    p_bar = (p1 + p2) / 2\n    \n    # Valores críticos Z\n    z_alpha = stats.norm.ppf(1 - alpha / 2)\n    z_beta = stats.norm.ppf(power)\n    \n    # Cálculo del tamaño de muestra\n    numerator = (z_alpha * ((p_bar * (1 - p_bar)) ** 0.5) + \n                 z_beta * (((p1 * (1 - p1)) ** 0.5) + ((p2 * (1 - p2)) ** 0.5))) ** 2\n    \n    denominator = (p1 - p2) ** 2\n    \n    n_sample = numerator / denominator\n    \n    # Redondear hacia arriba para obtener un entero\n    result = int(n_sample)\n    \n    return result",
+  "got": "20621"
+ }
+}

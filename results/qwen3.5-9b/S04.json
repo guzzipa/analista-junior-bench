@@ -1,0 +1,20 @@
+{
+ "task_id": "S04",
+ "bloque": "SQL",
+ "model": "qwen3.5-9b",
+ "response": "```sql\nSELECT \n    strftime('%Y-%m', fecha_entrega) AS mes,\n    COUNT(DISTINCT cliente_id) AS nuevos_clientes\nFROM pedidos\nWHERE estado = 'entregado'\n  AND fecha_entrega IS NOT NULL\n  AND fecha_entrega >= '2025-01-01'\n  AND fecha_entrega < '2026-07-01'\n  AND cliente_id IN (\n      SELECT MIN(cliente_id)\n      FROM pedidos\n      WHERE estado = 'entregado'\n        AND fecha_entrega IS NOT NULL\n        AND cliente_id = pedidos.cliente_id\n        AND fecha_entrega >= '2025-01-01'\n        AND fecha_entrega < '2026-07-01'\n      GROUP BY cliente_id\n  )\nGROUP BY mes\nORDER BY mes;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 531,
+  "completion_tokens": 197
+ },
+ "latency_s": 7.34,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:58:13",
+ "grade": {
+  "ok": false,
+  "error": "esperaba 12 filas, recibió 18",
+  "code": "SELECT \n    strftime('%Y-%m', fecha_entrega) AS mes,\n    COUNT(DISTINCT cliente_id) AS nuevos_clientes\nFROM pedidos\nWHERE estado = 'entregado'\n  AND fecha_entrega IS NOT NULL\n  AND fecha_entrega >= '2025-01-01'\n  AND fecha_entrega < '2026-07-01'\n  AND cliente_id IN (\n      SELECT MIN(cliente_id)\n      FROM pedidos\n      WHERE estado = 'entregado'\n        AND fecha_entrega IS NOT NULL\n        AND cliente_id = pedidos.cliente_id\n        AND fecha_entrega >= '2025-01-01'\n        AND fecha_entrega < '2026-07-01'\n      GROUP BY cliente_id\n  )\nGROUP BY mes\nORDER BY mes;",
+  "got": "[[\"2025-01\", 967], [\"2025-02\", 1010], [\"2025-03\", 1107], [\"2025-04\", 1126], [\"2025-05\", 1432], [\"2025-06\", 1208], [\"2025-07\", 1244], [\"2025-08\", 1377], [\"2025-09\", 1267], [\"2025-10\", 1294], [\"2025-11\", 1574], [\"2025-12\", 1790], [\"2026-01\", 1406], [\"2026-02\", 1197], [\"2026-03\", 1272], [\"2026-04\", 1295], [\"2026-05\", 1830], [\"2026-06\", 1456]]"
+ }
+}

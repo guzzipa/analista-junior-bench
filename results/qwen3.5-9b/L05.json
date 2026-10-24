@@ -1,0 +1,19 @@
+{
+ "task_id": "L05",
+ "bloque": "Limpieza",
+ "model": "qwen3.5-9b",
+ "response": "```python\nimport os\nimport pandas as pd\n\ndef solve(data_dir):\n    # Ruta al archivo CSV de ventas por sucursal\n    csv_path = os.path.join(data_dir, \"ventas_sucursales.csv\")\n    \n    # Carga del DataFrame\n    df = pd.read_csv(csv_path, sep=';')\n    \n    # Conversión de la columna 'fecha' a formato datetime para filtrar el primer trimestre de 2026\n    # El formato en el CSV es DD/MM/YYYY, pandas lo lee automáticamente si se especifica el formato correcto o se intenta inferir.\n    # Para asegurar la conversión correcta dado el formato específico:\n    df['fecha'] = pd.to_datetime(df['fecha'], format='%d/%m/%Y')\n    \n    # Filtrado para obtener solo el primer trimestre de 2026 (Ene, Feb, Mar)\n    q1_2026_mask = (df['fecha'].dt.year == 2026) & (df['fecha'].dt.month <= 3)\n    df_q1 = df[q1_2026_mask]\n    \n    # Agrupación por sucursal y suma de la columna 'venta'\n    ventas_totales = df_q1.groupby('sucursal')['venta'].sum()\n    \n    # Redondeo a 2 decimales\n    ventas_totales = ventas_totales.round(2)\n    \n    # Conversión a diccionario con el nombre de la sucursal como clave\n    resultado = ventas_totales.to_dict()\n    \n    return resultado\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 713,
+  "completion_tokens": 338
+ },
+ "latency_s": 25.97,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:01:10",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:   File \"pandas/_libs/parsers.pyx\", line 574, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas/_libs/parsers.pyx\", line 663, in pandas._libs.parsers.TextReader._get_header\n  File \"pandas/_libs/parsers.pyx\", line 874, in pandas._libs.parsers.TextReader._tokenize_rows\n  File \"pandas/_libs/parsers.pyx\", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status\n  File \"pandas/_libs/parsers.pyx\", line 2053, in pandas._libs.parsers.raise_parser_error\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xf3 in position 34: invalid continuation byte",
+  "code": "import os\nimport pandas as pd\n\ndef solve(data_dir):\n    # Ruta al archivo CSV de ventas por sucursal\n    csv_path = os.path.join(data_dir, \"ventas_sucursales.csv\")\n    \n    # Carga del DataFrame\n    df = pd.read_csv(csv_path, sep=';')\n    \n    # Conversión de la columna 'fecha' a formato datetime para filtrar el primer trimestre de 2026\n    # El formato en el CSV es DD/MM/YYYY, pandas lo lee automáticamente si se especifica el formato correcto o se intenta inferir.\n    # Para asegurar la conversión correcta dado el formato específico:\n    df['fecha'] = pd.to_datetime(df['fecha'], format='%d/%m/%Y')\n    \n    # Filtrado para obtener solo el primer trimestre de 2026 (Ene, Feb, Mar)\n    q1_2026_mask = (df['fecha'].dt.year == 2026) & (df['fecha'].dt.month <= 3)\n    df_q1 = df[q1_2026_mask]\n    \n    # Agrupación por sucursal y suma de la columna 'venta'\n    ventas_totales = df_q1.groupby('sucursal')['venta'].sum()\n    \n    # Redondeo a 2 decimales\n    ventas_totales = ventas_totales.round(2)\n    \n    # Conversión a diccionario con el nombre de la sucursal como clave\n    resultado = ventas_totales.to_dict()\n    \n    return resultado"
+ }
+}

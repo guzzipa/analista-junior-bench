@@ -1,0 +1,20 @@
+{
+ "task_id": "S07",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "```sql\nSELECT \n    strftime('%Y-%m', fecha_entrega) AS mes,\n    SUM(i.cantidad * i.precio_unitario) AS facturacion,\n    SUM(SUM(i.cantidad * i.precio_unitario)) OVER (ORDER BY strftime('%Y-%m', fecha_entrega)) AS acumulado\nFROM items i\nJOIN pedidos p ON i.pedido_id = p.pedido_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2025-01-01'\n  AND p.fecha <= '2026-06-30'\nGROUP BY mes\nORDER BY mes;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 525,
+  "completion_tokens": 143
+ },
+ "latency_s": 7.01,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:23:15",
+ "grade": {
+  "ok": false,
+  "error": "esperaba 12 filas, recibió 19",
+  "code": "SELECT \n    strftime('%Y-%m', fecha_entrega) AS mes,\n    SUM(i.cantidad * i.precio_unitario) AS facturacion,\n    SUM(SUM(i.cantidad * i.precio_unitario)) OVER (ORDER BY strftime('%Y-%m', fecha_entrega)) AS acumulado\nFROM items i\nJOIN pedidos p ON i.pedido_id = p.pedido_id\nWHERE p.estado = 'entregado'\n  AND p.fecha >= '2025-01-01'\n  AND p.fecha <= '2026-06-30'\nGROUP BY mes\nORDER BY mes;",
+  "got": "[[\"2025-01\", 412740610.0, 412740610.0], [\"2025-02\", 488074380.0, 900814990.0], [\"2025-03\", 487304510.0, 1388119500.0], [\"2025-04\", 498460020.0, 1886579520.0], [\"2025-05\", 629795460.0, 2516374980.0], [\"2025-06\", 567878250.0, 3084253230.0], [\"2025-07\", 586065250.0, 3670318480.0], [\"2025-08\", 679713010.0, 4350031490.0], [\"2025-09\", 585634000.0, 4935665490.0], [\"2025-10\", 646653930.0, 5582319420.0], [\"2025-11\", 747936850.0, 6330256270.0], [\"2025-12\", 1048320190.0, 7378576460.0], [\"2026-01\", 794589170.0, 8173165630.0], [\"2026-02\", 681239280.0, 8854404910.0], [\"2026-03\", 608735520.0, 9463140430.0], …"
+ }
+}

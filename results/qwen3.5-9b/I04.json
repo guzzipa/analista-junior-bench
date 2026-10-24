@@ -1,0 +1,17 @@
+{
+ "task_id": "I04",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-9b",
+ "response": "La campaña VUELTA10 sí impulsó el volumen de pedidos en agosto (+10% vs julio), pero no fue un éxito neto al reducir la facturación mensual total (-6% vs julio). El descuento otorgado (21.8M) superó el incremento en ventas brutas, lo que indica una erosión del margen por este canal. Además, el 80.2% de los usuarios ya eran clientes recurrentes, sugiriendo que la estrategia priorizó la retención sobre la adquisición de nuevos compradores. No se puede determinar si el crecimiento de pedidos fue exclusivo de esta campaña sin datos de control (meses sin cupón).",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 436,
+  "completion_tokens": 137
+ },
+ "latency_s": 13.26,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:25:35",
+ "grade": {
+  "ok": null
+ }
+}

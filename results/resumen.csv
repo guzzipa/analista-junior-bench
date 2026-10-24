@@ -1,3 +1,6 @@
 modelo,total,aprobo,minutos,tareas_respondidas,pendientes_humanos,SQL,Limpieza,Visualización,Estadística,Insight de negocio
 gemini-flash-lite,,,2.5,50,20,1.0,0.5,,1.0,
-gpt-oss-120b-groq,,,2.0,50,18,0.8,0.4,,1.0,
+gemma4-12b,,,32.7,50,17,1.0,0.1,,0.8,
+gpt-oss-120b-groq,,,2.4,50,18,0.8,0.4,,1.0,
+qwen3.5-4b,,,23.1,50,11,0.3,0.1,,0.1,
+qwen3.5-9b,,,28.8,50,17,0.6,0.0,,0.5,

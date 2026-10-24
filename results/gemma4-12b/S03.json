@@ -1,0 +1,20 @@
+{
+ "task_id": "S03",
+ "bloque": "SQL",
+ "model": "gemma4-12b",
+ "response": "```sql\nSELECT\n  canal,\n  ROUND(AVG(facturacion), 2) AS ticket_promedio\nFROM (\n  SELECT\n    p.canal,\n    SUM(i.cantidad * i.precio_unitario) AS facturacion\n  FROM pedidos p\n  JOIN items i ON p.pedido_id = i.pedido_id\n  WHERE p.estado = 'entregado'\n    AND p.fecha BETWEEN '2026-01-01' AND '2026-03-31'\n  GROUP BY p.pedido_id, p.canal\n) AS pedidos_trimestre\nGROUP BY canal;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 545,
+  "completion_tokens": 150
+ },
+ "latency_s": 7.45,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:39:22",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT\n  canal,\n  ROUND(AVG(facturacion), 2) AS ticket_promedio\nFROM (\n  SELECT\n    p.canal,\n    SUM(i.cantidad * i.precio_unitario) AS facturacion\n  FROM pedidos p\n  JOIN items i ON p.pedido_id = i.pedido_id\n  WHERE p.estado = 'entregado'\n    AND p.fecha BETWEEN '2026-01-01' AND '2026-03-31'\n  GROUP BY p.pedido_id, p.canal\n) AS pedidos_trimestre\nGROUP BY canal;",
+  "got": "[[\"app\", 359228.9], [\"web\", 517505.57]]"
+ }
+}

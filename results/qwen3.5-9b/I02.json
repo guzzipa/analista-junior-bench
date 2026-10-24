@@ -1,0 +1,17 @@
+{
+ "task_id": "I02",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-9b",
+ "response": "Sí es cierto; el puntaje promedio de reseñas en Patagonia cayó drásticamente de 3.94 a 2.95 entre enero y mayo, lo que indica una fuerte insatisfacción. Esto se explica principalmente por un aumento masivo en los días de entrega, que pasaron de ~7.6 días en marzo-abril a 12.0-12.1 días en abril y mayo, duplicando el tiempo de espera respecto al resto del país. Aunque la cantidad total de reseñas es baja (399), la tendencia negativa en ambas métricas (calidad y velocidad) confirma que los clientes están más enojados por los retrasos logísticos.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 879,
+  "completion_tokens": 145
+ },
+ "latency_s": 18.75,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:25:09",
+ "grade": {
+  "ok": null
+ }
+}

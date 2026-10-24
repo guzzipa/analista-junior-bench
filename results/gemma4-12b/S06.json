@@ -1,0 +1,20 @@
+{
+ "task_id": "S06",
+ "bloque": "SQL",
+ "model": "gemma4-12b",
+ "response": "```sql\nSELECT count(DISTINCT cliente_id) AS clientes\nFROM pedidos\nWHERE estado = 'entregado'\n  AND fecha BETWEEN '2025-01-01' AND '2025-12-31'\n  AND cliente_id NOT IN (\n    SELECT cliente_id\n    FROM pedidos\n    WHERE estado = 'entregado'\n      AND fecha BETWEEN '2026-01-01' AND '2026-06-30'\n  );\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 551,
+  "completion_tokens": 120
+ },
+ "latency_s": 5.57,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:39:54",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT count(DISTINCT cliente_id) AS clientes\nFROM pedidos\nWHERE estado = 'entregado'\n  AND fecha BETWEEN '2025-01-01' AND '2025-12-31'\n  AND cliente_id NOT IN (\n    SELECT cliente_id\n    FROM pedidos\n    WHERE estado = 'entregado'\n      AND fecha BETWEEN '2026-01-01' AND '2026-06-30'\n  );",
+  "got": "[[1456]]"
+ }
+}

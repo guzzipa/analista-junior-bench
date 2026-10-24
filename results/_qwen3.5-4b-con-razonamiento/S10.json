@@ -1,0 +1,19 @@
+{
+ "task_id": "S10",
+ "bloque": "SQL",
+ "model": "qwen3.5-4b",
+ "response": "",
+ "thinking_chars": 30454,
+ "usage": {
+  "prompt_tokens": 555,
+  "completion_tokens": 8192
+ },
+ "latency_s": 400.77,
+ "finish_reason": "length",
+ "timestamp": "2026-10-23 10:55:51",
+ "grade": {
+  "ok": false,
+  "error": "no encontré un bloque de código en la respuesta",
+  "code": null
+ }
+}

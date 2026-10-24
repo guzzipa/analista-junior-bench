@@ -1,0 +1,19 @@
+{
+ "task_id": "L05",
+ "bloque": "Limpieza",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    # Ruta del archivo CSV\n    csv_path = os.path.join(data_dir, \"ventas_sucursales.csv\")\n    \n    # Leer el archivo CSV\n    # El formato de fecha es DD/MM/YYYY y el valor es un string con puntos y comas\n    df = pd.read_csv(csv_path, sep=';', parse_dates=['fecha'])\n    \n    # Convertir la columna venta a float eliminando los puntos de miles y cambiando la coma decimal\n    df['venta'] = df['venta'].str.replace('.', '').str.replace(',', '.').astype(float)\n    \n    # Filtrar por el primer trimestre de 2026 (Enero, Febrero, Marzo)\n    # El formato de fecha en el CSV es 01/01/2026, por lo que el filtro es directo\n    q1_2026 = df[df['fecha'].dt.year == 2026] & (df['fecha'].dt.month.isin([1, 2, 3]))\n    \n    # Agrupar por sucursal y sumar la venta\n    resultado = q1_2026.groupby('sucursal')['venta'].sum()\n    \n    # Convertir a diccionario y redondear a 2 decimales\n    return {sucursal: round(total, 2) for sucursal, total in resultado.to_dict().items()}\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 739,
+  "completion_tokens": 349
+ },
+ "latency_s": 33.9,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:44:10",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:   File \"pandas/_libs/parsers.pyx\", line 574, in pandas._libs.parsers.TextReader.__cinit__\n  File \"pandas/_libs/parsers.pyx\", line 663, in pandas._libs.parsers.TextReader._get_header\n  File \"pandas/_libs/parsers.pyx\", line 874, in pandas._libs.parsers.TextReader._tokenize_rows\n  File \"pandas/_libs/parsers.pyx\", line 891, in pandas._libs.parsers.TextReader._check_tokenize_status\n  File \"pandas/_libs/parsers.pyx\", line 2053, in pandas._libs.parsers.raise_parser_error\nUnicodeDecodeError: 'utf-8' codec can't decode byte 0xf3 in position 34: invalid continuation byte",
+  "code": "import sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    # Ruta del archivo CSV\n    csv_path = os.path.join(data_dir, \"ventas_sucursales.csv\")\n    \n    # Leer el archivo CSV\n    # El formato de fecha es DD/MM/YYYY y el valor es un string con puntos y comas\n    df = pd.read_csv(csv_path, sep=';', parse_dates=['fecha'])\n    \n    # Convertir la columna venta a float eliminando los puntos de miles y cambiando la coma decimal\n    df['venta'] = df['venta'].str.replace('.', '').str.replace(',', '.').astype(float)\n    \n    # Filtrar por el primer trimestre de 2026 (Enero, Febrero, Marzo)\n    # El formato de fecha en el CSV es 01/01/2026, por lo que el filtro es directo\n    q1_2026 = df[df['fecha'].dt.year == 2026] & (df['fecha'].dt.month.isin([1, 2, 3]))\n    \n    # Agrupar por sucursal y sumar la venta\n    resultado = q1_2026.groupby('sucursal')['venta'].sum()\n    \n    # Convertir a diccionario y redondear a 2 decimales\n    return {sucursal: round(total, 2) for sucursal, total in resultado.to_dict().items()}"
+ }
+}

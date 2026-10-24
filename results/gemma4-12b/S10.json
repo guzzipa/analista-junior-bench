@@ -1,0 +1,20 @@
+{
+ "task_id": "S10",
+ "bloque": "SQL",
+ "model": "gemma4-12b",
+ "response": "```sql\nWITH PrimerasCompras AS (\n    SELECT \n        c.cliente_id,\n        MIN(p.fecha) as primera_fecha\n    FROM clientes c\n    JOIN pedidos p ON c.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n    GROUP BY c.cliente_id\n    HAVING primera_fecha BETWEEN '2025-01-01' AND '2025-01-31'\n),\nClientesConSegundaCompra AS (\n    SELECT \n        pc.cliente_id\n    FROM PrimerasCompras pc\n    JOIN pedidos p ON pc.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha > pc.primera_fecha\n      AND julianday(p.fecha) - julianday(pc.primera_fecha) <= 90\n    GROUP BY pc.cliente_id\n)\nSELECT \n    CAST(COUNT(cs.cliente_id) AS FLOAT) / COUNT(pc.cliente_id) AS tasa\nFROM PrimerasCompras pc\nLEFT JOIN ClientesConSegundaCompra cs ON pc.cliente_id = cs.cliente_id;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 570,
+  "completion_tokens": 275
+ },
+ "latency_s": 12.24,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:40:37",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "WITH PrimerasCompras AS (\n    SELECT \n        c.cliente_id,\n        MIN(p.fecha) as primera_fecha\n    FROM clientes c\n    JOIN pedidos p ON c.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n    GROUP BY c.cliente_id\n    HAVING primera_fecha BETWEEN '2025-01-01' AND '2025-01-31'\n),\nClientesConSegundaCompra AS (\n    SELECT \n        pc.cliente_id\n    FROM PrimerasCompras pc\n    JOIN pedidos p ON pc.cliente_id = p.cliente_id\n    WHERE p.estado = 'entregado'\n      AND p.fecha > pc.primera_fecha\n      AND julianday(p.fecha) - julianday(pc.primera_fecha) <= 90\n    GROUP BY pc.cliente_id\n)\nSELECT \n    CAST(COUNT(cs.cliente_id) AS FLOAT) / COUNT(pc.cliente_id) AS tasa\nFROM PrimerasCompras pc\nLEFT JOIN ClientesConSegundaCompra cs ON pc.cliente_id = cs.cliente_id;",
+  "got": "[[0.6377880184331797]]"
+ }
+}

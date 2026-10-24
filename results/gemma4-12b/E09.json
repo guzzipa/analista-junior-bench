@@ -1,0 +1,20 @@
+{
+ "task_id": "E09",
+ "bloque": "Estadística",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport numpy as np\nfrom scipy import stats\nimport os\n\ndef solve(data_dir):\n    # Parámetros del problema\n    p1 = 0.038  # Conversión actual\n    p2 = 0.043  # Conversión objetivo\n    alpha = 0.05\n    power = 0.80\n    \n    # Cálculo del tamaño de muestra para una prueba de proporciones (A/B testing)\n    # Usamos la fórmula de comparación de dos proporciones independientes\n    # n = (Z_alpha/2 + Z_beta)^2 * [p1(1-p1) + p2(1-p2)] / (p1-p2)^2\n    \n    z_alpha = stats.norm.ppf(1 - alpha / 2)\n    z_beta = stats.norm.ppf(power)\n    \n    # Varianzas de las proporciones\n    v1 = p1 * (1 - p1)\n    v2 = p2 * (1 - p2)\n    \n    # Tamaño de muestra por grupo\n    n_required = ((z_alpha + z_beta)**2 * (v1 + v2)) / ((p1 - p2)**2)\n    \n    # Redondear hacia arriba para obtener un entero\n    return int(np.ceil(n_required))\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 636,
+  "completion_tokens": 320
+ },
+ "latency_s": 33.82,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:07:22",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import sqlite3\nimport pandas as pd\nimport numpy as np\nfrom scipy import stats\nimport os\n\ndef solve(data_dir):\n    # Parámetros del problema\n    p1 = 0.038  # Conversión actual\n    p2 = 0.043  # Conversión objetivo\n    alpha = 0.05\n    power = 0.80\n    \n    # Cálculo del tamaño de muestra para una prueba de proporciones (A/B testing)\n    # Usamos la fórmula de comparación de dos proporciones independientes\n    # n = (Z_alpha/2 + Z_beta)^2 * [p1(1-p1) + p2(1-p2)] / (p1-p2)^2\n    \n    z_alpha = stats.norm.ppf(1 - alpha / 2)\n    z_beta = stats.norm.ppf(power)\n    \n    # Varianzas de las proporciones\n    v1 = p1 * (1 - p1)\n    v2 = p2 * (1 - p2)\n    \n    # Tamaño de muestra por grupo\n    n_required = ((z_alpha + z_beta)**2 * (v1 + v2)) / ((p1 - p2)**2)\n    \n    # Redondear hacia arriba para obtener un entero\n    return int(np.ceil(n_required))",
+  "got": "24397"
+ }
+}

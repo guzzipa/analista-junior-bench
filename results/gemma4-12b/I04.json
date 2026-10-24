@@ -1,0 +1,17 @@
+{
+ "task_id": "I04",
+ "bloque": "Insight de negocio",
+ "model": "gemma4-12b",
+ "response": "Si bien el volumen de pedidos en agosto (1745) fue el más alto del periodo, no se puede afirmar que la campaña VUELTA10 fue la causa directa del éxito. Los datos muestran que el 80.2% de los pedidos con cupón fueron de clientes que ya habían comprado anteriormente, lo que indica una retención de clientes existentes más que una adquisición de nuevos. Además, la facturación de agosto fue superior a la de septiembre y octubre, pero no se puede determinar si el crecimiento se debió al cupón o a otros factores externos. Finalmente, no se puede saber si el crecimiento fue sostenible, ya que los pedidos cayeron en septiembre.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 439,
+  "completion_tokens": 140
+ },
+ "latency_s": 19.74,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:10:14",
+ "grade": {
+  "ok": null
+ }
+}

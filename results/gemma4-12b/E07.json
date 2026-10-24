@@ -1,0 +1,20 @@
+{
+ "task_id": "E07",
+ "bloque": "Estadística",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport numpy as np\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener fechas de pedido y entrega de pedidos entregados\n    # Unimos clientes para obtener la región y pedidos para el estado\n    query = \"\"\"\n    SELECT \n        c.region, \n        julianday(p.fecha_entrega) - julianday(p.fecha) as dias_entrega\n    FROM pedidos p\n    JOIN clientes c ON p.cliente_id = c.cliente_id\n    WHERE p.estado = 'entregado'\n    AND p.fecha_entrega IS NOT NULL\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha_entrega'])\n    conn.close()\n    \n    if df.empty:\n        return {}\n\n    # Agrupamos por región y calculamos el percentil 90\n    # El método por defecto de pandas/numpy es 'linear'\n    results = df.groupby('region')['dias_entrega'].quantile(0.9).to_dict()\n    \n    # Redondeamos a 2 decimales\n    return {region: round(val, 2) for region, val in results.items()}\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 636,
+  "completion_tokens": 326
+ },
+ "latency_s": 33.23,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:06:08",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import sqlite3\nimport pandas as pd\nimport numpy as np\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consulta para obtener fechas de pedido y entrega de pedidos entregados\n    # Unimos clientes para obtener la región y pedidos para el estado\n    query = \"\"\"\n    SELECT \n        c.region, \n        julianday(p.fecha_entrega) - julianday(p.fecha) as dias_entrega\n    FROM pedidos p\n    JOIN clientes c ON p.cliente_id = c.cliente_id\n    WHERE p.estado = 'entregado'\n    AND p.fecha_entrega IS NOT NULL\n    \"\"\"\n    \n    df = pd.read_sql_query(query, conn, parse_dates=['fecha_entrega'])\n    conn.close()\n    \n    if df.empty:\n        return {}\n\n    # Agrupamos por región y calculamos el percentil 90\n    # El método por defecto de pandas/numpy es 'linear'\n    results = df.groupby('region')['dias_entrega'].quantile(0.9).to_dict()\n    \n    # Redondeamos a 2 decimales\n    return {region: round(val, 2) for region, val in results.items()}",
+  "got": "{\"AMBA\": 3.0, \"Centro\": 5.0, \"Cuyo\": 6.0, \"NEA\": 8.0, \"NOA\": 7.0, \"Patagonia\": 12.0}"
+ }
+}

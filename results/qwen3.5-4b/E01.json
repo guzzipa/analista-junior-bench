@@ -1,0 +1,19 @@
+{
+ "task_id": "E01",
+ "bloque": "Estadística",
+ "model": "qwen3.5-4b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    # Conectar a la base de datos SQLite\n    db_path = f\"{data_dir}/tienda.db\"\n    conn = sqlite3.connect(db_path)\n    \n    try:\n        # Leer las tablas necesarias\n        pedidos_df = pd.read_sql_query(\"SELECT * FROM pedidos WHERE estado = 'entregado' AND fecha >= '2025-01-01' AND fecha <= '2025-12-31'\", conn)\n        items_df = pd.read_sql_query(\"SELECT * FROM items\", conn)\n        \n        # Unir los datos de pedidos con items para obtener la facturación por pedido\n        # El join es necesario porque un pedido puede tener múltiples items\n        facturas = pedidos_df.merge(items_df, on='pedido_id', how='outer')\n        \n        # Agrupar por pedido_id y sumar la cantidad * precio_unitario para obtener el ticket (facturación)\n        tickets = facturas.groupby('pedido_id')['cantidad'] * facturas['precio_unitario'].sum()\n        \n        # Calcular media y mediana\n        media = tickets.mean()\n        mediana = tickets.median()\n        \n        # Redondear a 2 decimales\n        resultado = {\n            'media': round(float(media), 2),\n            'mediana': round(float(mediana), 2)\n        }\n        \n        return resultado\n    finally:\n        conn.close()\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 598,
+  "completion_tokens": 333
+ },
+ "latency_s": 16.79,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:38:33",
+ "grade": {
+  "ok": false,
+  "error": "error al ejecutar:     main()\n  File \"/Users/guzzipa/projects/analista-junior-bench/bench/_runner.py\", line 60, in main\n    res = mod.solve(data_dir)\n  File \"/tmp/bench_03hkclal/solution.py\", line 20, in solve\n    tickets = facturas.groupby('pedido_id')['cantidad'] * facturas['precio_unitario'].sum()\nValueError: setting an array element with a sequence. The requested array has an inhomogeneous shape after 2 dimensions. The detected shape was (33458, 2) + inhomogeneous part.",
+  "code": "import sqlite3\nimport pandas as pd\nimport numpy as np\n\ndef solve(data_dir):\n    # Conectar a la base de datos SQLite\n    db_path = f\"{data_dir}/tienda.db\"\n    conn = sqlite3.connect(db_path)\n    \n    try:\n        # Leer las tablas necesarias\n        pedidos_df = pd.read_sql_query(\"SELECT * FROM pedidos WHERE estado = 'entregado' AND fecha >= '2025-01-01' AND fecha <= '2025-12-31'\", conn)\n        items_df = pd.read_sql_query(\"SELECT * FROM items\", conn)\n        \n        # Unir los datos de pedidos con items para obtener la facturación por pedido\n        # El join es necesario porque un pedido puede tener múltiples items\n        facturas = pedidos_df.merge(items_df, on='pedido_id', how='outer')\n        \n        # Agrupar por pedido_id y sumar la cantidad * precio_unitario para obtener el ticket (facturación)\n        tickets = facturas.groupby('pedido_id')['cantidad'] * facturas['precio_unitario'].sum()\n        \n        # Calcular media y mediana\n        media = tickets.mean()\n        mediana = tickets.median()\n        \n        # Redondear a 2 decimales\n        resultado = {\n            'media': round(float(media), 2),\n            'mediana': round(float(mediana), 2)\n        }\n        \n        return resultado\n    finally:\n        conn.close()"
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "task_id": "E03",
+ "bloque": "Estadística",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport numpy as np\nfrom scipy import stats\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consultamos la tabla de reseñas para obtener los puntajes\n    query = \"SELECT puntaje FROM resenas\"\n    df = pd.read_sql_query(query, conn, chunksize=10000)\n    \n    # Concatenamos todos los chunks en un solo DataFrame\n    df = pd.concat(df)\n    \n    # Calculamos la media y la desviación estándar de la muestra\n    mean = df['puntaje'].mean()\n    std_dev = df['puntaje'].std()\n    n = len(df)\n    \n    if n < 2:\n        # Si no hay suficientes datos para calcular la varianza, el intervalo es el mismo valor\n        return [float(mean), float(mean)]\n    \n    # Calculamos el error estándar\n    # Usamos la distribución t de Student para el intervalo de confianza\n    # El grado de libertad es n - 1\n    se = std_dev / np.sqrt(n)\n    \n    # t-score para un nivel de confianza del 95% (alpha = 0.05)\n    # ppf es la función de distribución acumulada inversa\n    t_score = stats.t.ppf(0.975, n - 1)\n    \n    margin_of_error = t_score * se\n    \n    lower_bound = mean - margin_of_error\n    upper_bound = mean + margin_of_error\n    \n    conn.close()\n    \n    return [round(float(lower_bound), 4), round(float(upper_bound), 4)]\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 620,
+  "completion_tokens": 431
+ },
+ "latency_s": 46.19,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:03:04",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "import sqlite3\nimport pandas as pd\nimport numpy as np\nfrom scipy import stats\nimport os\n\ndef solve(data_dir):\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # Consultamos la tabla de reseñas para obtener los puntajes\n    query = \"SELECT puntaje FROM resenas\"\n    df = pd.read_sql_query(query, conn, chunksize=10000)\n    \n    # Concatenamos todos los chunks en un solo DataFrame\n    df = pd.concat(df)\n    \n    # Calculamos la media y la desviación estándar de la muestra\n    mean = df['puntaje'].mean()\n    std_dev = df['puntaje'].std()\n    n = len(df)\n    \n    if n < 2:\n        # Si no hay suficientes datos para calcular la varianza, el intervalo es el mismo valor\n        return [float(mean), float(mean)]\n    \n    # Calculamos el error estándar\n    # Usamos la distribución t de Student para el intervalo de confianza\n    # El grado de libertad es n - 1\n    se = std_dev / np.sqrt(n)\n    \n    # t-score para un nivel de confianza del 95% (alpha = 0.05)\n    # ppf es la función de distribución acumulada inversa\n    t_score = stats.t.ppf(0.975, n - 1)\n    \n    margin_of_error = t_score * se\n    \n    lower_bound = mean - margin_of_error\n    upper_bound = mean + margin_of_error\n    \n    conn.close()\n    \n    return [round(float(lower_bound), 4), round(float(upper_bound), 4)]",
+  "got": "[4.4102, 4.435]"
+ }
+}

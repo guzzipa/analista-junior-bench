@@ -1,0 +1,17 @@
+{
+ "task_id": "I02",
+ "bloque": "Insight de negocio",
+ "model": "qwen3.5-4b",
+ "response": "Sí, es cierto; la satisfacción de Patagonia cae drásticamente (promedio 3.6 vs 4.57 en AMBA) y coincide con picos de entrega extremadamente largos (12 días en mayo/junio frente a 2.5 en AMBA). Esto explica el enojo: los clientes perciben la demora logística como un fallo del servicio, no solo por el puntaje bajo, sino porque la brecha entre lo esperado y lo entregado es enorme durante esos meses.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 879,
+  "completion_tokens": 109
+ },
+ "latency_s": 9.37,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:45:00",
+ "grade": {
+  "ok": null
+ }
+}

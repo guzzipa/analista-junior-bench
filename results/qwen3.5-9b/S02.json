@@ -1,0 +1,20 @@
+{
+ "task_id": "S02",
+ "bloque": "SQL",
+ "model": "qwen3.5-9b",
+ "response": "```sql\nSELECT \n    p.producto_id,\n    p.nombre,\n    SUM(i.cantidad) AS unidades\nFROM productos p\nJOIN items i ON p.producto_id = i.producto_id\nJOIN pedidos ped ON i.pedido_id = ped.pedido_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha BETWEEN '2025-01-01' AND '2025-12-31'\nGROUP BY p.producto_id, p.nombre\nORDER BY unidades DESC\nLIMIT 5;\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 520,
+  "completion_tokens": 120
+ },
+ "latency_s": 7.15,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 11:58:01",
+ "grade": {
+  "ok": true,
+  "error": "",
+  "code": "SELECT \n    p.producto_id,\n    p.nombre,\n    SUM(i.cantidad) AS unidades\nFROM productos p\nJOIN items i ON p.producto_id = i.producto_id\nJOIN pedidos ped ON i.pedido_id = ped.pedido_id\nWHERE ped.estado = 'entregado'\n  AND ped.fecha BETWEEN '2025-01-01' AND '2025-12-31'\nGROUP BY p.producto_id, p.nombre\nORDER BY unidades DESC\nLIMIT 5;",
+  "got": "[[1, \"Celular Nova X\", 2472], [32, \"Crema Facial Hidratante\", 2029], [34, \"Protector Solar FPS50\", 1915], [35, \"Shampoo Sólido Natural\", 1754], [26, \"Remera Dry Fit\", 1706]]"
+ }
+}

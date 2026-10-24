@@ -1,0 +1,17 @@
+{
+ "task_id": "I08",
+ "bloque": "Insight de negocio",
+ "model": "gemma4-12b",
+ "response": "Para determinar la cantidad de clientes activos, primero debemos excluir el registro de la tabla clientes con segmento 'interno' (QA TEST).\n\nDe los 7,001 registros totales, quedan 7,000 clientes reales.\nSumando los clientes con pedidos entregados en 2026 (tramos a, b y c), el total es de 4,623 clientes activos.",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 351,
+  "completion_tokens": 85
+ },
+ "latency_s": 12.74,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 13:11:33",
+ "grade": {
+  "ok": null
+ }
+}

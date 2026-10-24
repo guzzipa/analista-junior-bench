@@ -1,0 +1,20 @@
+{
+ "task_id": "L01",
+ "bloque": "Limpieza",
+ "model": "gemma4-12b",
+ "response": "```python\nimport sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    # Conectar a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # El archivo clientes_crm.csv está en el data_dir\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leer el archivo CSV\n    # El archivo tiene una estructura donde el email es la clave única\n    # Usamos low_memory=False para evitar warnings y asegurar que se lean bien los tipos\n    df = pd.read_csv(csv_path, dtype={'email': str})\n    \n    # Contar clientes únicos basados en el email\n    # El enunciado pide cuántos clientes distintos hay (basado en email)\n    unique_clients_count = df['email'].nunique()\n    \n    conn.close()\n    \n    return int(unique_clients_count)\n```",
+ "thinking_chars": 0,
+ "usage": {
+  "prompt_tokens": 843,
+  "completion_tokens": 240
+ },
+ "latency_s": 16.89,
+ "finish_reason": "stop",
+ "timestamp": "2026-10-23 12:40:54",
+ "grade": {
+  "ok": false,
+  "error": "resultado: esperado 3000, recibido 3235",
+  "code": "import sqlite3\nimport pandas as pd\nimport os\n\ndef solve(data_dir):\n    # Conectar a la base de datos\n    db_path = os.path.join(data_dir, \"tienda.db\")\n    conn = sqlite3.connect(db_path)\n    \n    # El archivo clientes_crm.csv está en el data_dir\n    csv_path = os.path.join(data_dir, \"clientes_crm.csv\")\n    \n    # Leer el archivo CSV\n    # El archivo tiene una estructura donde el email es la clave única\n    # Usamos low_memory=False para evitar warnings y asegurar que se lean bien los tipos\n    df = pd.read_csv(csv_path, dtype={'email': str})\n    \n    # Contar clientes únicos basados en el email\n    # El enunciado pide cuántos clientes distintos hay (basado en email)\n    unique_clients_count = df['email'].nunique()\n    \n    conn.close()\n    \n    return int(unique_clients_count)",
+  "got": "3235"
+ }
+}
